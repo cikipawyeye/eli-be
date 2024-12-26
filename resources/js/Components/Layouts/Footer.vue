@@ -9,8 +9,8 @@
                         class="copyright text-muted text-lg-start text-center text-sm"
                     >
                         ©
-                        {{ new Date().getFullYear() }}
-                        , made with <i class="fa fa-heart"></i> by
+                        {{ new Date().getFullYear() }}, crafted with
+                        <i class="fa fa-heart"></i> by
                         <a
                             href="https://whatthefun.id"
                             class="font-weight-bold"

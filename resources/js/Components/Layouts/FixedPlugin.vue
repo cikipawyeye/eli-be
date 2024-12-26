@@ -57,7 +57,7 @@ onUnmounted(() => {
         <div class="card shadow-lg">
             <div class="card-header pb-0 pt-3">
                 <div class="float-start">
-                    <h5 class="mb-0 mt-3">Material UI Configurator</h5>
+                    <h5 class="mb-0 mt-3">UI Configurator</h5>
                     <p>See our dashboard options.</p>
                 </div>
                 <div class="float-end mt-4">

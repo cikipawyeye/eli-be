@@ -2,7 +2,7 @@
 import { useThemeStore } from '@/Stores/Theme';
 import { Link } from '@inertiajs/vue3';
 import { Dropdown } from 'bootstrap';
-import { onMounted, ref, watch } from 'vue';
+import { onMounted, ref } from 'vue';
 
 const themeStore = useThemeStore();
 
@@ -15,13 +15,6 @@ const dd = ref<Dropdown | null>(null);
 onMounted(() => {
     dd.value = new Dropdown('#dropdownMenuButton');
 });
-
-watch(
-    () => themeStore.showFixedPlugin,
-    (value) => {
-        console.log('watch', value);
-    },
-);
 </script>
 
 <template>

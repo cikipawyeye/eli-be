@@ -30,7 +30,7 @@ onMounted(() => {
     >
         <div class="sidenav-header">
             <i
-                class="fas fa-times text-dark position-absolute d-none d-xl-none end-0 top-0 cursor-pointer p-3 opacity-5"
+                class="fas fa-times text-dark position-absolute d-xl-none end-0 top-0 cursor-pointer p-3 opacity-5"
                 aria-hidden="true"
                 id="iconSidenav"
             ></i>
