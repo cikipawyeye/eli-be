@@ -76,7 +76,7 @@ const updatePassword = () => {
             <div class="mb-3">
                 <InputGroup :is-invalid="!!form.errors.password_confirmation">
                     <label for="password_confirmation" class="form-label"
-                        >New Password</label
+                        >Confirm Password</label
                     >
                     <input
                         v-model="form.password_confirmation"

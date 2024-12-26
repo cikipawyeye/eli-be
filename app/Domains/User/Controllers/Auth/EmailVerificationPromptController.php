@@ -4,14 +4,23 @@ declare(strict_types=1);
 
 namespace App\Domains\User\Controllers\Auth;
 
-use App\Support\Controllers\Controller;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
+use Illuminate\Http\Request;
+use App\Domains\User\Enums\RoleEnum;
+use Illuminate\Http\RedirectResponse;
+use App\Support\Controllers\Controller;
+use Illuminate\Routing\Controllers\Middleware;
 
 class EmailVerificationPromptController extends Controller
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware(sprintf('role:%s|%s', RoleEnum::SuperAdmin->value, RoleEnum::Admin->value)),
+        ];
+    }
+    
     /**
      * Display the email verification prompt.
      */

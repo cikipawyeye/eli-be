@@ -6,6 +6,7 @@ export const inputFocusDirective: Directive = {
         if (!input) return;
 
         const handleFocus = () => {
+            updateFilledClass();
             el.classList.add('focused', 'is-focused');
         };
         const handleBlur = () => {

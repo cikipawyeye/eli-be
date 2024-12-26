@@ -4,16 +4,22 @@ declare(strict_types=1);
 
 namespace App\Domains\User\Controllers\Auth;
 
-use App\Support\Controllers\Controller;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Password;
-use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
 use Inertia\Response;
+use Illuminate\Http\Request;
+use App\Domains\User\Enums\RoleEnum;
+use Illuminate\Http\RedirectResponse;
+use App\Support\Controllers\Controller;
+use Illuminate\Support\Facades\Password;
+use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Validation\ValidationException;
 
 class PasswordResetLinkController extends Controller
 {
+    public static function middleware(): array
+    {
+        return [];
+    }
     /**
      * Display the password reset link request view.
      */

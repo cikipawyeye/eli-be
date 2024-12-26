@@ -4,11 +4,14 @@ declare(strict_types=1);
 
 namespace App\Domains\User\Controllers;
 
+use App\Domains\User\Constants\PermissionConstant as Permission;
+use App\Domains\User\Enums\RoleEnum;
 use App\Domains\User\Requests\ProfileUpdateRequest;
 use App\Support\Controllers\Controller;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
@@ -16,6 +19,13 @@ use Inertia\Response;
 
 class ProfileController extends Controller
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware(sprintf('role:%s|%s', RoleEnum::SuperAdmin->value, RoleEnum::Admin->value)),
+        ];
+    }
+
     /**
      * Display the user's profile form.
      */
