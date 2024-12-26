@@ -16,10 +16,6 @@ use Illuminate\Validation\ValidationException;
 
 class PasswordResetLinkController extends Controller
 {
-    public static function middleware(): array
-    {
-        return [];
-    }
     /**
      * Display the password reset link request view.
      */

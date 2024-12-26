@@ -20,11 +20,6 @@ use Illuminate\Validation\ValidationException;
 
 class NewPasswordController extends Controller
 {
-    public static function middleware(): array
-    {
-        return [];
-    }
-    
     /**
      * Display the password reset view.
      */

@@ -16,13 +16,6 @@ use Illuminate\Validation\ValidationException;
 
 class ConfirmablePasswordController extends Controller
 {
-    public static function middleware(): array
-    {
-        return [
-            new Middleware(sprintf('role:%s|%s', RoleEnum::SuperAdmin->value, RoleEnum::Admin->value)),
-        ];
-    }
-    
     /**
      * Show the confirm password view.
      */

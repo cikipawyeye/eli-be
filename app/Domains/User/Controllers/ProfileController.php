@@ -19,13 +19,6 @@ use Inertia\Response;
 
 class ProfileController extends Controller
 {
-    public static function middleware(): array
-    {
-        return [
-            new Middleware(sprintf('role:%s|%s', RoleEnum::SuperAdmin->value, RoleEnum::Admin->value)),
-        ];
-    }
-
     /**
      * Display the user's profile form.
      */

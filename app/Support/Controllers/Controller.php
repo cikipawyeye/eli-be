@@ -6,7 +6,7 @@ namespace App\Support\Controllers;
 
 use Illuminate\Routing\Controllers\HasMiddleware;
 
-abstract class Controller implements HasMiddleware
+abstract class Controller extends \Illuminate\Routing\Controller
 {
     //
 }

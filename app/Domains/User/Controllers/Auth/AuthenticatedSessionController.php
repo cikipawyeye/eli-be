@@ -17,13 +17,6 @@ use Inertia\Response;
 
 class AuthenticatedSessionController extends Controller
 {
-    public static function middleware(): array
-    {
-        return [
-            new Middleware(sprintf('role:%s|%s', RoleEnum::SuperAdmin->value, RoleEnum::Admin->value), only: ['destroy']),
-        ];
-    }
-
     /**
      * Display the login view.
      */

@@ -14,13 +14,6 @@ use Illuminate\Routing\Controllers\Middleware;
 
 class EmailVerificationPromptController extends Controller
 {
-    public static function middleware(): array
-    {
-        return [
-            new Middleware(sprintf('role:%s|%s', RoleEnum::SuperAdmin->value, RoleEnum::Admin->value)),
-        ];
-    }
-    
     /**
      * Display the email verification prompt.
      */

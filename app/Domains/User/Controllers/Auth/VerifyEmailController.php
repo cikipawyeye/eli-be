@@ -13,13 +13,6 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
 class VerifyEmailController extends Controller
 {
-    public static function middleware(): array
-    {
-        return [
-            new Middleware(sprintf('role:%s|%s', RoleEnum::SuperAdmin->value, RoleEnum::Admin->value)),
-        ];
-    }
-    
     /**
      * Mark the authenticated user's email address as verified.
      */

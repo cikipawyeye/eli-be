@@ -17,11 +17,6 @@ use Illuminate\Routing\Controllers\Middleware;
 
 class RegisteredUserController extends Controller
 {
-    public static function middleware(): array
-    {
-        return [];
-    }
-    
     /**
      * Handle an incoming registration request.
      *
