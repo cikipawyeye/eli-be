@@ -1,14 +1,18 @@
 <script setup lang="ts">
 import InputError from '@/Components/InputError.vue';
-import InputLabel from '@/Components/InputLabel.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
-import TextInput from '@/Components/TextInput.vue';
+import InputGroup from '@/Components/InputGroup.vue';
 import { Link, useForm, usePage } from '@inertiajs/vue3';
 
-defineProps<{
-    mustVerifyEmail?: Boolean;
-    status?: String;
-}>();
+defineProps({
+    mustVerifyEmail: {
+        type: Boolean,
+        required: false,
+    },
+    status: {
+        type: String,
+        required: false,
+    },
+});
 
 const user = usePage().props.auth.user;
 
@@ -20,47 +24,36 @@ const form = useForm({
 
 <template>
     <section>
-        <header>
-            <h2 class="text-lg font-medium text-gray-900">
-                Profile Information
-            </h2>
-
-            <p class="mt-1 text-sm text-gray-600">
-                Update your account's profile information and email address.
-            </p>
-        </header>
-
         <form
             @submit.prevent="form.patch(route('profile.update'))"
-            class="mt-6 space-y-6"
+            class="py-3"
         >
-            <div>
-                <InputLabel for="name" value="Name" />
-
-                <TextInput
-                    id="name"
-                    type="text"
-                    class="mt-1 block w-full"
-                    v-model="form.name"
-                    required
-                    autofocus
-                    autocomplete="name"
-                />
+            <div class="mb-3">
+                <InputGroup :is-invalid="!!form.errors.name">
+                    <label for="name" class="form-label">Name</label>
+                    <input
+                        v-model="form.name"
+                        id="name"
+                        type="text"
+                        class="form-control"
+                        autofocus
+                    />
+                </InputGroup>
 
                 <InputError class="mt-2" :message="form.errors.name" />
             </div>
 
-            <div>
-                <InputLabel for="email" value="Email" />
-
-                <TextInput
-                    id="email"
-                    type="email"
-                    class="mt-1 block w-full"
-                    v-model="form.email"
-                    required
-                    autocomplete="username"
-                />
+            <div class="mb-3">
+                <InputGroup :is-invalid="!!form.errors.email">
+                    <label for="email" class="form-label">Email</label>
+                    <input
+                        v-model="form.email"
+                        id="email"
+                        type="email"
+                        class="form-control"
+                        autofocus
+                    />
+                </InputGroup>
 
                 <InputError class="mt-2" :message="form.errors.email" />
             </div>
@@ -86,9 +79,14 @@ const form = useForm({
                 </div>
             </div>
 
-            <div class="flex items-center gap-4">
-                <PrimaryButton :disabled="form.processing">Save</PrimaryButton>
-
+            <div class="d-flex gap-4">
+                <button
+                    class="btn btn-dark mb-0"
+                    type="submit"
+                    :disabled="form.processing"
+                >
+                    Save
+                </button>
                 <Transition
                     enter-active-class="transition ease-in-out"
                     enter-from-class="opacity-0"

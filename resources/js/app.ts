@@ -1,10 +1,13 @@
-import '../css/app.css';
+// import '../css/app.css';
+import '../theme/scss/material-dashboard.scss';
 import './bootstrap';
 
 import { createInertiaApp } from '@inertiajs/vue3';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
+import { createPinia } from 'pinia';
 import { createApp, DefineComponent, h } from 'vue';
 import { ZiggyVue } from '../../vendor/tightenco/ziggy';
+import { inputFocusDirective } from './Supports/Diretives/InputFocusDirective';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
@@ -17,8 +20,10 @@ createInertiaApp({
         ),
     setup({ el, App, props, plugin }) {
         createApp({ render: () => h(App, props) })
+            .use(createPinia())
             .use(plugin)
             .use(ZiggyVue)
+            .directive('input-focus', inputFocusDirective)
             .mount(el);
     },
     progress: {
