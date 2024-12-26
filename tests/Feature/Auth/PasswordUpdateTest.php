@@ -1,6 +1,8 @@
 <?php
 
-use App\Models\User;
+declare(strict_types=1);
+
+use App\Domains\User\Models\User;
 use Illuminate\Support\Facades\Hash;
 
 test('password can be updated', function () {

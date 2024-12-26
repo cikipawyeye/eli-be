@@ -1,6 +1,8 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
+declare(strict_types=1);
+
+use App\Domains\User\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
