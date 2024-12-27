@@ -4,12 +4,10 @@ declare(strict_types=1);
 
 namespace App\Domains\User\Controllers\Auth;
 
-use App\Domains\User\Enums\RoleEnum;
-use Illuminate\Auth\Events\Verified;
-use Illuminate\Http\RedirectResponse;
 use App\Support\Controllers\Controller;
-use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Auth\Events\Verified;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Http\RedirectResponse;
 
 class VerifyEmailController extends Controller
 {

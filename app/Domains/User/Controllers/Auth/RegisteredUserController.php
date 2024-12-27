@@ -4,16 +4,14 @@ declare(strict_types=1);
 
 namespace App\Domains\User\Controllers\Auth;
 
-use Illuminate\Http\Request;
-use Illuminate\Validation\Rules;
 use App\Domains\User\Models\User;
-use App\Domains\User\Enums\RoleEnum;
+use App\Support\Controllers\Controller;
+use Illuminate\Auth\Events\Registered;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Auth\Events\Registered;
-use App\Support\Controllers\Controller;
-use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Validation\Rules;
 
 class RegisteredUserController extends Controller
 {

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import GuestLayout from '@/Layouts/GuestLayout.vue';
+import Guest from '@/Layouts/Guest.vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
 import { computed } from 'vue';
 
@@ -19,7 +19,7 @@ const verificationLinkSent = computed(
 </script>
 
 <template>
-    <GuestLayout>
+    <Guest>
         <Head title="Email Verification" />
 
         <div class="mb-4 text-sm text-gray-600">
@@ -54,5 +54,5 @@ const verificationLinkSent = computed(
                 >
             </div>
         </form>
-    </GuestLayout>
+    </Guest>
 </template>

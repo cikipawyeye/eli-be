@@ -4,11 +4,9 @@ declare(strict_types=1);
 
 namespace App\Domains\User\Controllers\Auth;
 
-use Illuminate\Http\Request;
-use App\Domains\User\Enums\RoleEnum;
-use Illuminate\Http\RedirectResponse;
 use App\Support\Controllers\Controller;
-use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 
 class EmailVerificationNotificationController extends Controller
 {

@@ -3,6 +3,7 @@ import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
+import Guest from '@/Layouts/Guest.vue';
 import { Head, useForm } from '@inertiajs/vue3';
 
 const props = defineProps<{
@@ -27,7 +28,7 @@ const submit = () => {
 </script>
 
 <template>
-    <GuestLayout>
+    <Guest>
         <Head title="Reset Password" />
 
         <form @submit.prevent="submit">
@@ -92,5 +93,5 @@ const submit = () => {
                 </PrimaryButton>
             </div>
         </form>
-    </GuestLayout>
+    </Guest>
 </template>
