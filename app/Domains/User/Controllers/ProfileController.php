@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domains\User\Controllers;
 
+use App\Domains\User\Enums\RoleEnum;
 use App\Domains\User\Requests\ProfileUpdateRequest;
 use App\Support\Controllers\Controller;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -16,6 +17,11 @@ use Inertia\Response;
 
 class ProfileController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(sprintf('role:%s|%s', RoleEnum::Admin->value, RoleEnum::User->value));
+    }
+
     /**
      * Display the user's profile form.
      */

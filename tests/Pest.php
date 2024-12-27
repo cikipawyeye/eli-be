@@ -2,6 +2,12 @@
 
 declare(strict_types=1);
 
+use App\Domains\User\Enums\RoleEnum;
+use App\Domains\User\Models\User;
+use App\Domains\User\PermissionAssignment;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
+
 /*
 |--------------------------------------------------------------------------
 | Test Case
@@ -43,7 +49,27 @@ expect()->extend('toBeOne', function () {
 |
 */
 
-function something()
+function createUser(?array $attributes = null, ?RoleEnum $role = null): User
 {
-    // ..
+    $attributes ??= [];
+    $role ??= RoleEnum::User;
+    $roleObject = Role::firstOrCreate(['name' => $role->value]);
+
+    collect(PermissionAssignment::getPermissionsByRole($role->value))
+        ->each(function (string $permission) use ($roleObject) {
+            $permissionObject = Permission::firstOrCreate(['name' => $permission]);
+            $roleObject->givePermissionTo($permissionObject->name);
+        });
+
+    return User::factory()->create($attributes)->assignRole($role);
+}
+
+function createSuperAdmin(?array $attributes = null): User
+{
+    return createUser($attributes, RoleEnum::SuperAdmin);
+}
+
+function createAdmin(?array $attributes = null): User
+{
+    return createUser($attributes, RoleEnum::Admin);
 }

@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-use App\Domains\User\Enums\RoleEnum;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -22,7 +21,6 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
 
         $middleware->web(append: [
-            sprintf('role:%s|%s', RoleEnum::SuperAdmin->value, RoleEnum::Admin->value),
             \App\Http\Middleware\HandleInertiaRequests::class,
             \Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets::class,
         ]);

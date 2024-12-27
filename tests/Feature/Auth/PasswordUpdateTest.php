@@ -6,7 +6,8 @@ use App\Domains\User\Models\User;
 use Illuminate\Support\Facades\Hash;
 
 test('password can be updated', function () {
-    $user = User::factory()->create();
+    /** @var User */
+    $user = createAdmin();
 
     $response = $this
         ->actingAs($user)
@@ -25,7 +26,8 @@ test('password can be updated', function () {
 });
 
 test('correct password must be provided to update password', function () {
-    $user = User::factory()->create();
+    /** @var User */
+    $user = createAdmin();
 
     $response = $this
         ->actingAs($user)

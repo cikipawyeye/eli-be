@@ -7,11 +7,10 @@ namespace App\Support\Controllers;
 use App\Support\Resource\ResourceTransformer;
 use Illuminate\Pagination\AbstractCursorPaginator;
 use Illuminate\Pagination\AbstractPaginator;
-use Illuminate\Routing\Controller;
 use Spatie\LaravelData\CursorPaginatedDataCollection;
 use Spatie\LaravelData\PaginatedDataCollection;
 
-abstract class ApiController extends Controller
+abstract class ApiController extends \Illuminate\Routing\Controller
 {
     /**
      * Send json response
