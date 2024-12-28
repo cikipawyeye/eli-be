@@ -94,7 +94,7 @@ abstract class Repository
         $this->orderBy();
 
         return $this->query
-            ->paginate($this->limit ?? 10)
+            ->paginate($this->limit ?? 25)
             ->appends($appends);
     }
 
@@ -128,7 +128,7 @@ abstract class Repository
         $this->orderBy();
 
         return $this->query
-            ->cursorPaginate($this->limit ?? 10)
+            ->cursorPaginate($this->limit ?? 25)
             ->appends($appends);
     }
 }

@@ -8,6 +8,7 @@ import { createPinia } from 'pinia';
 import { createApp, DefineComponent, h } from 'vue';
 import { ZiggyVue } from '../../vendor/tightenco/ziggy';
 import { inputFocusDirective } from './Supports/Diretives/InputFocusDirective';
+import translator from './Supports/translator';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
@@ -23,6 +24,7 @@ createInertiaApp({
             .use(createPinia())
             .use(plugin)
             .use(ZiggyVue)
+            .use(translator)
             .directive('input-focus', inputFocusDirective)
             .mount(el);
     },

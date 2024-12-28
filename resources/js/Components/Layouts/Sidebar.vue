@@ -3,20 +3,33 @@ import { useThemeStore } from '@/Stores/Theme';
 import { Link } from '@inertiajs/vue3';
 import { storeToRefs } from 'pinia';
 import { computed, onMounted, ref } from 'vue';
+import { useI18n } from 'vue-i18n';
 
 const { sidebarColor, sidebarType } = storeToRefs(useThemeStore());
 const color = computed(() =>
     sidebarType.value === 'bg-gradient-dark' ? 'text-white' : 'text-dark',
 );
 
-const sidebarActiveClass = (routeName: string) => {
-    return route().current(routeName)
+const sidebarActiveClass = (
+    routeName: string,
+    hasParams?: Record<string, string>,
+) => {
+    const isRouteActive = route().current(routeName);
+    const areParamsMatching = hasParams
+        ? Object.entries(hasParams).every(
+              ([key, value]) => route().params[key] === value,
+          )
+        : true;
+
+    return isRouteActive && areParamsMatching
         ? `nav-link ${sidebarColor.value} active text-white`
         : `nav-link ${color.value}`;
 };
 
 const isBodyWhite = ref(false);
 const isBodyDark = ref(false);
+
+const { t } = useI18n();
 
 onMounted(() => {
     isBodyWhite.value = !!document.querySelector('body:not(.dark-version)');
@@ -60,6 +73,47 @@ onMounted(() => {
                             >dashboard</i
                         >
                         <span class="nav-link-text ms-1">Dashboard</span>
+                    </Link>
+                </li>
+                <li class="nav-item mt-3">
+                    <h6
+                        :class="`text-uppercase ${color} font-weight-bolder ms-2 ps-4 text-xs opacity-5`"
+                    >
+                        {{ t('content') }}
+                    </h6>
+                </li>
+                <li class="nav-item">
+                    <Link
+                        :class="
+                            sidebarActiveClass('subcategories.index', {
+                                category: '0',
+                            })
+                        "
+                        :href="route('subcategories.index', { category: 0 })"
+                    >
+                        <i class="material-symbols-rounded opacity-5"
+                            >dashboard</i
+                        >
+                        <span class="nav-link-text ms-1">{{
+                            t('motivation')
+                        }}</span>
+                    </Link>
+                </li>
+                <li class="nav-item">
+                    <Link
+                        :class="
+                            sidebarActiveClass('subcategories.index', {
+                                category: '1',
+                            })
+                        "
+                        :href="route('subcategories.index', { category: 1 })"
+                    >
+                        <i class="material-symbols-rounded opacity-5"
+                            >dashboard</i
+                        >
+                        <span class="nav-link-text ms-1">{{
+                            t('reminder')
+                        }}</span>
                     </Link>
                 </li>
                 <li class="nav-item mt-3">

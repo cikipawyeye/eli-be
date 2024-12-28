@@ -19,6 +19,33 @@ class PermissionAssignment
                 R::SuperAdmin,
                 R::Admin,
             ],
+
+            P::MANAGE_SUBCATEGORIES => [
+                R::SuperAdmin,
+                R::Admin,
+            ],
+            P::BROWSE_SUBCATEGORIES => [
+                R::SuperAdmin,
+                R::Admin,
+                R::User,
+            ],
+            P::READ_SUBCATEGORY => [
+                R::SuperAdmin,
+                R::Admin,
+                R::User,
+            ],
+            P::EDIT_SUBCATEGORY => [
+                R::SuperAdmin,
+                R::Admin,
+            ],
+            P::ADD_SUBCATEGORY => [
+                R::SuperAdmin,
+                R::Admin,
+            ],
+            P::DELETE_SUBCATEGORY => [
+                R::SuperAdmin,
+                R::Admin,
+            ],
         ];
     }
 

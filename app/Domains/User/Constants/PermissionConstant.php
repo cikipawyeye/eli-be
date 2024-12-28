@@ -17,4 +17,12 @@ class PermissionConstant extends Constant
     public const EDIT_USER = 'edit_user';
     public const ADD_USER = 'add_user';
     public const DELETE_USER = 'delete_user';
+
+    // user
+    public const MANAGE_SUBCATEGORIES = 'manage_subcategories';
+    public const BROWSE_SUBCATEGORIES = 'browse_subcategories';
+    public const READ_SUBCATEGORY = 'read_subcategory';
+    public const EDIT_SUBCATEGORY = 'edit_subcategory';
+    public const ADD_SUBCATEGORY = 'add_subcategory';
+    public const DELETE_SUBCATEGORY = 'delete_subcategory';
 }

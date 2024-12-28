@@ -1,0 +1,16 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Domains\Content\Repositories;
+
+use App\Support\Repositories\Criteria;
+
+class SubcategoryCriteria extends Criteria
+{
+    public function __construct(
+        public ?int $limit,
+        public ?string $search,
+        public ?int $category,
+    ) {}
+}

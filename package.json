@@ -31,9 +31,11 @@
         "vue-tsc": "^2.0.24"
     },
     "dependencies": {
+        "@intlify/unplugin-vue-i18n": "^6.0.2",
         "@popperjs/core": "^2.11.8",
         "@types/bootstrap": "^5.2.10",
         "bootstrap": "^5.3.3",
-        "pinia": "^2.3.0"
+        "pinia": "^2.3.0",
+        "vue-i18n": "^11.0.1"
     }
 }

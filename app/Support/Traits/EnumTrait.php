@@ -48,7 +48,7 @@ trait EnumTrait
         return null;
     }
 
-    public static function list(): Collection
+    public static function toOptions(): Collection
     {
         return collect(self::cases())->map(static fn ($case) => [
             'name' => $case->name,
