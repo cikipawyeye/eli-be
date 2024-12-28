@@ -10,14 +10,7 @@
                     >
                         ©
                         {{ new Date().getFullYear() }}, crafted with
-                        <i class="fa fa-heart"></i> by
-                        <a
-                            href="https://whatthefun.id"
-                            class="font-weight-bold"
-                            target="_blank"
-                            >Whatthefun.id</a
-                        >
-                        for a better web.
+                        <i class="fa fa-heart"></i>
                     </div>
                 </div>
                 <div class="col-lg-6">
