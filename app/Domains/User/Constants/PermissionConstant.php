@@ -8,6 +8,7 @@ use App\Support\Constants\Constant;
 
 class PermissionConstant extends Constant
 {
+    public const VIEW_HORIZON_DASHBOARD = 'view_horizon_dashboard';
     public const VIEW_ADMIN_DASHBOARD = 'view_admin_dashboard';
 
     // user
@@ -18,7 +19,7 @@ class PermissionConstant extends Constant
     public const ADD_USER = 'add_user';
     public const DELETE_USER = 'delete_user';
 
-    // user
+    // subcategory
     public const MANAGE_SUBCATEGORIES = 'manage_subcategories';
     public const BROWSE_SUBCATEGORIES = 'browse_subcategories';
     public const READ_SUBCATEGORY = 'read_subcategory';

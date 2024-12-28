@@ -15,6 +15,8 @@ class PermissionAssignment
     public static function assignments(): array // NOSONAR
     {
         return [
+            P::VIEW_HORIZON_DASHBOARD => [R::SuperAdmin],
+
             P::VIEW_ADMIN_DASHBOARD => [
                 R::SuperAdmin,
                 R::Admin,
