@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
-use App\Domains\User\Controllers\ProfileController;
+use App\Domains\Content\Controllers\ContentController;
 use App\Domains\Content\Controllers\SubcategoryController;
+use App\Domains\User\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -27,6 +28,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::resource('/subcategories', SubcategoryController::class)->except(['edit']);
+    Route::resource('/contents', ContentController::class)->except(['edit']);
 });
 
 require __DIR__.'/auth.php'; // NOSONAR

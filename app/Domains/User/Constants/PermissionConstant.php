@@ -26,4 +26,12 @@ class PermissionConstant extends Constant
     public const EDIT_SUBCATEGORY = 'edit_subcategory';
     public const ADD_SUBCATEGORY = 'add_subcategory';
     public const DELETE_SUBCATEGORY = 'delete_subcategory';
+
+    // content
+    public const MANAGE_CONTENTS = 'manage_contents';
+    public const BROWSE_CONTENTS = 'browse_contents';
+    public const READ_CONTENT = 'read_content';
+    public const EDIT_CONTENT = 'edit_content';
+    public const ADD_CONTENT = 'add_content';
+    public const DELETE_CONTENT = 'delete_content';
 }

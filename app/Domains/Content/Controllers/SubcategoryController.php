@@ -5,13 +5,16 @@ declare(strict_types=1);
 namespace App\Domains\Content\Controllers;
 
 use App\Domains\Content\Actions\SaveSubcategoryAction;
+use App\Domains\Content\DataTransferObject\ContentData;
 use App\Domains\Content\DataTransferObject\SubcategoryData;
 use App\Domains\Content\Enums\ContentCategoryEnum;
 use App\Domains\Content\Models\Subcategory;
-use App\Domains\User\Constants\PermissionConstant as Permission;
+use App\Domains\Content\Repositories\ContentCriteria;
+use App\Domains\Content\Repositories\ContentRepository;
 use App\Domains\Content\Repositories\SubcategoryCriteria;
 use App\Domains\Content\Repositories\SubcategoryRepository;
 use App\Domains\Content\Requests\SaveSubcategoryRequest;
+use App\Domains\User\Constants\PermissionConstant as Permission;
 use App\Support\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -24,7 +27,7 @@ class SubcategoryController extends Controller
     {
         $this->middleware(sprintf('permission:%s', Permission::BROWSE_SUBCATEGORIES))->only('index');
         $this->middleware(sprintf('permission:%s', Permission::READ_SUBCATEGORY))->only('show');
-        $this->middleware(sprintf('permission:%s', Permission::ADD_SUBCATEGORY))->only('store');
+        $this->middleware(sprintf('permission:%s', Permission::ADD_SUBCATEGORY))->only('store', 'create');
         $this->middleware(sprintf('permission:%s', Permission::EDIT_SUBCATEGORY))->only('update');
         $this->middleware(sprintf('permission:%s', Permission::DELETE_SUBCATEGORY))->only('destroy');
     }
@@ -36,16 +39,15 @@ class SubcategoryController extends Controller
     {
         $criteria = SubcategoryCriteria::from([
             ...$request->all(),
-            'category' => $request->get('category') ?? ContentCategoryEnum::Motivation->value
+            'category' => $request->get('category') ?? ContentCategoryEnum::Motivation->value,
         ]);
         $repository = new SubcategoryRepository($criteria);
-
-        $paginate = $request->boolean('paginate') == 'false';
+        $paginate = 'false' == $request->boolean('paginate');
 
         return Inertia::render('Content/Subcategory/Index', [
             'data' => Inertia::defer(fn() => $this->resource(SubcategoryData::class, $paginate
                 ? $repository->get()
-                : $repository->paginate($request->all()))),
+                : $repository->paginate($request->all()), 'contents_count')),
             'criteria' => $criteria,
         ]);
     }
@@ -53,7 +55,7 @@ class SubcategoryController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create(Request $request)
+    public function create(Request $request): Response
     {
         return Inertia::render('Content/Subcategory/Create', [
             'query' => $request->query(),
@@ -65,7 +67,7 @@ class SubcategoryController extends Controller
      */
     public function store(SaveSubcategoryRequest $request)
     {
-        $result = dispatch_sync(new SaveSubcategoryAction(new Subcategory(), SubcategoryData::from($request->validated())));
+        $result = dispatch_sync(new SaveSubcategoryAction(new Subcategory, SubcategoryData::from($request->validated())));
 
         return redirect()
             ->route('subcategories.show', ['subcategory' => $result->id])
@@ -75,10 +77,21 @@ class SubcategoryController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(int $subcategory)
+    public function show(Request $request, int $subcategory): Response
     {
+        $contentCriteria = ContentCriteria::from([
+            ...$request->get('content', []),
+            'subcategory' => $subcategory,
+        ]);
+        $contentRepo = new ContentRepository($contentCriteria);
+        $paginate = 'false' == $request->boolean('content.paginate');
+
         return Inertia::render('Content/Subcategory/Show', [
             'data' => fn() => Subcategory::findOrFail($subcategory),
+            'contents' => Inertia::defer(fn() => $this->resource(ContentData::class, $paginate
+                ? $contentRepo->get()
+                : $contentRepo->paginate($request->get('content', [])))),
+            'content_criteria' => $contentCriteria,
         ]);
     }
 

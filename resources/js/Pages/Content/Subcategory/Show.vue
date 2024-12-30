@@ -6,12 +6,17 @@ import { flashError, flashSuccess } from '@/Supports/helpers';
 import { Head, Link, usePage } from '@inertiajs/vue3';
 import { onMounted, PropType, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
+import ContentList from './Partials/Contents/ContentList.vue';
 import Delete from './Partials/Delete.vue';
 import Edit from './Partials/Edit.vue';
 
 defineProps({
     data: {
         type: Object as PropType<Subcategory>,
+        required: false,
+    },
+    contents: {
+        type: Object as PropType<PaginatedResponseData<Content>>,
         required: false,
     },
 });
@@ -80,55 +85,53 @@ onMounted(() => {
         </template>
 
         <div class="card mb-4 mt-5">
-            <div class="card-body">
+            <div class="card-header position-relative mt-n4 z-index-2 mx-3 p-0">
                 <div
-                    class="card-header position-relative mt-n4 z-index-2 mx-3 p-0"
+                    class="shadow-secondary border-radius-lg d-flex flex-wrap gap-4 p-3"
                 >
-                    <div
-                        class="shadow-secondary border-radius-lg d-flex gap-3 p-3"
+                    <h6 class="text-capitalize my-auto">
+                        {{ data?.name }}
+                    </h6>
+                    <span
+                        class="badge badge-sm text-none my-auto"
+                        :class="{
+                            'badge-info': data?.is_active,
+                            'badge-secondary': !data?.is_active,
+                        }"
+                        >{{ t(data?.is_active ? 'active' : 'inactive') }}</span
                     >
-                        <h6 class="text-capitalize my-auto">
-                            {{ data?.name }}
-                        </h6>
-                        <span
-                            class="badge text-none my-auto"
-                            :class="{
-                                'badge-info': data?.is_active,
-                                'badge-secondary': !data?.is_active,
-                            }"
-                            >{{
-                                t(data?.is_active ? 'active' : 'inactive')
-                            }}</span
-                        >
 
-                        <div class="d-flex align-items-center ms-auto gap-3">
-                            <button
-                                class="btn btn-info mb-0 text-nowrap"
-                                @click="isEditing = true"
-                            >
-                                <i class="fa fa-pencil me-2"></i>
-                                {{
-                                    t('edit', {
-                                        data: t('subcategory'),
-                                    })
-                                }}
-                            </button>
-                            <button
-                                class="btn btn-danger mb-0 text-nowrap"
-                                @click="isDeleting = true"
-                            >
-                                <i class="fa fa-trash me-2"></i>
-                                {{
-                                    t('delete', {
-                                        data: t('subcategory'),
-                                    })
-                                }}
-                            </button>
-                        </div>
+                    <div
+                        class="d-flex align-items-center justify-content-end ms-auto flex-wrap gap-3"
+                    >
+                        <button
+                            class="btn btn-sm btn-info mb-0 text-nowrap"
+                            @click="isEditing = true"
+                        >
+                            <i class="fa fa-pencil"></i>
+                            <span class="d-none d-md-inline ms-2">{{
+                                t('edit', {
+                                    data: t('subcategory'),
+                                })
+                            }}</span>
+                        </button>
+                        <button
+                            class="btn btn-sm btn-danger mb-0 text-nowrap"
+                            @click="isDeleting = true"
+                        >
+                            <i class="fa fa-trash"></i>
+                            <span class="d-none d-md-inline ms-2">{{
+                                t('delete', {
+                                    data: t('subcategory'),
+                                })
+                            }}</span>
+                        </button>
                     </div>
                 </div>
+            </div>
 
-                <div class="card-body pb-2"></div>
+            <div class="card-body pb-2">
+                <ContentList />
             </div>
         </div>
     </AuthenticatedLayout>

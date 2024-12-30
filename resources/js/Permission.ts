@@ -1,7 +1,7 @@
 // Generated file, do not manually edit. Generate from BE instead (php artisan app:generate-permission-constants)
 export const Permissions = {
-  VIEW_ADMIN_DASHBOARD: 'view_admin_dashboard',
   VIEW_HORIZON_DASHBOARD: 'view_horizon_dashboard',
+  VIEW_ADMIN_DASHBOARD: 'view_admin_dashboard',
   MANAGE_USERS: 'manage_users',
   BROWSE_USERS: 'browse_users',
   READ_USER: 'read_user',
@@ -14,4 +14,10 @@ export const Permissions = {
   EDIT_SUBCATEGORY: 'edit_subcategory',
   ADD_SUBCATEGORY: 'add_subcategory',
   DELETE_SUBCATEGORY: 'delete_subcategory',
+  MANAGE_CONTENTS: 'manage_contents',
+  BROWSE_CONTENTS: 'browse_contents',
+  READ_CONTENT: 'read_content',
+  EDIT_CONTENT: 'edit_content',
+  ADD_CONTENT: 'add_content',
+  DELETE_CONTENT: 'delete_content',
 };

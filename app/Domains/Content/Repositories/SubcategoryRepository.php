@@ -11,7 +11,7 @@ class SubcategoryRepository extends Repository
 {
     protected string $model = \App\Domains\Content\Models\Subcategory::class;
 
-    protected ?array $withCount = [];
+    protected ?array $withCount = ['contents'];
 
     protected ?array $searchableColumns = ['name'];
 

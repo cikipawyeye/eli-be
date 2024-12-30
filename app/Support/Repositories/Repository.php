@@ -35,6 +35,9 @@ abstract class Repository
     protected ?array $with = [];
 
     /** @var array<string>|null */
+    protected ?array $select = null;
+
+    /** @var array<string>|null */
     protected ?array $withCount = [];
 
     protected ?int $limit = null;
@@ -46,7 +49,7 @@ abstract class Repository
 
     private function makeQuery(): void
     {
-        $query = (new $this->model)->query();
+        $query = (new $this->model)->newQuery();
         $this->query = ! empty($this->with) ? $query->with($this->with) : $query;
         $this->query = ! empty($this->withCount) ? $query->withCount($this->withCount) : $query;
 
@@ -82,6 +85,15 @@ abstract class Repository
         return $this;
     }
 
+    public function select(?array $select = null): self
+    {
+        if ($select) {
+            $this->select = $select;
+        }
+
+        return $this;
+    }
+
     public function limit(?int $limit): void
     {
         if ($limit) {
@@ -93,11 +105,13 @@ abstract class Repository
      * @param  array<string,string>|null                         $appends
      * @return LengthAwarePaginator<Model>|Collection<int,Model>
      */
-    public function paginate(?array $appends = null): LengthAwarePaginator|Collection
+    public function paginate(array $appends = []): LengthAwarePaginator|Collection
     {
-        $appends = $appends ?? [];
-
         $this->orderBy();
+
+        if ($this->select) {
+            $this->query->select($this->select);
+        }
 
         return $this->query
             ->paginate($this->limit ?? 25)
@@ -110,6 +124,10 @@ abstract class Repository
     public function get(): Collection
     {
         $this->orderBy();
+
+        if ($this->select) {
+            $this->query->select($this->select);
+        }
 
         return $this->query
             ->limit($this->limit ?? null)
@@ -127,10 +145,8 @@ abstract class Repository
      * @param  array<string,string>|null $appends
      * @return CursorPaginator<Model>
      */
-    public function cursorPaginate(?array $appends = null): CursorPaginator
+    public function cursorPaginate(array $appends = []): CursorPaginator
     {
-        $appends = $appends ?? [];
-
         $this->orderBy();
 
         return $this->query

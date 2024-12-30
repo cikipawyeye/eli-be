@@ -7,16 +7,16 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Domains\Content\Models\Subcategory>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Domains\Content\Models\Content>
  */
-class SubcategoryFactory extends Factory
+class ContentFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var class-string<\Illuminate\Database\Eloquent\Model>
      */
-    protected $model = \App\Domains\Content\Models\Subcategory::class;
+    protected $model = \App\Domains\Content\Models\Content::class;
 
     /**
      * Define the model's default state.

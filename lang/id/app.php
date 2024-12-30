@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'name' => 'Nama',
     'content' => 'Konten',
@@ -20,7 +22,6 @@ return [
     'back' => 'Kembali',
     'yes' => 'Ya',
     'no' => 'Tidak',
-    'search' => 'Cari',
     'reset' => 'Reset',
     'dashboard' => 'Dasbor',
     'home' => 'Beranda',
@@ -35,6 +36,8 @@ return [
     'deleted_data' => 'Data :data berhasil dihapus',
     'subcategory' => 'Sub-Kategori',
     'loading_data' => 'Memuat data...',
+    'search' => 'Cari :data',
     'detail' => 'Detail',
     'confirm_delete' => 'Apakah Anda yakin ingin menghapus data :data?',
+    'image' => 'Gambar',
 ];

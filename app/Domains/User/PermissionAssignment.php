@@ -48,6 +48,33 @@ class PermissionAssignment
                 R::SuperAdmin,
                 R::Admin,
             ],
+
+            P::MANAGE_CONTENTS => [
+                R::SuperAdmin,
+                R::Admin,
+            ],
+            P::BROWSE_CONTENTS => [
+                R::SuperAdmin,
+                R::Admin,
+                R::User,
+            ],
+            P::READ_CONTENT => [
+                R::SuperAdmin,
+                R::Admin,
+                R::User,
+            ],
+            P::EDIT_CONTENT => [
+                R::SuperAdmin,
+                R::Admin,
+            ],
+            P::ADD_CONTENT => [
+                R::SuperAdmin,
+                R::Admin,
+            ],
+            P::DELETE_CONTENT => [
+                R::SuperAdmin,
+                R::Admin,
+            ],
         ];
     }
 
@@ -56,7 +83,7 @@ class PermissionAssignment
         $permissions = [];
 
         foreach (self::assignments() as $permission => $roles) {
-            if (in_array($role, array_map(fn (R $role) => $role->value, $roles), true)) {
+            if (in_array($role, array_map(fn(R $role) => $role->value, $roles), true)) {
                 $permissions[] = $permission;
             }
         }

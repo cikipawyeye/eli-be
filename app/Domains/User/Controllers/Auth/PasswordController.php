@@ -17,7 +17,7 @@ class PasswordController extends Controller
     {
         $this->middleware(sprintf('role:%s|%s', RoleEnum::Admin->value, RoleEnum::User->value));
     }
-    
+
     /**
      * Update the user's password.
      */

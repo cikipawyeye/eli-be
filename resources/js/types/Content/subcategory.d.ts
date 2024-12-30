@@ -5,4 +5,6 @@ type Subcategory = {
     is_active: boolean;
     created_at?: string;
     updated_at?: string;
+    contents?: Content[];
+    contents_count?: number;
 };

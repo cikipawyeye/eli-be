@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Domains\Content\Actions;
 
 use App\Domains\Content\DataTransferObject\SubcategoryData;
@@ -21,7 +23,7 @@ class SaveSubcategoryAction extends Action
             'is_active',
         )->toArray());
         $this->model->save();
-        
+
         return $this->model;
     }
 }

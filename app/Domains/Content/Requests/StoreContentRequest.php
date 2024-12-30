@@ -4,11 +4,9 @@ declare(strict_types=1);
 
 namespace App\Domains\Content\Requests;
 
-use App\Domains\Content\Enums\ContentCategoryEnum;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
-class SaveSubcategoryRequest extends FormRequest
+class StoreContentRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -18,9 +16,9 @@ class SaveSubcategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:100'],
-            'is_active' => ['required', 'boolean'],
-            'category' => ['required', 'string', Rule::enum(ContentCategoryEnum::class)],
+            'subcategory_id' => ['required', 'integer', 'exists:subcategories,id'],
+            'title' => ['required', 'string', 'max:255'],
+            'image' => ['required', 'image', 'max:4096'],
         ];
     }
 }

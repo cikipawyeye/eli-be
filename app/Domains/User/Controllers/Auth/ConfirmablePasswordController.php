@@ -19,7 +19,7 @@ class ConfirmablePasswordController extends Controller
     {
         $this->middleware(sprintf('role:%s|%s', RoleEnum::Admin->value, RoleEnum::User->value));
     }
-    
+
     /**
      * Show the confirm password view.
      */

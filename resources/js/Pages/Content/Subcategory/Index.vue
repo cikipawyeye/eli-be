@@ -8,6 +8,8 @@ import { Deferred, Head, Link, router, usePage } from '@inertiajs/vue3';
 import { computed, onMounted, PropType, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 
+const { t } = useI18n();
+
 const props = defineProps({
     data: {
         type: Object as PropType<PaginatedResponseData<Subcategory>>,
@@ -20,10 +22,6 @@ const props = defineProps({
 });
 const success = usePage<SharedProps>().props.flash.success;
 const meta = computed(() => props.data?.meta);
-
-const { t } = useI18n();
-
-const loading = ref(false);
 const category = computed(() => {
     if (
         props.criteria?.category !== undefined &&
@@ -36,8 +34,8 @@ const category = computed(() => {
 
     return t('motivation');
 });
-
 const search = ref('');
+
 const handleSearch = debounce(() => {
     router.reload({
         only: ['data'],
@@ -100,7 +98,7 @@ onMounted(() => {
         <div class="card mb-4 mt-5">
             <div class="card-header position-relative mt-n4 z-index-2 mx-3 p-0">
                 <div class="shadow-secondary border-radius-lg d-flex gap-4 p-3">
-                    <h6 class="text-capitalize mb-1">
+                    <h6 class="text-capitalize my-auto">
                         {{ category }}
                     </h6>
 
@@ -156,6 +154,11 @@ onMounted(() => {
                                 <th
                                     class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2"
                                 >
+                                    {{ t('content') }}
+                                </th>
+                                <th
+                                    class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2"
+                                >
                                     {{ t('status') }}
                                 </th>
                                 <th class="text-secondary opacity-7"></th>
@@ -202,6 +205,14 @@ onMounted(() => {
                                             </h6>
                                         </Link>
                                     </td>
+                                    <td class="ps-4">
+                                        <span
+                                            class="font-weight-bold mb-0 text-sm"
+                                            >{{
+                                                subcategory.contents_count
+                                            }}</span
+                                        >
+                                    </td>
                                     <td class="text-sm">
                                         <span
                                             class="badge text-none my-auto"
@@ -239,11 +250,7 @@ onMounted(() => {
                                         colspan="4"
                                         class="text-secondary py-6 text-center"
                                     >
-                                        <span v-if="loading">{{
-                                            t('loading_data')
-                                        }}</span>
-
-                                        <span v-else>{{
+                                        <span>{{
                                             criteria?.search
                                                 ? t('no_data_found')
                                                 : t('no_data')
