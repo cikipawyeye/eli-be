@@ -7,6 +7,7 @@ import { Deferred, router, usePage } from '@inertiajs/vue3';
 import { computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import AddContentForm from './AddContentForm.vue';
+import DeleteContent from './DeleteContent.vue';
 
 const { t } = useI18n();
 
@@ -22,6 +23,8 @@ const meta = computed(() => page.props.contents?.meta);
 const criteria = computed(() => page.props.content_criteria);
 const search = ref('');
 const isAdding = ref(false);
+const isDeleting = ref(false);
+const selectedContent = ref<Content | null>(null);
 
 const handleSearch = debounce(() => {
     router.reload({
@@ -56,11 +59,21 @@ const handlePagination = ({
 const closeAddModal = () => {
     isAdding.value = false;
 };
+
+const closeDeleteModal = () => {
+    isDeleting.value = false;
+    selectedContent.value = null;
+};
+
+const destroyContent = (content: Content) => {
+    selectedContent.value = content;
+    isDeleting.value = true;
+};
 </script>
 
 <template>
     <div>
-        <div class="d-flex align-items-center ms-auto flex-wrap gap-3">
+        <div class="d-flex align-items-center my-2 ms-auto flex-wrap gap-3">
             <div>
                 <InputGroup>
                     <input
@@ -140,6 +153,14 @@ const closeAddModal = () => {
                                 <h6 class="mb-0 text-sm">#{{ content.id }}</h6>
                             </td>
                             <td>{{ content.title }}</td>
+                            <td class="align-middle">
+                                <button
+                                    class="text-secondary font-weight-bold border-0 bg-transparent text-xs"
+                                    @click="destroyContent(content)"
+                                >
+                                    {{ t('delete') }}
+                                </button>
+                            </td>
                         </tr>
 
                         <tr v-if="!data || data?.data.length < 1">
@@ -169,6 +190,18 @@ const closeAddModal = () => {
             v-if="page.props.data?.id"
             :subcategory_id="page.props.data?.id"
             v-on:close-modal="closeAddModal"
+        />
+    </Modal>
+
+    <Modal
+        :show="isDeleting"
+        id="delete-content-modal"
+        @close="closeDeleteModal"
+    >
+        <DeleteContent
+            v-if="selectedContent"
+            :content="selectedContent"
+            v-on:close-modal="closeDeleteModal"
         />
     </Modal>
 </template>

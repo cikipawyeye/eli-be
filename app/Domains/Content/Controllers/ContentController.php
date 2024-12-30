@@ -46,6 +46,10 @@ class ContentController extends Controller
      */
     public function destroy(Content $content)
     {
-        //
+        $content->delete();
+
+        return redirect()
+            ->route('subcategories.show', ['subcategory' => $content->subcategory_id])
+            ->with('success', __('app.deleted_data', ['data' => __('app.subcategory')]));
     }
 }

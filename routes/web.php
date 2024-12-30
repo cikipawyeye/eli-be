@@ -28,7 +28,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::resource('/subcategories', SubcategoryController::class)->except(['edit']);
-    Route::resource('/contents', ContentController::class)->except(['edit']);
+    Route::resource('/contents', ContentController::class)->only(['store', 'update', 'destroy']);
 });
 
 require __DIR__.'/auth.php'; // NOSONAR

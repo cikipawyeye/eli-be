@@ -26,7 +26,10 @@ const form = useForm<{ image: File | null } & Content>({
 
 const submit = () => {
     form.post(route('contents.store'), {
-        onSuccess: () => emit('closeModal'),
+        onSuccess: () => {
+            form.reset();
+            emit('closeModal');
+        },
     });
 };
 
