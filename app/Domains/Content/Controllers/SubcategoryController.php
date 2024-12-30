@@ -51,38 +51,47 @@ class SubcategoryController extends Controller
     }
 
     /**
+     * Show the form for creating a new resource.
+     */
+    public function create(Request $request)
+    {
+        return Inertia::render('Content/Subcategory/Create', [
+            'query' => $request->query(),
+        ]);
+    }
+
+    /**
      * Store a newly created resource in storage.
      */
     public function store(SaveSubcategoryRequest $request)
     {
-        // $result = dispatch_sync(new SaveSubcategoryAction(new Subcategory(), SubcategoryData::from($request->validated())));
+        $result = dispatch_sync(new SaveSubcategoryAction(new Subcategory(), SubcategoryData::from($request->validated())));
 
-        // return $this->sendJsonResponse(
-        //     message: __('app.stored_data', ['data' => __('app.subcategory')]),
-        //     data: $result
-        // );
+        return redirect()
+            ->route('subcategories.show', ['subcategory' => $result->id])
+            ->with('success', __('app.stored_data', ['data' => __('app.subcategory')]));
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Subcategory $agent)
+    public function show(int $subcategory)
     {
-        // return $this->sendJsonResponse(
-        //     SubcategoryData::fromModel($agent)
-        // );
+        return Inertia::render('Content/Subcategory/Show', [
+            'data' => fn() => Subcategory::findOrFail($subcategory),
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(SaveSubcategoryRequest $request, Subcategory $agent)
+    public function update(SaveSubcategoryRequest $request, Subcategory $subcategory)
     {
-        // dispatch_sync(new SaveSubcategoryAction($agent, SubcategoryData::from($request->validated())));
+        dispatch_sync(new SaveSubcategoryAction($subcategory, SubcategoryData::from($request->validated())));
 
-        // return $this->sendJsonResponse(
-        //     message: __('app.updated_data', ['data' => __('app.subcategory')])
-        // );
+        return redirect()
+            ->route('subcategories.show', ['subcategory' => $subcategory->id])
+            ->with('success', __('app.updated_data', ['data' => __('app.subcategory')]));
     }
 
     /**
@@ -96,6 +105,8 @@ class SubcategoryController extends Controller
             $subcategory->delete();
         });
 
-        return redirect()->route('subcategories.index', compact('category'));
+        return redirect()
+            ->route('subcategories.index', compact('category'))
+            ->with('success', __('app.deleted_data', ['data' => __('app.subcategory')]));
     }
 }

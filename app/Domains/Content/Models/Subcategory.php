@@ -7,6 +7,12 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 
 class Subcategory extends Model
 {
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = ['name', 'category', 'is_active'];
 
     protected static function newFactory(): Factory
     {

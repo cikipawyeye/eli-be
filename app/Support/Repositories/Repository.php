@@ -53,15 +53,19 @@ abstract class Repository
         if ($this->criteria) {
             foreach ($this->criteria->toArray() as $key => $value) {
                 $key = Str::camel($key);
-                if ($value) {
+                if (method_exists($this, $key)) {
                     $this->$key($value);
                 }
             }
         }
     }
 
-    public function search(string $keyword): static
+    public function search(?string $keyword): static
     {
+        if (! $keyword) {
+            return $this;
+        }
+
         if (! empty($this->searchableColumns)) {
             $keyword = sprintf('%%%s%%', $keyword);
 
@@ -78,9 +82,11 @@ abstract class Repository
         return $this;
     }
 
-    public function limit(int $limit): void
+    public function limit(?int $limit): void
     {
-        $this->limit = $limit;
+        if ($limit) {
+            $this->limit = $limit;
+        }
     }
 
     /**

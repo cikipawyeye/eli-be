@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'name' => 'Nama',
     'content' => 'Konten',
     'title' => 'Judul',
     'description' => 'Deskripsi',
@@ -9,9 +10,10 @@ return [
     'active' => 'Aktif',
     'inactive' => 'Tidak Aktif',
     'action' => 'Aksi',
-    'add' => 'Tambah',
-    'edit' => 'Ubah',
-    'delete' => 'Hapus',
+    'create' => 'Buat :data',
+    'add' => 'Tambah :data',
+    'edit' => 'Ubah :data',
+    'delete' => 'Hapus :data',
     'save' => 'Simpan',
     'cancel' => 'Batal',
     'close' => 'Tutup',
@@ -33,4 +35,6 @@ return [
     'deleted_data' => 'Data :data berhasil dihapus',
     'subcategory' => 'Sub-Kategori',
     'loading_data' => 'Memuat data...',
+    'detail' => 'Detail',
+    'confirm_delete' => 'Apakah Anda yakin ingin menghapus data :data?',
 ];

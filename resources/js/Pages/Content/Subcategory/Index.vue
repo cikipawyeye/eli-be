@@ -3,8 +3,8 @@ import InputGroup from '@/Components/InputGroup.vue';
 import Pagination from '@/Components/Pagination.vue';
 import { ContentCategory } from '@/Constants/ContentCategory';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { debounce, rowNumber } from '@/Supports/helpers';
-import { Head, Link, router } from '@inertiajs/vue3';
+import { debounce, flashSuccess, rowNumber } from '@/Supports/helpers';
+import { Deferred, Head, Link, router, usePage } from '@inertiajs/vue3';
 import { computed, onMounted, PropType, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 
@@ -18,6 +18,7 @@ const props = defineProps({
         required: false,
     },
 });
+const success = usePage<SharedProps>().props.flash.success;
 const meta = computed(() => props.data?.meta);
 
 const { t } = useI18n();
@@ -66,14 +67,9 @@ const handlePagination = ({
 
 onMounted(() => {
     search.value = props.criteria?.search ?? '';
-    router.reload({
-        only: ['data'],
-        data: {
-            search: search.value,
-        },
-        onStart: () => (loading.value = true),
-        onFinish: () => (loading.value = false),
-    });
+    if (success) {
+        flashSuccess(success);
+    }
 });
 </script>
 
@@ -103,12 +99,12 @@ onMounted(() => {
 
         <div class="card mb-4 mt-5">
             <div class="card-header position-relative mt-n4 z-index-2 mx-3 p-0">
-                <div class="shadow-dark border-radius-lg d-flex gap-4 p-3">
+                <div class="shadow-secondary border-radius-lg d-flex gap-4 p-3">
                     <h6 class="text-capitalize mb-1">
                         {{ category }}
                     </h6>
 
-                    <div class="ms-auto">
+                    <div class="d-flex align-items-center ms-auto gap-3">
                         <InputGroup>
                             <input
                                 v-model="search"
@@ -119,6 +115,25 @@ onMounted(() => {
                                 @input="handleSearch"
                             />
                         </InputGroup>
+                        <Link
+                            :href="
+                                route('subcategories.create', {
+                                    _query: {
+                                        category: criteria?.category,
+                                    },
+                                })
+                            "
+                        >
+                            <button
+                                class="btn btn-primary btn-sm mb-0 text-nowrap"
+                            >
+                                {{
+                                    t('create', {
+                                        data: t('subcategory'),
+                                    })
+                                }}
+                            </button></Link
+                        >
                     </div>
                 </div>
             </div>
@@ -147,65 +162,95 @@ onMounted(() => {
                             </tr>
                         </thead>
                         <tbody>
-                            <tr
-                                v-for="(subcategory, index) in data?.data"
-                                :key="subcategory.id"
-                            >
-                                <td class="ps-4">
-                                    <span class="font-weight-bold mb-0 text-sm"
-                                        >{{
-                                            rowNumber(
-                                                index,
-                                                data?.meta?.from ?? 1,
-                                            )
-                                        }}.</span
-                                    >
-                                </td>
-                                <td>
-                                    <h6 class="mb-0 text-sm">
-                                        {{ subcategory.name }}
-                                    </h6>
-                                </td>
-                                <td class="text-sm">
-                                    <span
-                                        class="badge badge-sm bg-gradient-success"
-                                        >{{
-                                            t(
-                                                subcategory.is_active
-                                                    ? 'active'
-                                                    : 'inactive',
-                                            )
-                                        }}</span
-                                    >
-                                </td>
-                                <td class="align-middle">
-                                    <a
-                                        href="javascript:;"
-                                        class="text-secondary font-weight-bold text-xs"
-                                        data-toggle="tooltip"
-                                        data-original-title="Edit"
-                                    >
-                                        Edit
-                                    </a>
-                                </td>
-                            </tr>
+                            <Deferred :data="['data']">
+                                <template #fallback>
+                                    <tr>
+                                        <td
+                                            colspan="4"
+                                            class="text-secondary py-6 text-center"
+                                        >
+                                            <span>{{ t('loading_data') }}</span>
+                                        </td>
+                                    </tr>
+                                </template>
 
-                            <tr v-if="!data || data?.data.length < 1">
-                                <td
-                                    colspan="4"
-                                    class="text-secondary py-6 text-center"
+                                <tr
+                                    v-for="(subcategory, index) in data?.data"
+                                    :key="subcategory.id"
                                 >
-                                    <span v-if="loading">{{
-                                        t('loading_data')
-                                    }}</span>
+                                    <td class="ps-4">
+                                        <span
+                                            class="font-weight-bold mb-0 text-sm"
+                                            >{{
+                                                rowNumber(
+                                                    index,
+                                                    data?.meta?.from ?? 1,
+                                                )
+                                            }}.</span
+                                        >
+                                    </td>
+                                    <td>
+                                        <Link
+                                            :href="
+                                                route('subcategories.show', {
+                                                    subcategory: subcategory.id,
+                                                })
+                                            "
+                                        >
+                                            <h6 class="mb-0 text-sm">
+                                                {{ subcategory.name }}
+                                            </h6>
+                                        </Link>
+                                    </td>
+                                    <td class="text-sm">
+                                        <span
+                                            class="badge text-none my-auto"
+                                            :class="{
+                                                'badge-info':
+                                                    subcategory.is_active,
+                                                'badge-secondary':
+                                                    !subcategory.is_active,
+                                            }"
+                                            >{{
+                                                t(
+                                                    subcategory.is_active
+                                                        ? 'active'
+                                                        : 'inactive',
+                                                )
+                                            }}</span
+                                        >
+                                    </td>
+                                    <td class="align-middle">
+                                        <Link
+                                            :href="
+                                                route('subcategories.show', {
+                                                    subcategory: subcategory.id,
+                                                })
+                                            "
+                                            class="text-secondary font-weight-bold text-xs"
+                                        >
+                                            {{ t('detail') }}
+                                        </Link>
+                                    </td>
+                                </tr>
 
-                                    <span v-else>{{
-                                        criteria?.search
-                                            ? t('no_data_found')
-                                            : t('no_data')
-                                    }}</span>
-                                </td>
-                            </tr>
+                                <tr v-if="!data || data?.data.length < 1">
+                                    <td
+                                        colspan="4"
+                                        class="text-secondary py-6 text-center"
+                                    >
+                                        <span v-if="loading">{{
+                                            t('loading_data')
+                                        }}</span>
+
+                                        <span v-else>{{
+                                            criteria?.search
+                                                ? t('no_data_found')
+                                                : t('no_data')
+                                        }}</span>
+                                    </td>
+                                </tr>
+                            </Deferred>
                         </tbody>
                     </table>
                 </div>

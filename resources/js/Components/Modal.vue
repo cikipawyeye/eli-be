@@ -17,7 +17,9 @@ const props = defineProps({
     },
 });
 
-const emit = defineEmits(['close']);
+const emit = defineEmits<{
+    close: [void];
+}>();
 
 const modal = ref<Modal | null>(null);
 let hiddenListener: (() => void) | null = null;
