@@ -29,6 +29,7 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('/subcategories', SubcategoryController::class)->except(['edit']);
     Route::resource('/contents', ContentController::class)->only(['store', 'update', 'destroy']);
+    Route::get('/contents/{content}/images', [ContentController::class, 'getImage'])->name('contents.image');
 });
 
-require __DIR__.'/auth.php'; // NOSONAR
+require __DIR__ . '/auth.php'; // NOSONAR

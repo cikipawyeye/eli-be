@@ -8,9 +8,11 @@ use App\Support\Models\Model;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Facades\URL;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use Spatie\MediaLibrary\ResponsiveImages\ResponsiveImage;
 
 /**
  * @mixin IdeHelperContent
@@ -40,7 +42,7 @@ class Content extends Model implements HasMedia
 
     public function registerMediaConversions(?Media $media = null): void
     {
-        $this->addMediaConversion('webp')
+        $this->addMediaConversion('optimized')
             ->format('webp')
             ->performOnCollections('content')
             ->withResponsiveImages();
@@ -52,14 +54,34 @@ class Content extends Model implements HasMedia
     }
 
     // Set the image urls
-    // public function image(): Attribute
-    // {
-    //     $image = $this->getFirstMedia('content');
-    //     return Attribute::make(fn () => $image ? [
-    //         'original_url' => $image->getFullUrl(),
-    //         'optimized_url' => $image->getFullUrl('webp'),
-    //         'responsive' => $image->getResponsiveImageUrls('webp'),
-    //         'alt' => $this->title,
-    //     ] : null);
-    // }
+    public function imageUrls(): Attribute
+    {
+        $image = $this->getFirstMedia('content');
+        if (!$image) {
+            return Attribute::make(null);
+        }
+
+        $expiresAt = now()->addMinutes(30);
+        $baseUrl = URL::temporarySignedRoute(
+            'contents.image',
+            $expiresAt,
+            ['content' => $this->id]
+        );
+        $originalUrl = $baseUrl;
+        $optimizedUrl = sprintf('%s&type=optimized', $baseUrl);
+        /** @var \Illuminate\Support\Collection<ResponsiveImage> */
+        $responsiveImages = $image?->responsiveImages('optimized')->files ?? collect();
+        $responsives = $responsiveImages->map(fn(ResponsiveImage $file) => [
+            'width' => $file->width(),
+            'height' => $file->height(),
+            'url' => sprintf('%s&type=%s', $baseUrl, sprintf('responsive/%s', $file->fileName)),
+        ])->toArray();
+
+        return Attribute::make(fn() => [
+            'original' => $originalUrl,
+            'optimized' => $optimizedUrl,
+            'responsives' => $responsives,
+            'alt' => $this->title,
+        ]);
+    }
 }

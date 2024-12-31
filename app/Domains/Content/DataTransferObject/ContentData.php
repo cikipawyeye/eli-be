@@ -7,6 +7,7 @@ namespace App\Domains\Content\DataTransferObject;
 use App\Domains\Content\Models\Content;
 use Carbon\Carbon;
 use Spatie\LaravelData\Data;
+use Spatie\LaravelData\Lazy;
 
 class ContentData extends Data
 {
@@ -16,6 +17,7 @@ class ContentData extends Data
         public readonly ?string $title,
         public readonly string|Carbon|null $created_at,
         public readonly string|Carbon|null $updated_at,
+        public readonly Lazy|array|null $image_urls,
     ) {}
 
     public static function fromModel(Content $model): self
@@ -26,6 +28,7 @@ class ContentData extends Data
             title: $model->title,
             created_at: $model->created_at,
             updated_at: $model->updated_at,
+            image_urls: Lazy::create(fn() => $model->imageUrls),
         );
     }
 }

@@ -11,6 +11,9 @@ use App\Domains\Content\Requests\StoreContentRequest;
 use App\Domains\Content\Requests\UpdateContentRequest;
 use App\Domains\User\Constants\PermissionConstant as Permission;
 use App\Support\Controllers\Controller;
+use Illuminate\Http\Request;
+use Illuminate\Routing\Exceptions\InvalidSignatureException;
+use Illuminate\Support\Facades\Storage;
 
 class ContentController extends Controller
 {
@@ -44,12 +47,44 @@ class ContentController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Content $content)
+    public function destroy(int $content)
     {
-        $content->delete();
+        $model = Content::select('id', 'subcategory_id')->findOrFail($content);
+        $model->delete();
 
         return redirect()
-            ->route('subcategories.show', ['subcategory' => $content->subcategory_id])
+            ->route('subcategories.show', ['subcategory' => $model->subcategory_id])
             ->with('success', __('app.deleted_data', ['data' => __('app.subcategory')]));
+    }
+
+    public function getImage(Request $request, int $content)
+    {
+        if (! $request->hasValidSignatureWhileIgnoring(['type'])) {
+            throw new InvalidSignatureException();
+        }
+
+        /** @var Content */
+        $content = Content::with('media')->select('id')->findOrFail($content);
+        $media = $content->getFirstMedia('content');
+        $type = $request->get('type');
+
+        if (!$type) {
+            return $media;
+        }
+
+        if ($type === 'optimized') {
+            $path = $media->getPath('optimized');
+            return file_exists($path) ? response()->file($path) : $media;
+        }
+
+        if (str_starts_with($type, 'responsive/')) {
+            $filename = str_replace('responsive/', '', $type);
+            $path = Storage::disk('local')
+                ->path(sprintf('%s/responsive-images/%s', $media->id, $filename));
+
+            return response()->file($path);
+        }
+
+        return abort(404);
     }
 }

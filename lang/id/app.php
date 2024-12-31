@@ -38,6 +38,6 @@ return [
     'loading_data' => 'Memuat data...',
     'search' => 'Cari :data',
     'detail' => 'Detail',
-    'confirm_delete' => 'Apakah Anda yakin ingin menghapus data :data?',
+    'confirm_delete' => 'Apakah Anda yakin ingin menghapus :data?',
     'image' => 'Gambar',
 ];

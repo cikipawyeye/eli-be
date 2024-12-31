@@ -16,6 +16,9 @@ class ContentRepository extends Repository
 
     protected string $defaultSortDirection = self::SORT_DIRECTION_ASC;
 
+    /** @var array<string>|null */
+    protected ?array $with = ['media'];
+
     protected string $model = \App\Domains\Content\Models\Content::class;
 
     protected function subcategory(?int $subcategory): static

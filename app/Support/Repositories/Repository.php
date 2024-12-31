@@ -114,7 +114,10 @@ abstract class Repository
         }
 
         return $this->query
-            ->paginate($this->limit ?? 25)
+            ->paginate(
+                perPage: $this->limit ?? 25,
+                page: $appends['page'] ?? null,
+            )
             ->appends($appends);
     }
 

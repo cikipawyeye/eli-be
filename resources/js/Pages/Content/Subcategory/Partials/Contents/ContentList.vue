@@ -2,11 +2,12 @@
 import InputGroup from '@/Components/InputGroup.vue';
 import Modal from '@/Components/Modal.vue';
 import Pagination from '@/Components/Pagination.vue';
-import { debounce, rowNumber } from '@/Supports/helpers';
+import { debounce } from '@/Supports/helpers';
 import { Deferred, router, usePage } from '@inertiajs/vue3';
 import { computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import AddContentForm from './AddContentForm.vue';
+import ContentImage from './ContentImage.vue';
 import DeleteContent from './DeleteContent.vue';
 
 const { t } = useI18n();
@@ -26,15 +27,21 @@ const isAdding = ref(false);
 const isDeleting = ref(false);
 const selectedContent = ref<Content | null>(null);
 
-const handleSearch = debounce(() => {
+const reloadContents = (payload: Record<string, string | number>) => {
     router.reload({
         only: ['contents', 'content_criteria'],
         data: {
-            content: { search: search.value },
+            content: {
+                ...criteria.value,
+                ...payload,
+            },
         },
         showProgress: true,
     });
-});
+};
+const handleSearch = debounce(() =>
+    reloadContents({ search: search.value, page: 1 }),
+);
 
 const handlePagination = ({
     per_page,
@@ -43,17 +50,7 @@ const handlePagination = ({
     per_page: number;
     page: number;
 }) => {
-    router.reload({
-        only: ['contents', 'content_criteria'],
-        data: {
-            content: {
-                ...criteria.value,
-                limit: per_page,
-                page,
-            },
-        },
-        showProgress: true,
-    });
+    reloadContents({ limit: per_page, page });
 };
 
 const closeAddModal = () => {
@@ -103,81 +100,35 @@ const destroyContent = (content: Content) => {
             </button>
         </div>
 
-        <div class="table-responsive p-0">
-            <table class="align-items-center mb-0 table">
-                <thead>
-                    <tr>
-                        <th
-                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
-                        >
-                            #
-                        </th>
-                        <th
-                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2"
-                        >
-                            ID
-                        </th>
-                        <th
-                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2"
-                        >
-                            {{ t('title') }}
-                        </th>
-                        <th class="text-secondary opacity-7"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <Deferred :data="['contents']">
-                        <template #fallback>
-                            <tr>
-                                <td
-                                    colspan="4"
-                                    class="text-secondary py-6 text-center"
-                                >
-                                    <span>{{ t('loading_data') }}</span>
-                                </td>
-                            </tr>
-                        </template>
+        <div class="row">
+            <Deferred :data="['contents']">
+                <template #fallback>
+                    <div class="d-flex p-4">
+                        <div class="spinner-border mx-auto" role="status">
+                            <span class="sr-only">{{ t('loading_data') }}</span>
+                        </div>
+                    </div>
+                </template>
 
-                        <tr
-                            v-for="(content, index) in data?.data"
-                            :key="content.id"
-                        >
-                            <td class="ps-4">
-                                <span class="font-weight-bold mb-0 text-sm"
-                                    >{{
-                                        rowNumber(index, data?.meta?.from ?? 1)
-                                    }}.</span
-                                >
-                            </td>
-                            <td>
-                                <h6 class="mb-0 text-sm">#{{ content.id }}</h6>
-                            </td>
-                            <td>{{ content.title }}</td>
-                            <td class="align-middle">
-                                <button
-                                    class="text-secondary font-weight-bold border-0 bg-transparent text-xs"
-                                    @click="destroyContent(content)"
-                                >
-                                    {{ t('delete') }}
-                                </button>
-                            </td>
-                        </tr>
+                <div
+                    v-for="content in data?.data"
+                    :key="content.id"
+                    class="col-6 col-md-4 col-xl-3"
+                >
+                    <ContentImage
+                        :content="content"
+                        v-on:destroy="destroyContent"
+                    />
+                </div>
 
-                        <tr v-if="!data || data?.data.length < 1">
-                            <td
-                                colspan="4"
-                                class="text-secondary py-6 text-center"
-                            >
-                                <span>{{
-                                    criteria?.search
-                                        ? t('no_data_found')
-                                        : t('no_data')
-                                }}</span>
-                            </td>
-                        </tr>
-                    </Deferred>
-                </tbody>
-            </table>
+                <div v-if="!data || data?.data.length < 1">
+                    <p class="text-secondary py-6 text-center">
+                        <span>{{
+                            criteria?.search ? t('no_data_found') : t('no_data')
+                        }}</span>
+                    </p>
+                </div>
+            </Deferred>
         </div>
 
         <div v-if="meta" class="card-footer">

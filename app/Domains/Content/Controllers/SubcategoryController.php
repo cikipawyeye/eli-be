@@ -14,6 +14,7 @@ use App\Domains\Content\Repositories\ContentRepository;
 use App\Domains\Content\Repositories\SubcategoryCriteria;
 use App\Domains\Content\Repositories\SubcategoryRepository;
 use App\Domains\Content\Requests\SaveSubcategoryRequest;
+use App\Domains\Content\Requests\ShowSubcategoryRequest;
 use App\Domains\User\Constants\PermissionConstant as Permission;
 use App\Support\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -77,21 +78,14 @@ class SubcategoryController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Request $request, int $subcategory): Response
+    public function show(ShowSubcategoryRequest $request, int $subcategory): Response
     {
-        $contentCriteria = ContentCriteria::from([
-            ...$request->get('content', []),
-            'subcategory' => $subcategory,
-        ]);
-        $contentRepo = new ContentRepository($contentCriteria);
-        $paginate = 'false' == $request->boolean('content.paginate');
-
         return Inertia::render('Content/Subcategory/Show', [
             'data' => fn() => Subcategory::findOrFail($subcategory),
-            'contents' => Inertia::defer(fn() => $this->resource(ContentData::class, $paginate
-                ? $contentRepo->get()
-                : $contentRepo->paginate($request->get('content', [])))),
-            'content_criteria' => $contentCriteria,
+            'contents' => Inertia::defer(
+                fn() => $this->resource(ContentData::class, $request->getContents(), 'image_urls')
+            ),
+            'content_criteria' => $request->getContentCriteria(),
         ]);
     }
 
