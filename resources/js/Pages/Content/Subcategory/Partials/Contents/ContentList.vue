@@ -9,6 +9,7 @@ import { useI18n } from 'vue-i18n';
 import AddContentForm from './AddContentForm.vue';
 import ContentImage from './ContentImage.vue';
 import DeleteContent from './DeleteContent.vue';
+import EditContentForm from './EditContentForm.vue';
 
 const { t } = useI18n();
 
@@ -24,6 +25,7 @@ const meta = computed(() => page.props.contents?.meta);
 const criteria = computed(() => page.props.content_criteria);
 const search = ref('');
 const isAdding = ref(false);
+const isEditing = ref(false);
 const isDeleting = ref(false);
 const selectedContent = ref<Content | null>(null);
 
@@ -42,7 +44,6 @@ const reloadContents = (payload: Record<string, string | number>) => {
 const handleSearch = debounce(() =>
     reloadContents({ search: search.value, page: 1 }),
 );
-
 const handlePagination = ({
     per_page,
     page,
@@ -57,14 +58,24 @@ const closeAddModal = () => {
     isAdding.value = false;
 };
 
-const closeDeleteModal = () => {
-    isDeleting.value = false;
+const editContent = (content: Content) => {
+    selectedContent.value = content;
+    isEditing.value = true;
+};
+
+const closeEditModal = () => {
+    isEditing.value = false;
     selectedContent.value = null;
 };
 
-const destroyContent = (content: Content) => {
+const deleteContent = (content: Content) => {
     selectedContent.value = content;
     isDeleting.value = true;
+};
+
+const closeDeleteModal = () => {
+    isDeleting.value = false;
+    selectedContent.value = null;
 };
 </script>
 
@@ -117,7 +128,8 @@ const destroyContent = (content: Content) => {
                 >
                     <ContentImage
                         :content="content"
-                        v-on:destroy="destroyContent"
+                        v-on:edit="editContent"
+                        v-on:destroy="deleteContent"
                     />
                 </div>
 
@@ -141,6 +153,14 @@ const destroyContent = (content: Content) => {
             v-if="page.props.data?.id"
             :subcategory_id="page.props.data?.id"
             v-on:close-modal="closeAddModal"
+        />
+    </Modal>
+
+    <Modal :show="isEditing" id="edit-content-modal" @close="closeEditModal">
+        <EditContentForm
+            v-if="selectedContent"
+            :content="selectedContent"
+            v-on:close-modal="closeEditModal"
         />
     </Modal>
 

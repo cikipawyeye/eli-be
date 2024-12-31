@@ -3,16 +3,18 @@ import InputError from '@/Components/InputError.vue';
 import InputGroup from '@/Components/InputGroup.vue';
 import { useForm } from '@inertiajs/vue3';
 import { FilePondFile } from 'filepond';
+import { computed, PropType, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 const { t } = useI18n();
 
 const props = defineProps({
-    subcategory_id: {
-        type: Number,
+    content: {
+        type: Object as PropType<Content>,
         required: true,
     },
 });
+const selected = computed(() => props.content);
 
 const emit = defineEmits<{
     closeModal: [void];
@@ -20,12 +22,12 @@ const emit = defineEmits<{
 
 const form = useForm<{ image: File | null } & Content>({
     image: null,
-    title: '',
-    subcategory_id: props.subcategory_id,
+    title: selected.value.title,
+    subcategory_id: selected.value.subcategory_id,
 });
 
 const submit = () => {
-    form.post(route('contents.store'), {
+    form.put(route('contents.update', { content: selected.value.id }), {
         onSuccess: () => {
             form.reset();
             emit('closeModal');
@@ -37,12 +39,21 @@ const updateFiles = (fileItems: FilePondFile[]) => {
     form.image =
         (fileItems.map((fileItem) => fileItem.file)[0] as File) ?? null;
 };
+
+watch(
+    () => selected.value,
+    (value) => {
+        form.title = value.title;
+        form.subcategory_id = value.subcategory_id;
+    },
+    { immediate: true },
+);
 </script>
 
 <template>
     <div class="modal-header">
         <h6 class="modal-title font-weight-normal" id="modal-title-default">
-            {{ t('add', { data: t('content') }) }}
+            {{ t('edit', { data: t('content') }) }}
         </h6>
         <button
             type="button"
@@ -75,14 +86,12 @@ const updateFiles = (fileItems: FilePondFile[]) => {
                 <InputError :message="form.errors.title" />
             </div>
             <div class="mb-3">
-                <label for="" class="form-label"
-                    >{{ t('image') }}<span class="text-warning">*</span></label
-                >
+                <label for="" class="form-label">{{ t('image') }}</label>
 
                 <file-pond
                     store-as-file="true"
                     @updatefiles="updateFiles"
-                    label-idle="Drop files here..."
+                    :label-idle="'Select new image or leave empty to keep the current image.'"
                     :allow-multiple="false"
                     :accepted-file-types="['image/*']"
                 />

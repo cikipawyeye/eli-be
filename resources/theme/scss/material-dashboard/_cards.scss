@@ -16,7 +16,7 @@
   @include hover {
     &[data-animation="true"] {
       .card-header {
-        @include transform-translate-y(-50px);
+        @include transform-translate-y(-40px);
       }
     }
   }

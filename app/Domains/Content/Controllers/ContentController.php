@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Domains\Content\Controllers;
 
 use App\Domains\Content\Actions\StoreContentAction;
+use App\Domains\Content\Actions\UpdateContentAction;
 use App\Domains\Content\DataTransferObject\ContentData;
 use App\Domains\Content\Models\Content;
 use App\Domains\Content\Requests\StoreContentRequest;
@@ -41,7 +42,11 @@ class ContentController extends Controller
      */
     public function update(UpdateContentRequest $request, Content $content)
     {
-        //
+        $result = dispatch_sync(new UpdateContentAction($content, ContentData::from($request->validated()), $request->file('image')));
+
+        return redirect()
+            ->route('subcategories.show', ['subcategory' => $result->subcategory_id])
+            ->with('success', __('app.updated_data', ['data' => __('app.subcategory')]));
     }
 
     /**
