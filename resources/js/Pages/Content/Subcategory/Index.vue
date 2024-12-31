@@ -5,7 +5,7 @@ import { ContentCategory } from '@/Constants/ContentCategory';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { debounce, flashSuccess, rowNumber } from '@/Supports/helpers';
 import { Deferred, Head, Link, router, usePage } from '@inertiajs/vue3';
-import { computed, onMounted, PropType, ref } from 'vue';
+import { computed, onMounted, PropType, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 const { t } = useI18n();
@@ -16,7 +16,11 @@ const props = defineProps({
         required: false,
     },
     criteria: {
-        type: Object as PropType<{ search: string | null; category: 0 | 1 }>,
+        type: Object as PropType<{
+            category: 0 | 1;
+            search: string | null;
+            type: 'active' | 'inactive' | null;
+        }>,
         required: false,
     },
 });
@@ -35,33 +39,33 @@ const category = computed(() => {
     return t('motivation');
 });
 const search = ref('');
+const type = ref<'active' | 'inactive' | null>(null);
 
-const handleSearch = debounce(() => {
+const reloadContent = (payload: Record<string, string | number | null>) => {
     router.reload({
         only: ['data'],
         data: {
-            search: search.value,
+            ...props.criteria,
+            ...payload,
         },
         showProgress: true,
     });
-});
+};
 
+const handleSearch = debounce(() => {
+    reloadContent({ type: type.value, search: search.value });
+});
 const handlePagination = ({
     per_page,
     page,
 }: {
     per_page: number;
     page: number;
-}) => {
-    router.reload({
-        only: ['data'],
-        data: {
-            page,
-            limit: per_page,
-        },
-        showProgress: true,
-    });
-};
+}) => reloadContent({ page, limit: per_page });
+watch(
+    () => type.value,
+    () => reloadContent({ type: type.value, search: search.value }),
+);
 
 onMounted(() => {
     search.value = props.criteria?.search ?? '';
@@ -103,6 +107,20 @@ onMounted(() => {
                     </h6>
 
                     <div class="d-flex align-items-center ms-auto gap-3">
+                        <InputGroup>
+                            <select
+                                v-model="type"
+                                class="form-control form-control-sm"
+                            >
+                                <option :value="null">All Status</option>
+                                <option value="active">
+                                    {{ t('active') }}
+                                </option>
+                                <option value="inactive">
+                                    {{ t('inactive') }}
+                                </option>
+                            </select>
+                        </InputGroup>
                         <InputGroup>
                             <input
                                 v-model="search"
@@ -247,7 +265,7 @@ onMounted(() => {
 
                                 <tr v-if="!data || data?.data.length < 1">
                                     <td
-                                        colspan="4"
+                                        colspan="6"
                                         class="text-secondary py-6 text-center"
                                     >
                                         <span>{{

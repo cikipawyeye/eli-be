@@ -46,10 +46,10 @@ class SubcategoryController extends Controller
         $paginate = 'false' == $request->boolean('paginate');
 
         return Inertia::render('Content/Subcategory/Index', [
+            'criteria' => $criteria,
             'data' => Inertia::defer(fn() => $this->resource(SubcategoryData::class, $paginate
                 ? $repository->get()
                 : $repository->paginate($request->all()), 'contents_count')),
-            'criteria' => $criteria,
         ]);
     }
 
