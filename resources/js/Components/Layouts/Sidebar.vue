@@ -5,7 +5,10 @@ import { storeToRefs } from 'pinia';
 import { computed, onMounted, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 
+const { t } = useI18n();
+
 const { sidebarColor, sidebarType } = storeToRefs(useThemeStore());
+
 const color = computed(() =>
     sidebarType.value === 'bg-gradient-dark' ? 'text-white' : 'text-dark',
 );
@@ -14,7 +17,7 @@ const sidebarActiveClass = (
     routeName: string,
     hasParams?: Record<string, string>,
 ) => {
-    const isRouteActive = route().current(routeName);
+    const isRouteActive = route().current()?.startsWith(routeName);
     const areParamsMatching = hasParams
         ? Object.entries(hasParams).every(
               ([key, value]) => route().params[key] === value,
@@ -22,14 +25,12 @@ const sidebarActiveClass = (
         : true;
 
     return isRouteActive && areParamsMatching
-        ? `nav-link ${sidebarColor.value} active text-white`
-        : `nav-link ${color.value}`;
+        ? `${sidebarColor.value} active`
+        : color.value;
 };
 
 const isBodyWhite = ref(false);
 const isBodyDark = ref(false);
-
-const { t } = useI18n();
 
 onMounted(() => {
     isBodyWhite.value = !!document.querySelector('body:not(.dark-version)');
@@ -51,7 +52,16 @@ onMounted(() => {
             <Link :href="route('dashboard')">
                 <div class="navbar-brand m-0 px-4 py-3">
                     <img
+                        v-if="sidebarType != 'bg-gradient-dark'"
                         src="/assets/img/logo-ct-dark.png"
+                        class="navbar-brand-img"
+                        width="26"
+                        height="26"
+                        alt="main_logo"
+                    />
+                    <img
+                        v-else
+                        src="/assets/img/logo-ct.png"
                         class="navbar-brand-img"
                         width="26"
                         height="26"
@@ -66,56 +76,105 @@ onMounted(() => {
             <ul class="navbar-nav">
                 <li class="nav-item">
                     <Link
-                        :class="sidebarActiveClass('dashboard')"
+                        :class="`nav-link ${sidebarActiveClass('dashboard')}`"
                         :href="route('dashboard')"
                     >
                         <i class="material-symbols-rounded opacity-5"
                             >dashboard</i
                         >
-                        <span class="nav-link-text ms-1">Dashboard</span>
-                    </Link>
-                </li>
-                <li class="nav-item mt-3">
-                    <h6
-                        :class="`text-uppercase ${color} font-weight-bolder ms-2 ps-4 text-xs opacity-5`"
-                    >
-                        {{ t('content') }}
-                    </h6>
-                </li>
-                <li class="nav-item">
-                    <Link
-                        :class="
-                            sidebarActiveClass('subcategories.index', {
-                                category: '0',
-                            })
-                        "
-                        :href="route('subcategories.index', { category: 0 })"
-                    >
-                        <i class="material-symbols-rounded opacity-5"
-                            >dashboard</i
-                        >
-                        <span class="nav-link-text ms-1">{{
-                            t('motivation')
-                        }}</span>
+                        <span class="nav-link-text ms-1 ps-1">Dashboard</span>
                     </Link>
                 </li>
                 <li class="nav-item">
-                    <Link
-                        :class="
-                            sidebarActiveClass('subcategories.index', {
-                                category: '1',
-                            })
+                    <a
+                        href="#contentSidebar"
+                        class="nav-link"
+                        :class="{
+                            active: route()
+                                .current()
+                                ?.startsWith('subcategories'),
+                            'text-dark': sidebarType != 'bg-gradient-dark',
+                            'text-white': sidebarType == 'bg-gradient-dark',
+                        }"
+                        data-bs-toggle="collapse"
+                        aria-controls="contentSidebar"
+                        :aria-expanded="
+                            route().current()?.startsWith('subcategories')
                         "
-                        :href="route('subcategories.index', { category: 1 })"
                     >
                         <i class="material-symbols-rounded opacity-5"
-                            >dashboard</i
+                            >space_dashboard</i
                         >
-                        <span class="nav-link-text ms-1">{{
-                            t('reminder')
+                        <span class="nav-link-text ms-1 ps-1">{{
+                            t('content')
                         }}</span>
-                    </Link>
+                    </a>
+                    <div class="show collapse" id="contentSidebar">
+                        <ul class="nav">
+                            <li
+                                class="nav-item"
+                                :class="{
+                                    active:
+                                        route()
+                                            .current()
+                                            ?.startsWith('subcategories') &&
+                                        route().params.category == '0',
+                                }"
+                            >
+                                <Link
+                                    class="nav-link"
+                                    :class="`${sidebarActiveClass(
+                                        'subcategories',
+                                        {
+                                            category: '0',
+                                        },
+                                    )}`"
+                                    :href="
+                                        route('subcategories.index', {
+                                            category: 0,
+                                        })
+                                    "
+                                >
+                                    <span class="sidenav-mini-icon"> - </span>
+                                    <span class="sidenav-normal ms-1 ps-1">
+                                        {{ t('motivation') }}
+                                    </span>
+                                </Link>
+                            </li>
+                            <li
+                                class="nav-item"
+                                :class="{
+                                    active:
+                                        route()
+                                            .current()
+                                            ?.startsWith('subcategories') &&
+                                        route().params.category == '1',
+                                }"
+                            >
+                                <Link
+                                    class="nav-link"
+                                    :class="`${sidebarActiveClass(
+                                        'subcategories',
+                                        {
+                                            category: '1',
+                                        },
+                                    )}`"
+                                    :href="
+                                        route('subcategories.index', {
+                                            category: 1,
+                                        })
+                                    "
+                                >
+                                    <span class="sidenav-mini-icon"> - </span>
+                                    <span class="sidenav-normal ms-1 ps-1">
+                                        {{ t('reminder') }}
+                                    </span>
+                                </Link>
+                            </li>
+                        </ul>
+                    </div>
                 </li>
+
                 <li class="nav-item mt-3">
                     <h6
                         :class="`text-uppercase ${color} font-weight-bolder ms-2 ps-4 text-xs opacity-5`"
@@ -125,6 +184,7 @@ onMounted(() => {
                 </li>
                 <li class="nav-item">
                     <Link
+                        class="nav-link"
                         :class="sidebarActiveClass('profile.edit')"
                         :href="route('profile.edit')"
                     >

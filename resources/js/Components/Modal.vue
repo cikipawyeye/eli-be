@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Modal } from 'bootstrap';
-import { onMounted, onUnmounted, ref, watch } from 'vue';
+import { computed, onMounted, onUnmounted, ref, watch } from 'vue';
 
 const props = defineProps({
     id: {
@@ -22,6 +22,7 @@ const emit = defineEmits<{
 }>();
 
 const modal = ref<Modal | null>(null);
+const showModal = computed(() => props.show);
 let hiddenListener: (() => void) | null = null;
 
 onMounted(() => {
@@ -48,7 +49,7 @@ onUnmounted(() => {
 });
 
 watch(
-    () => props.show,
+    () => showModal.value,
     (show) => (show ? modal.value?.show() : modal.value?.hide()),
 );
 </script>
@@ -59,7 +60,7 @@ watch(
         :id="props.id"
         tabindex="-1"
         :aria-labelledby="`${id}-label`"
-        aria-hidden="true"
+        :aria-hidden="showModal ? 'true' : 'false'"
     >
         <div
             :class="`modal-dialog modal-dialog-centered ${scrollable ? 'modal-dialog-scrollable' : ''}`"

@@ -88,7 +88,7 @@ const closeDeleteModal = () => {
                         v-model="search"
                         id="search"
                         type="search"
-                        class="form-control form-control-sm"
+                        class="form-control"
                         :placeholder="
                             t('search', {
                                 data: t('content'),
@@ -99,7 +99,7 @@ const closeDeleteModal = () => {
                 </InputGroup>
             </div>
             <button
-                class="btn btn-primary btn-sm mb-0 ms-auto text-nowrap"
+                class="btn bg-gradient-primary mb-0 ms-auto text-nowrap"
                 @click="isAdding = true"
             >
                 <i class="fa fa-plus"></i>
@@ -150,7 +150,7 @@ const closeDeleteModal = () => {
 
     <Modal id="add-content-modal" :show="isAdding" @close="closeAddModal">
         <AddContentForm
-            v-if="page.props.data?.id"
+            v-if="page.props.data?.id && isAdding"
             :subcategory_id="page.props.data?.id"
             v-on:close-modal="closeAddModal"
         />
@@ -158,8 +158,7 @@ const closeDeleteModal = () => {
 
     <Modal :show="isEditing" id="edit-content-modal" @close="closeEditModal">
         <EditContentForm
-            v-if="selectedContent"
-            :content="selectedContent"
+            :content="selectedContent ?? undefined"
             v-on:close-modal="closeEditModal"
         />
     </Modal>
@@ -170,8 +169,7 @@ const closeDeleteModal = () => {
         @close="closeDeleteModal"
     >
         <DeleteContent
-            v-if="selectedContent"
-            :content="selectedContent"
+            :content="selectedContent ?? undefined"
             v-on:close-modal="closeDeleteModal"
         />
     </Modal>

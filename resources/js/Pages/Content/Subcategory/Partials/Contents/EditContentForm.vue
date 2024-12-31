@@ -11,7 +11,7 @@ const { t } = useI18n();
 const props = defineProps({
     content: {
         type: Object as PropType<Content>,
-        required: true,
+        required: false,
     },
 });
 const selected = computed(() => props.content);
@@ -22,12 +22,12 @@ const emit = defineEmits<{
 
 const form = useForm<{ image: File | null } & Content>({
     image: null,
-    title: selected.value.title,
-    subcategory_id: selected.value.subcategory_id,
+    title: selected.value?.title ?? '',
+    subcategory_id: selected.value?.subcategory_id ?? 0,
 });
 
 const submit = () => {
-    form.put(route('contents.update', { content: selected.value.id }), {
+    form.put(route('contents.update', { content: selected.value?.id }), {
         onSuccess: () => {
             form.reset();
             emit('closeModal');
@@ -43,6 +43,8 @@ const updateFiles = (fileItems: FilePondFile[]) => {
 watch(
     () => selected.value,
     (value) => {
+        if (!value) return;
+
         form.title = value.title;
         form.subcategory_id = value.subcategory_id;
     },

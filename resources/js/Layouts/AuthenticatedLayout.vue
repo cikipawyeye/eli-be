@@ -53,7 +53,7 @@ onUnmounted(() => {
             </template>
         </Navbar>
 
-        <div class="container py-2">
+        <div class="container-fluid py-2">
             <slot />
 
             <Footer />

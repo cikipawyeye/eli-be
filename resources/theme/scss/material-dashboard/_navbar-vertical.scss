@@ -369,9 +369,12 @@
     & + .collapsing{
       .nav-item.active{
         .nav-link.active{
-          @include gradient-directional(nth($dark, 1) 0%, nth($dark, -1) 100%, $deg: 195deg);
+          // @include gradient-directional(nth($dark, 1) 0%, nth($dark, -1) 100%, $deg: 195deg);
+          // span{
+          //   color: $white;
+          // }
           span{
-            color: $white;
+            font-weight: bold;
           }
         }
       }
@@ -416,13 +419,11 @@
       font-weight: 700;
       content: "\f107";
       margin-left: auto;
-      color: rgba($light-gradient-state, 0.7);
       @include transition($transition-base);
     }
     // Expanded
     &[aria-expanded="true"] {
       &:after {
-        color: $light-gradient-state;
         transform: rotate(180deg);
       }
     }

@@ -39,7 +39,7 @@ const deleteSubcategory = () => {
 
     <div class="modal-body">
         <p
-            class="mt-1 text-sm text-gray-600"
+            class="mt-1"
             v-html="
                 t('confirm_delete', {
                     data: `${t('subcategory')}:
@@ -47,24 +47,35 @@ const deleteSubcategory = () => {
                 })
             "
         ></p>
-    </div>
 
-    <div class="modal-footer">
-        <button
-            class="btn btn-secondary mb-0"
-            type="button"
-            @click="emit('closeModal')"
-        >
-            {{ t('cancel') }}
-        </button>
+        <blockquote class="blockquote text-md mb-4">
+            <p class="ps-3">Semua konten pada sub-kategori ini akan hilang</p>
+        </blockquote>
 
-        <button
-            class="btn btn-danger mb-0"
-            type="button"
-            :disabled="form.processing"
-            @click="deleteSubcategory"
-        >
-            {{ t('delete') }}
-        </button>
+        <div class="row">
+            <div class="col-6 pe-2">
+                <button
+                    class="w-100 btn bg-gradient-secondary mb-0"
+                    type="button"
+                    @click="emit('closeModal')"
+                >
+                    {{ t('cancel') }}
+                </button>
+            </div>
+            <div class="col-6 ps-2">
+                <button
+                    class="w-100 btn bg-gradient-danger mb-0"
+                    type="button"
+                    :disabled="form.processing"
+                    @click="deleteSubcategory"
+                >
+                    {{
+                        t('delete', {
+                            data: t('subcategory'),
+                        })
+                    }}
+                </button>
+            </div>
+        </div>
     </div>
 </template>

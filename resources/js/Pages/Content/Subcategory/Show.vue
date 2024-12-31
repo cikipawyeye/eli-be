@@ -105,7 +105,7 @@ onMounted(() => {
                         class="d-flex align-items-center justify-content-end ms-auto flex-wrap gap-3"
                     >
                         <button
-                            class="btn btn-sm btn-info mb-0 text-nowrap"
+                            class="btn btn-sm btn-warning mb-0 text-nowrap"
                             @click="isEditing = true"
                         >
                             <i class="fa fa-pencil"></i>

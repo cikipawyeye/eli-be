@@ -9,7 +9,7 @@ const { t } = useI18n();
 const props = defineProps({
     content: {
         type: Object as PropType<Content>,
-        required: true,
+        required: false,
     },
 });
 const content = computed(() => props.content);
@@ -20,6 +20,8 @@ const emit = defineEmits<{
 }>();
 
 const destroy = () => {
+    if (!content.value) return;
+
     form.delete(
         route('contents.destroy', {
             content: content.value.id,
@@ -53,32 +55,39 @@ const destroy = () => {
 
     <div class="modal-body">
         <p
-            class="mt-1 text-sm text-gray-600"
+            class="mb-4 mt-1"
             v-html="
                 t('confirm_delete', {
-                    data: `${t('content')}:
-            <strong>${content.title}</strong>`,
+                    data: `${t('content')}:<br/>
+            <strong>${content?.title}</strong>`,
                 })
             "
         ></p>
-    </div>
 
-    <div class="modal-footer">
-        <button
-            class="btn btn-secondary mb-0"
-            type="button"
-            @click="emit('closeModal')"
-        >
-            {{ t('cancel') }}
-        </button>
-
-        <button
-            class="btn btn-danger mb-0"
-            type="button"
-            :disabled="form.processing"
-            @click="destroy"
-        >
-            {{ t('delete') }}
-        </button>
+        <div class="row">
+            <div class="col-6 pe-2">
+                <button
+                    class="w-100 btn bg-gradient-secondary mb-0"
+                    type="button"
+                    @click="emit('closeModal')"
+                >
+                    {{ t('cancel') }}
+                </button>
+            </div>
+            <div class="col-6 ps-2">
+                <button
+                    class="w-100 btn bg-gradient-danger mb-0"
+                    type="button"
+                    :disabled="form.processing"
+                    @click="destroy"
+                >
+                    {{
+                        t('delete', {
+                            data: t('content'),
+                        })
+                    }}
+                </button>
+            </div>
+        </div>
     </div>
 </template>

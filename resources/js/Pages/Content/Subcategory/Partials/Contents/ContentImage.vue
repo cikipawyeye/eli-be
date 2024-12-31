@@ -16,6 +16,13 @@ const emit = defineEmits<{
 const downloadSuccess = ref(false);
 
 const download = () => {
+    if (
+        !window.confirm(
+            `Do you want to download content: ${props.content?.title}?`,
+        )
+    )
+        return;
+
     const imageUrl = props.content.image_urls?.original;
 
     if (imageUrl) {
@@ -51,7 +58,7 @@ const download = () => {
                     <img
                         :src="
                             content.image_urls?.optimized ??
-                            content.image_urls.original
+                            content.image_urls?.original
                         "
                         :alt="content.title"
                         class="w-100 border-radius-lg shadow-dark"
@@ -89,7 +96,7 @@ const download = () => {
                         <i class="material-symbols-rounded text-lg">edit</i>
                     </button>
                     <button
-                        class="btn btn-link text-primary mb-0 border-0"
+                        class="btn btn-link text-danger mb-0 border-0"
                         data-bs-toggle="tooltip"
                         data-bs-placement="bottom"
                         title="Delete"
