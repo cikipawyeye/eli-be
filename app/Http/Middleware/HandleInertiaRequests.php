@@ -42,7 +42,7 @@ class HandleInertiaRequests extends Middleware
             },
             'auth' => [
                 'user' => $request->user()
-                    ->append('permissions_by_roles')
+                    ?->append('permissions_by_roles')
                     ->makeHidden('permissions', 'roles'),
             ],
         ];
