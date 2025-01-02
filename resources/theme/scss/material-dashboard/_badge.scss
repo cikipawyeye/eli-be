@@ -1,8 +1,44 @@
+@import 'badges/badge';
+@import 'badges/badge-circle';
+@import 'badges/badge-dot';
+@import 'badges/badge-floating';
+
 @each $prop, $value in $theme-colors {
-  .badge.bg-#{$prop} {
-    background: $value;
-  }
+    .badge.bg-#{$prop} {
+        background: $value;
+    }
 }
+
 .badge {
-  text-transform: uppercase;
+    text-transform: uppercase;
+}
+
+.badge.badge-primary {
+    color: var(--bs-primary);
+    background-color: var(--bs-light-primary);
+}
+
+.badge.badge-secondary {
+    color: rgb(98.45, 80.55, 80.55);
+    background-color: var(--bs-light-secondary);
+}
+
+.badge.badge-info {
+    color: var(--bs-info);
+    background-color: var(--bs-light-info);
+}
+
+.badge.badge-success {
+    color: var(--bs-success);
+    background-color: var(--bs-light-success);
+}
+
+.badge.badge-warning {
+    color: var(--bs-warning);
+    background-color: var(--bs-light-warning);
+}
+
+.badge.badge-danger {
+    color: var(--bs-error);
+    background-color: var(--bs-light-error);
 }

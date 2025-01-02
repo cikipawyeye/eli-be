@@ -47,7 +47,7 @@
     "registered_at": "Terdaftar pada",
     "email_verified_at": "Email terverifikasi pada",
     "not_verified": "Belum diverifikasi",
-    "password_confirmed": "Konfirmasi Kata Sandi",
+    "password_confirmation": "Konfirmasi Kata Sandi",
     "new_password": "Kata Sandi Baru",
     "succeeded": "Berhasil",
     "failed": "Gagal",
@@ -61,5 +61,11 @@
     "paid_at": "Dibayar pada",
     "pending": "Menunggu",
     "requires_action": "Memerlukan Tindakan",
-    "awaiting_capture": "Menunggu Penangkapan"
+    "awaiting_capture": "Menunggu Penangkapan",
+    "account": "Akun",
+    "account_type": "Tipe Akun",
+    "account_status": "Status Akun",
+    "date": "Tanggal",
+    "premium": "Premium",
+    "regular": "Reguler"
 }

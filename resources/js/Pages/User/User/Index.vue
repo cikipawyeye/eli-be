@@ -12,7 +12,7 @@ import {
     rowNumber,
 } from '@/Supports/helpers';
 import { Deferred, Head, Link, router, usePage } from '@inertiajs/vue3';
-import { computed, onMounted, PropType, ref } from 'vue';
+import { computed, onMounted, PropType, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import Add from './Partials/Add.vue';
 
@@ -32,6 +32,8 @@ const props = defineProps({
 });
 const { success, error } = usePage<SharedProps>().props.flash;
 const meta = computed(() => props.data?.meta);
+const criteria = computed(() => props.criteria);
+const premium = ref<'true' | 'false' | null>(null);
 const search = ref('');
 const isAdding = ref(false);
 
@@ -39,7 +41,7 @@ const reloadContent = (payload: Record<string, string | number | null>) => {
     router.reload({
         only: ['data'],
         data: {
-            ...props.criteria,
+            ...criteria.value,
             ...payload,
         },
         showProgress: true,
@@ -47,7 +49,7 @@ const reloadContent = (payload: Record<string, string | number | null>) => {
 };
 
 const handleSearch = debounce(() => {
-    reloadContent({ search: search.value });
+    reloadContent({ search: search.value, is_premium: premium.value });
 });
 const handlePagination = ({
     per_page,
@@ -56,6 +58,10 @@ const handlePagination = ({
     per_page: number;
     page: number;
 }) => reloadContent({ page, limit: per_page });
+watch(
+    () => premium.value,
+    () => reloadContent({ is_premium: premium.value, search: search.value }),
+);
 
 onMounted(() => {
     search.value = props.criteria?.search ?? '';
@@ -104,6 +110,22 @@ const closeAddModal = () => {
 
                     <div class="d-flex align-items-center ms-auto gap-3">
                         <InputGroup>
+                            <select
+                                v-model="premium"
+                                class="form-control form-control-sm"
+                            >
+                                <option :value="null">
+                                    All Account Status
+                                </option>
+                                <option value="true">
+                                    {{ t('premium') }}
+                                </option>
+                                <option value="false">
+                                    {{ t('regular') }}
+                                </option>
+                            </select>
+                        </InputGroup>
+                        <InputGroup>
                             <input
                                 v-model="search"
                                 id="search"
@@ -150,6 +172,11 @@ const closeAddModal = () => {
                                 <th
                                     class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2"
                                 >
+                                    {{ t('account_status') }}
+                                </th>
+                                <th
+                                    class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2"
+                                >
                                     {{ t('name') }}
                                 </th>
                                 <th
@@ -170,7 +197,7 @@ const closeAddModal = () => {
                                 <template #fallback>
                                     <tr>
                                         <td
-                                            colspan="6"
+                                            colspan="7"
                                             class="text-secondary py-6 text-center"
                                         >
                                             <span>{{ t('loading_data') }}</span>
@@ -191,6 +218,18 @@ const closeAddModal = () => {
                                                     data?.meta?.from ?? 1,
                                                 )
                                             }}.</span
+                                        >
+                                    </td>
+                                    <td>
+                                        <span
+                                            v-if="user.is_premium"
+                                            class="badge bg-gradient-primary badge-sm"
+                                            >Premium</span
+                                        >
+                                        <span
+                                            v-else
+                                            class="badge badge-secondary badge-sm"
+                                            >Regular</span
                                         >
                                     </td>
                                     <td>
@@ -240,7 +279,7 @@ const closeAddModal = () => {
 
                                 <tr v-if="!data || data?.data.length < 1">
                                     <td
-                                        colspan="6"
+                                        colspan="7"
                                         class="text-secondary py-6 text-center"
                                     >
                                         <span>{{

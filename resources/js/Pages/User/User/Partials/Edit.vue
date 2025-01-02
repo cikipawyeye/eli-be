@@ -26,6 +26,7 @@ const form = useForm<
     email_verified_at: user.value.email_verified_at,
     password: null,
     password_confirmation: null,
+    is_premium: user.value.is_premium,
 });
 
 watch(
@@ -118,6 +119,34 @@ const submit = () => {
                 </InputGroup>
 
                 <InputError :message="form.errors.email_verified_at" />
+            </div>
+
+            <div class="mb-4">
+                <label for="is_premium" class="form-label">{{
+                    t('account_status')
+                }}</label>
+                <div class="mx-1">
+                    <div
+                        class="form-check form-switch d-flex align-items-center mb-3"
+                    >
+                        <input
+                            v-model="form.is_premium"
+                            class="form-check-input"
+                            type="checkbox"
+                            id="is_premium"
+                            name="is_premium"
+                        />
+                        <label
+                            class="form-check-label mb-0 ms-3"
+                            for="is_premium"
+                            >{{
+                                form.is_premium ? t('premium') : t('regular')
+                            }}</label
+                        >
+                    </div>
+                </div>
+
+                <InputError :message="form.errors.is_premium" />
             </div>
 
             <div class="mb-3">

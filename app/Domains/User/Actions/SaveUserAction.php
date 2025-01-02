@@ -31,8 +31,9 @@ class SaveUserAction extends Action
         )->toArray());
 
         $this->model->email_verified_at = $this->data->email_verified_at;
+        $this->model->is_premium = $this->data->is_premium;
 
-        if ($this->data->password) {
+        if (!empty($this->data->password)) {
             $this->model->password = Hash::make($this->data->password);
         }
 

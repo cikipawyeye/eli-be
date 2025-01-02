@@ -12,5 +12,6 @@ class UserCriteria extends Criteria
         public readonly ?int $limit,
         public readonly ?string $search,
         public readonly ?string $role,
+        public readonly ?string $is_premium,
     ) {}
 }

@@ -13,6 +13,7 @@ class UserData extends Data
         public string $name,
         public string $email,
         public string|null $email_verified_at,
+        public bool $is_premium,
         public string|Carbon|null $created_at,
         public ?string $password = null,
     ) {}
@@ -24,6 +25,7 @@ class UserData extends Data
             name: $user->name,
             email: $user->email,
             email_verified_at: $user->email_verified_at,
+            is_premium: $user->is_premium,
             created_at: $user->created_at,
         );
     }

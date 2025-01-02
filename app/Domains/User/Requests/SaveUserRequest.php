@@ -32,6 +32,7 @@ class SaveUserRequest extends FormRequest
             ],
             'password' => [$this->route('user') ? 'nullable' : 'required', 'string', 'min:8', 'confirmed'],
             'email_verified_at' => ['nullable', 'date'],
+            'is_premium' => ['nullable', 'boolean'],
         ];
     }
 }

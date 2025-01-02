@@ -78,6 +78,12 @@ onMounted(() => {
                         {{ user?.name }}
                     </h6>
 
+                    <span
+                        v-if="user.is_premium"
+                        class="badge bg-gradient-primary my-auto"
+                        >Premium</span
+                    >
+
                     <div
                         class="d-flex align-items-center justify-content-end ms-auto flex-wrap gap-3"
                     >
