@@ -2,12 +2,15 @@
 
 namespace App\Domains\User\Controllers;
 
+use App\Domains\User\Actions\DeleteUserAction;
+use App\Domains\User\Actions\SaveUserAction;
 use App\Domains\User\Constants\PermissionConstant as Permission;
 use App\Domains\User\DataTransferObjects\UserData;
 use App\Domains\User\Enums\RoleEnum;
 use App\Domains\User\Models\User;
 use App\Domains\User\Repositories\UserCriteria;
 use App\Domains\User\Repositories\UserRepository;
+use App\Domains\User\Requests\SaveUserRequest;
 use App\Support\Controllers\Controller;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -54,9 +57,13 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(SaveUserRequest $request)
     {
-        //
+        $user = dispatch_sync(new SaveUserAction(new User(), UserData::from($request->validated())));
+
+        return redirect()
+            ->route('users.show', ['user' => $user->id])
+            ->with('success', __('app.stored_data', ['data' => __('app.user')]));
     }
 
     /**
@@ -80,16 +87,24 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, User $user)
+    public function update(SaveUserRequest $request, User $user)
     {
-        //
+        dispatch_sync(new SaveUserAction($user, UserData::from($request->validated())));
+
+        return redirect()
+            ->route('users.show', ['user' => $user->id])
+            ->with('success', __('app.updated_data', ['data' => __('app.user')]));
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(User $user)
+    public function destroy(int $user)
     {
-        //
+        dispatch_sync(new DeleteUserAction($user));
+
+        return redirect()
+            ->route('users.index')
+            ->with('success', __('app.deleted_data', ['data' => __('app.user')]));
     }
 }

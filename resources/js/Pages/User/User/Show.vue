@@ -10,6 +10,8 @@ import {
 import { Head, Link, usePage } from '@inertiajs/vue3';
 import { computed, onMounted, PropType, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
+import Delete from './Partials/Delete.vue';
+import Edit from './Partials/Edit.vue';
 
 const props = defineProps({
     data: {
@@ -93,7 +95,7 @@ onMounted(() => {
                             <i class="fa fa-pencil"></i>
                             <span class="d-none d-md-inline ms-2">{{
                                 t('edit', {
-                                    data: t('subcategory'),
+                                    data: t('user'),
                                 })
                             }}</span>
                         </button>
@@ -111,7 +113,7 @@ onMounted(() => {
                             <i class="fa fa-trash"></i>
                             <span class="d-none d-md-inline ms-2">{{
                                 t('delete', {
-                                    data: t('subcategory'),
+                                    data: t('user'),
                                 })
                             }}</span>
                         </button>
@@ -164,7 +166,7 @@ onMounted(() => {
         id="edit-modal"
         @close="closeEditModal"
     >
-        <!-- <Edit v-if="data" v-on:close-modal="closeEditModal" /> -->
+        <Edit v-on:close-modal="closeEditModal" />
     </Modal>
 
     <Modal
@@ -177,6 +179,6 @@ onMounted(() => {
         id="delete-modal"
         @close="closeDeleteModal"
     >
-        <!-- <Delete v-if="data" v-on:close-modal="closeDeleteModal" /> -->
+        <Delete v-on:close-modal="closeDeleteModal" />
     </Modal>
 </template>

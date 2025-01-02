@@ -14,7 +14,7 @@ class VerifyEmailController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(sprintf('role:%s|%s', RoleEnum::Admin->value, RoleEnum::User->value));
+        $this->middleware(sprintf('role:%s|%s', RoleEnum::Admin->value, RoleEnum::SuperAdmin->value));
     }
 
     /**

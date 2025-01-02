@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import InputGroup from '@/Components/InputGroup.vue';
+import Modal from '@/Components/Modal.vue';
 import Pagination from '@/Components/Pagination.vue';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Permissions } from '@/Permission';
@@ -13,6 +14,7 @@ import {
 import { Deferred, Head, Link, router, usePage } from '@inertiajs/vue3';
 import { computed, onMounted, PropType, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
+import Add from './Partials/Add.vue';
 
 const { t } = useI18n();
 
@@ -31,6 +33,7 @@ const props = defineProps({
 const { success, error } = usePage<SharedProps>().props.flash;
 const meta = computed(() => props.data?.meta);
 const search = ref('');
+const isAdding = ref(false);
 
 const reloadContent = (payload: Record<string, string | number | null>) => {
     router.reload({
@@ -63,6 +66,10 @@ onMounted(() => {
         flashError(error);
     }
 });
+
+const closeAddModal = () => {
+    isAdding.value = false;
+};
 </script>
 
 <template>
@@ -107,25 +114,26 @@ onMounted(() => {
                                 @input="handleSearch"
                             />
                         </InputGroup>
-                        <Link
+                        <div
                             v-if="
                                 (
                                     $page.props?.auth.user
                                         ?.permissions_by_roles ?? []
                                 ).includes(Permissions.ADD_USER)
                             "
-                            :href="route('users.create')"
                         >
                             <button
                                 class="btn btn-primary btn-sm mb-0 text-nowrap"
+                                @click="isAdding = true"
                             >
+                                <i class="fa fa-plus me-2"></i>
                                 {{
-                                    t('create', {
+                                    t('add', {
                                         data: t('user'),
                                     })
                                 }}
-                            </button></Link
-                        >
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -254,4 +262,17 @@ onMounted(() => {
             </div>
         </div>
     </AuthenticatedLayout>
+
+    <Modal
+        v-if="
+            ($page.props?.auth.user?.permissions_by_roles ?? []).includes(
+                Permissions.ADD_USER,
+            )
+        "
+        :show="isAdding"
+        id="add-user-modal"
+        @close="closeAddModal"
+    >
+        <Add v-on:close-modal="closeAddModal" />
+    </Modal>
 </template>

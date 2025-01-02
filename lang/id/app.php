@@ -51,4 +51,6 @@ return [
     'registered_at' => 'Terdaftar pada',
     'email_verified_at' => 'Email terverifikasi pada',
     'not_verified' => 'Belum diverifikasi',
+    'password_confirmed' => 'Konfirmasi Kata Sandi',
+    'new_password' => 'Kata Sandi Baru',
 ];
