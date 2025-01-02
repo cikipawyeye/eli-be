@@ -20,4 +20,10 @@ export const Permissions = {
   EDIT_CONTENT: 'edit_content',
   ADD_CONTENT: 'add_content',
   DELETE_CONTENT: 'delete_content',
+  MANAGE_PAYMENTS: 'manage_payments',
+  BROWSE_PAYMENTS: 'browse_payments',
+  READ_PAYMENT: 'read_payment',
+  EDIT_PAYMENT: 'edit_payment',
+  ADD_PAYMENT: 'add_payment',
+  DELETE_PAYMENT: 'delete_payment',
 };

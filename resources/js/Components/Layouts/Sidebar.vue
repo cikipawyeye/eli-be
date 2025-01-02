@@ -185,6 +185,19 @@ onMounted(() => {
                         }}</span>
                     </Link>
                 </li>
+                <li class="nav-item">
+                    <Link
+                        :class="`nav-link ${sidebarActiveClass('payments')}`"
+                        :href="route('payments.index')"
+                    >
+                        <i class="material-symbols-rounded opacity-5"
+                            >payments</i
+                        >
+                        <span class="nav-link-text ms-1 ps-1">{{
+                            t('payments')
+                        }}</span>
+                    </Link>
+                </li>
 
                 <li class="nav-item mt-3">
                     <h6

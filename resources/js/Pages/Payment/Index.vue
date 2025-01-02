@@ -1,26 +1,24 @@
 <script setup lang="ts">
 import InputGroup from '@/Components/InputGroup.vue';
-import Modal from '@/Components/Modal.vue';
 import Pagination from '@/Components/Pagination.vue';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Permissions } from '@/Permission';
 import {
     debounce,
     flashError,
     flashSuccess,
     formatHumanDateTime,
+    formatMoney,
     rowNumber,
 } from '@/Supports/helpers';
 import { Deferred, Head, Link, router, usePage } from '@inertiajs/vue3';
 import { computed, onMounted, PropType, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
-import Add from './Partials/Add.vue';
 
 const { t } = useI18n();
 
 const props = defineProps({
     data: {
-        type: Object as PropType<PaginatedResponseData<User>>,
+        type: Object as PropType<PaginatedResponseData<Payment>>,
         required: false,
     },
     criteria: {
@@ -33,7 +31,6 @@ const props = defineProps({
 const { success, error } = usePage<SharedProps>().props.flash;
 const meta = computed(() => props.data?.meta);
 const search = ref('');
-const isAdding = ref(false);
 
 const reloadContent = (payload: Record<string, string | number | null>) => {
     router.reload({
@@ -66,14 +63,10 @@ onMounted(() => {
         flashError(error);
     }
 });
-
-const closeAddModal = () => {
-    isAdding.value = false;
-};
 </script>
 
 <template>
-    <Head :title="t('users')" />
+    <Head :title="t('payments')" />
 
     <AuthenticatedLayout>
         <template #header>
@@ -90,7 +83,7 @@ const closeAddModal = () => {
                     class="breadcrumb-item text-dark active text-sm"
                     aria-current="page"
                 >
-                    {{ t('users') }}
+                    {{ t('payments') }}
                 </li>
             </ol>
         </template>
@@ -99,7 +92,7 @@ const closeAddModal = () => {
             <div class="card-header position-relative mt-n4 z-index-2 mx-3 p-0">
                 <div class="shadow-secondary border-radius-lg d-flex gap-4 p-3">
                     <h6 class="text-capitalize my-auto">
-                        {{ t('users') }}
+                        {{ t('payments') }}
                     </h6>
 
                     <div class="d-flex align-items-center ms-auto gap-3">
@@ -113,26 +106,6 @@ const closeAddModal = () => {
                                 @input="handleSearch"
                             />
                         </InputGroup>
-                        <div
-                            v-if="
-                                (
-                                    $page.props?.auth.user
-                                        ?.permissions_by_roles ?? []
-                                ).includes(Permissions.ADD_USER)
-                            "
-                        >
-                            <button
-                                class="btn btn-primary btn-sm mb-0 text-nowrap"
-                                @click="isAdding = true"
-                            >
-                                <i class="fa fa-plus me-2"></i>
-                                {{
-                                    t('add', {
-                                        data: t('user'),
-                                    })
-                                }}
-                            </button>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -150,19 +123,23 @@ const closeAddModal = () => {
                                 <th
                                     class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2"
                                 >
-                                    {{ t('name') }}
+                                    {{ t('user') }}
                                 </th>
                                 <th
                                     class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2"
                                 >
-                                    {{ t('email') }}
+                                    {{ t('jumlah') }}
                                 </th>
                                 <th
                                     class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2"
                                 >
-                                    {{ t('registered_at') }}
+                                    {{ t('status') }}
                                 </th>
-                                <th class="text-secondary opacity-7"></th>
+                                <th
+                                    class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2"
+                                >
+                                    {{ t('date') }}
+                                </th>
                             </tr>
                         </thead>
                         <tbody>
@@ -179,8 +156,8 @@ const closeAddModal = () => {
                                 </template>
 
                                 <tr
-                                    v-for="(user, index) in data?.data"
-                                    :key="user.id"
+                                    v-for="(payment, index) in data?.data"
+                                    :key="payment.id"
                                 >
                                     <td class="ps-4">
                                         <span
@@ -197,44 +174,40 @@ const closeAddModal = () => {
                                         <Link
                                             :href="
                                                 route('users.show', {
-                                                    user: user.id,
+                                                    user: payment.user_id,
                                                 })
                                             "
                                         >
                                             <h6 class="mb-0 text-sm">
-                                                {{ user.name }}
+                                                {{ payment.user?.name ?? '-' }}
                                             </h6>
                                         </Link>
                                     </td>
                                     <td class="text-sm">
                                         <span
                                             class="font-weight-bold mb-0 text-sm"
-                                            >{{ user.email }}</span
+                                            >{{
+                                                formatMoney(payment.amount)
+                                            }}</span
+                                        >
+                                    </td>
+                                    <td class="text-sm">
+                                        <span
+                                            class="font-weight-bold mb-0 text-sm"
+                                            >{{ payment.state }}</span
                                         >
                                     </td>
                                     <td class="text-sm">
                                         <span
                                             class="font-weight-bold mb-0 text-sm"
                                             >{{
-                                                user.created_at
+                                                payment.created_at
                                                     ? formatHumanDateTime(
-                                                          user.created_at,
+                                                          payment.created_at,
                                                       )
                                                     : '-'
                                             }}</span
                                         >
-                                    </td>
-                                    <td class="align-middle">
-                                        <Link
-                                            :href="
-                                                route('users.show', {
-                                                    user: user.id,
-                                                })
-                                            "
-                                            class="text-secondary font-weight-bold text-xs"
-                                        >
-                                            {{ t('detail') }}
-                                        </Link>
                                     </td>
                                 </tr>
 
@@ -261,17 +234,4 @@ const closeAddModal = () => {
             </div>
         </div>
     </AuthenticatedLayout>
-
-    <Modal
-        v-if="
-            ($page.props?.auth.user?.permissions_by_roles ?? []).includes(
-                Permissions.ADD_USER,
-            )
-        "
-        :show="isAdding"
-        id="add-user-modal"
-        @close="closeAddModal"
-    >
-        <Add v-on:close-modal="closeAddModal" />
-    </Modal>
 </template>

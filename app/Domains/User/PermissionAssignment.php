@@ -16,7 +16,6 @@ class PermissionAssignment
     {
         return [
             P::VIEW_HORIZON_DASHBOARD => [R::SuperAdmin],
-
             P::VIEW_ADMIN_DASHBOARD => [
                 R::SuperAdmin,
                 R::Admin,
@@ -98,6 +97,31 @@ class PermissionAssignment
                 R::SuperAdmin,
             ],
             P::DELETE_USER => [
+                R::SuperAdmin,
+            ],
+
+            // Payment
+            P::MANAGE_PAYMENTS => [
+                R::SuperAdmin,
+                R::Admin,
+            ],
+            P::BROWSE_PAYMENTS => [
+                R::SuperAdmin,
+                R::Admin,
+                R::User,
+            ],
+            P::READ_PAYMENT => [
+                R::SuperAdmin,
+                R::Admin,
+                R::User,
+            ],
+            P::EDIT_PAYMENT => [
+                R::SuperAdmin,
+            ],
+            P::ADD_PAYMENT => [
+                R::SuperAdmin,
+            ],
+            P::DELETE_PAYMENT => [
                 R::SuperAdmin,
             ],
         ];

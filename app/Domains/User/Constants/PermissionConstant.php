@@ -34,4 +34,12 @@ class PermissionConstant extends Constant
     public const EDIT_CONTENT = 'edit_content';
     public const ADD_CONTENT = 'add_content';
     public const DELETE_CONTENT = 'delete_content';
+
+    // payment
+    public const MANAGE_PAYMENTS = 'manage_payments';
+    public const BROWSE_PAYMENTS = 'browse_payments';
+    public const READ_PAYMENT = 'read_payment';
+    public const EDIT_PAYMENT = 'edit_payment';
+    public const ADD_PAYMENT = 'add_payment';
+    public const DELETE_PAYMENT = 'delete_payment';
 }

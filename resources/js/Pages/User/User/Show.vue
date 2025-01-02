@@ -88,7 +88,6 @@ onMounted(() => {
                                         ?.permissions_by_roles ?? []
                                 ).includes(Permissions.EDIT_USER)
                             "
-                            :href="route('users.create')"
                             class="btn btn-sm btn-warning mb-0 text-nowrap"
                             @click="isEditing = true"
                         >
@@ -106,7 +105,6 @@ onMounted(() => {
                                         ?.permissions_by_roles ?? []
                                 ).includes(Permissions.DELETE_USER)
                             "
-                            :href="route('users.create')"
                             class="btn btn-sm btn-danger mb-0 text-nowrap"
                             @click="isDeleting = true"
                         >

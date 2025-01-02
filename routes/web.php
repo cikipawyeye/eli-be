@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use App\Domains\Content\Controllers\ContentController;
 use App\Domains\Content\Controllers\SubcategoryController;
+use App\Domains\Payment\Controllers\PaymentController;
 use App\Domains\User\Controllers\ProfileController;
 use App\Domains\User\Controllers\UserController;
 use Illuminate\Foundation\Application;
@@ -33,6 +34,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/contents/{content}/image', [ContentController::class, 'getImage'])->name('contents.image');
 
     Route::resource('/users', UserController::class)->except(['edit', 'create']);
+
+    Route::resource('/payments', PaymentController::class)->except([]);
 });
 
 require __DIR__ . '/auth.php'; // NOSONAR

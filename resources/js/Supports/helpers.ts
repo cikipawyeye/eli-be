@@ -117,3 +117,13 @@ export function parseQueryString({ params }: { params: any }): string {
         .map((key) => key + '=' + params[key])
         .join('&');
 }
+
+export function formatMoney(amount: number, digits = 0) {
+    const formatter = new Intl.NumberFormat('id-ID', {
+        minimumFractionDigits: digits,
+        style: 'currency',
+        currency: 'IDR',
+    });
+
+    return formatter.format(amount);
+}

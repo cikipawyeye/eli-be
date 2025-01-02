@@ -77,7 +77,13 @@ abstract class Repository
 
             $this->query = $this->query->where(function ($query) use ($searchableColumns, $keyword) {
                 foreach ($searchableColumns as $column) {
-                    $query->orWhere($column, 'ilike', $keyword);
+                    if (Str::contains($column, '.')) {
+                        $query->orWhereHas(Str::before($column, '.'), function ($query) use ($column, $keyword) {
+                            $query->where(Str::after($column, '.'), 'ilike', $keyword);
+                        });
+                    } else {
+                        $query->orWhere($column, 'ilike', $keyword);
+                    }
                 }
             });
         }
@@ -109,14 +115,11 @@ abstract class Repository
     {
         $this->orderBy();
 
-        if ($this->select) {
-            $this->query->select($this->select);
-        }
-
         return $this->query
             ->paginate(
                 perPage: $this->limit ?? 25,
                 page: $appends['page'] ?? null,
+                columns: $this->select ?? ['*']
             )
             ->appends($appends);
     }
@@ -128,13 +131,9 @@ abstract class Repository
     {
         $this->orderBy();
 
-        if ($this->select) {
-            $this->query->select($this->select);
-        }
-
         return $this->query
             ->limit($this->limit ?? null)
-            ->get();
+            ->get($this->select ?? ['*']);
     }
 
     protected function orderBy(): static
