@@ -87,23 +87,26 @@ const closeModal = () => {
                     <InputError class="mt-2" :message="form.errors.password" />
                 </div>
 
-                <div class="d-flex justify-content-end mt-4 gap-3">
-                    <button
-                        class="btn btn-secondary mb-0"
-                        type="button"
-                        @click="closeModal"
-                    >
-                        Cancel
-                    </button>
-
-                    <button
-                        class="btn btn-danger mb-0"
-                        type="button"
-                        :disabled="form.processing"
-                        @click="deleteUser"
-                    >
-                        Delete Account
-                    </button>
+                <div class="row mt-5">
+                    <div class="col-6 pe-2">
+                        <button
+                            class="w-100 btn btn-secondary mb-0"
+                            type="button"
+                            @click="closeModal"
+                        >
+                            Cancel
+                        </button>
+                    </div>
+                    <div class="col-6 ps-2">
+                        <button
+                            class="w-100 btn btn-danger mb-0"
+                            type="button"
+                            :disabled="form.processing"
+                            @click="deleteUser"
+                        >
+                            Delete Account
+                        </button>
+                    </div>
                 </div>
             </div>
         </Modal>
