@@ -37,7 +37,7 @@ class PaymentController extends Controller
             'criteria' => Inertia::always($criteria),
             'data' => Inertia::defer(fn() => $this->resource(PaymentData::class, $paginate
                 ? $repository->get()
-                : $repository->paginate($request->all()))),
+                : $repository->paginate($request->all()), 'user')),
         ]);
     }
 
@@ -62,7 +62,9 @@ class PaymentController extends Controller
      */
     public function show(Payment $payment)
     {
-        //
+        return Inertia::render('Payment/Show', [
+            'data' => PaymentData::fromModel($payment)->include('user'),
+        ]);
     }
 
     /**

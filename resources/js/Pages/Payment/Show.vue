@@ -1,39 +1,28 @@
 <script setup lang="ts">
-import Modal from '@/Components/Modal.vue';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Permissions } from '@/Permission';
 import {
     flashError,
     flashSuccess,
     formatHumanDateTime,
+    formatMoney,
 } from '@/Supports/helpers';
 import { Head, Link, usePage } from '@inertiajs/vue3';
 import { computed, onMounted, PropType, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
-import Delete from './Partials/Delete.vue';
-import Edit from './Partials/Edit.vue';
-import PaymentList from './Partials/Payment/PaymentList.vue';
 
 const props = defineProps({
     data: {
-        type: Object as PropType<User>,
+        type: Object as PropType<Payment>,
         required: true,
     },
 });
-const user = computed(() => props.data);
+const payment = computed(() => props.data);
 const { success, error } = usePage<SharedProps>().props.flash;
 const isEditing = ref(false);
 const isDeleting = ref(false);
 
 const { t } = useI18n();
-
-const closeEditModal = () => {
-    isEditing.value = false;
-};
-
-const closeDeleteModal = () => {
-    isDeleting.value = false;
-};
 
 onMounted(() => {
     if (success) {
@@ -47,7 +36,7 @@ onMounted(() => {
 </script>
 
 <template>
-    <Head :title="data?.name" />
+    <Head :title="t('payment')" />
 
     <AuthenticatedLayout>
         <template #header>
@@ -60,12 +49,12 @@ onMounted(() => {
                         <i class="fa fa-house"></i>
                     </Link>
                 </li>
-                <li class="breadcrumb-item text-sm">{{ t('users') }}</li>
+                <li class="breadcrumb-item text-sm">{{ t('payments') }}</li>
                 <li
                     class="breadcrumb-item text-dark active text-sm"
                     aria-current="page"
                 >
-                    {{ data?.name }}
+                    {{ data?.id }}
                 </li>
             </ol>
         </template>
@@ -76,14 +65,8 @@ onMounted(() => {
                     class="shadow-secondary border-radius-lg d-flex flex-wrap gap-4 p-3"
                 >
                     <h6 class="text-capitalize my-auto">
-                        {{ user?.name }}
+                        {{ t('payment') }}
                     </h6>
-
-                    <span
-                        v-if="user.is_premium"
-                        class="badge bg-gradient-primary my-auto"
-                        >Premium</span
-                    >
 
                     <div
                         class="d-flex align-items-center justify-content-end ms-auto flex-wrap gap-3"
@@ -93,7 +76,7 @@ onMounted(() => {
                                 (
                                     $page.props?.auth.user
                                         ?.permissions_by_roles ?? []
-                                ).includes(Permissions.EDIT_USER)
+                                ).includes(Permissions.EDIT_PAYMENT)
                             "
                             class="btn btn-sm btn-warning mb-0 text-nowrap"
                             @click="isEditing = true"
@@ -101,7 +84,7 @@ onMounted(() => {
                             <i class="fa fa-pencil"></i>
                             <span class="d-none d-md-inline ms-2">{{
                                 t('edit', {
-                                    data: t('user'),
+                                    data: t('payment'),
                                 })
                             }}</span>
                         </button>
@@ -110,7 +93,7 @@ onMounted(() => {
                                 (
                                     $page.props?.auth.user
                                         ?.permissions_by_roles ?? []
-                                ).includes(Permissions.DELETE_USER)
+                                ).includes(Permissions.DELETE_PAYMENT)
                             "
                             class="btn btn-sm btn-danger mb-0 text-nowrap"
                             @click="isDeleting = true"
@@ -118,7 +101,7 @@ onMounted(() => {
                             <i class="fa fa-trash"></i>
                             <span class="d-none d-md-inline ms-2">{{
                                 t('delete', {
-                                    data: t('user'),
+                                    data: t('payment'),
                                 })
                             }}</span>
                         </button>
@@ -129,63 +112,45 @@ onMounted(() => {
             <div class="card-body">
                 <ul class="list-group m-4">
                     <li class="list-group-item border-0 ps-0 pt-0 text-sm">
-                        <strong class="text-dark">{{ t('name') }}:</strong>
-                        &nbsp;
-                        {{ user.name }}
-                    </li>
-                    <li class="list-group-item border-0 ps-0 text-sm">
-                        <strong class="text-dark">{{ t('email') }}:</strong>
-                        &nbsp;
-                        {{ user.email }}
-                    </li>
-                    <li class="list-group-item border-0 ps-0 text-sm">
-                        <strong class="text-dark"
-                            >{{ t('email_verified_at') }}:</strong
-                        >
-                        &nbsp;
-                        {{ user.email_verified_at ?? t('not_verified') }}
-                    </li>
-                    <li class="list-group-item border-0 ps-0 text-sm">
-                        <strong class="text-dark"
-                            >{{ t('registered_at') }}:</strong
-                        >
+                        <strong class="text-dark">{{ t('date') }}:</strong>
                         &nbsp;
                         {{
-                            user.created_at
-                                ? formatHumanDateTime(user.created_at)
+                            payment.created_at
+                                ? formatHumanDateTime(payment.created_at)
                                 : ''
                         }}
+                    </li>
+                    <li class="list-group-item border-0 ps-0 text-sm">
+                        <strong class="text-dark">{{ t('amount') }}:</strong>
+                        &nbsp;
+                        {{ formatMoney(payment.amount) }}
+                    </li>
+                    <li class="list-group-item border-0 ps-0 text-sm">
+                        <strong class="text-dark"
+                            >{{ t('payment_method') }}:</strong
+                        >
+                        &nbsp;
+                        {{ payment.payment_method_type }}
+                    </li>
+                    <li class="list-group-item border-0 ps-0 text-sm">
+                        <strong class="text-dark">{{ t('status') }}:</strong>
+                        &nbsp;
+                        <span
+                            v-if="payment.state === 'SUCCEEDED'"
+                            class="badge bg-gradient-primary badge-sm"
+                            >{{ t('succeeded') }}</span
+                        >
+                        <span
+                            v-else-if="payment.state === 'FAILED'"
+                            class="badge badge-warning badge-sm"
+                            >{{ t('failed') }}</span
+                        >
+                        <span v-else class="badge badge-secondary badge-sm">{{
+                            t('pending')
+                        }}</span>
                     </li>
                 </ul>
             </div>
         </div>
-
-        <PaymentList />
     </AuthenticatedLayout>
-
-    <Modal
-        v-if="
-            ($page.props?.auth.user?.permissions_by_roles ?? []).includes(
-                Permissions.EDIT_USER,
-            )
-        "
-        :show="isEditing"
-        id="edit-modal"
-        @close="closeEditModal"
-    >
-        <Edit v-on:close-modal="closeEditModal" />
-    </Modal>
-
-    <Modal
-        v-if="
-            ($page.props?.auth.user?.permissions_by_roles ?? []).includes(
-                Permissions.DELETE_USER,
-            )
-        "
-        :show="isDeleting"
-        id="delete-modal"
-        @close="closeDeleteModal"
-    >
-        <Delete v-on:close-modal="closeDeleteModal" />
-    </Modal>
 </template>

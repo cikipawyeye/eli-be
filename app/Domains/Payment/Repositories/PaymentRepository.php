@@ -13,7 +13,7 @@ class PaymentRepository extends Repository
     /** @var array<string>|null */
     protected ?array $searchableColumns = ['user.name'];
 
-    protected ?array $with = ['user.name'];
+    protected ?array $with = ['user:id,name'];
 
     public function userId(?int $id): self
     {

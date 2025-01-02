@@ -72,4 +72,8 @@ return [
     'date' => 'Tanggal',
     'premium' => 'Premium',
     'regular' => 'Reguler',
+    'payment_history' => 'Riwayat Pembayaran',
+    'payment_detail' => 'Detail Pembayaran',
+    'payment_status' => 'Status Pembayaran',
+    'payment_amount' => 'Jumlah Pembayaran',
 ];

@@ -2,6 +2,7 @@
 
 use App\Domains\Payment\Enums\PaymentMethodType;
 use App\Domains\Payment\States\Payment\Failed;
+use App\Domains\Payment\States\Payment\Pending;
 use App\Domains\Payment\States\Payment\Succeeded;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -26,7 +27,7 @@ return new class extends Migration
             $table->string('x_payment_method_id')->nullable();
             $table->integer('amount');
             $table->enum('payment_method_type', PaymentMethodType::toArray());
-            $table->enum('state', [Succeeded::$name, Failed::$name]);
+            $table->enum('state', [Pending::$name, Succeeded::$name, Failed::$name]);
             $table->timestamps();
             $table->softDeletes();
 

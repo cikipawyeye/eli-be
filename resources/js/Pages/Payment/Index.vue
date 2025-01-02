@@ -140,6 +140,7 @@ onMounted(() => {
                                 >
                                     {{ t('date') }}
                                 </th>
+                                <th class="text-secondary opacity-7"></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -147,7 +148,7 @@ onMounted(() => {
                                 <template #fallback>
                                     <tr>
                                         <td
-                                            colspan="6"
+                                            colspan="7"
                                             class="text-secondary py-6 text-center"
                                         >
                                             <span>{{ t('loading_data') }}</span>
@@ -193,8 +194,21 @@ onMounted(() => {
                                     </td>
                                     <td class="text-sm">
                                         <span
-                                            class="font-weight-bold mb-0 text-sm"
-                                            >{{ payment.state }}</span
+                                            v-if="payment.state === 'SUCCEEDED'"
+                                            class="badge bg-gradient-primary"
+                                            >{{ t('succeeded') }}</span
+                                        >
+                                        <span
+                                            v-else-if="
+                                                payment.state === 'FAILED'
+                                            "
+                                            class="badge badge-warning"
+                                            >{{ t('failed') }}</span
+                                        >
+                                        <span
+                                            v-else
+                                            class="badge badge-secondary"
+                                            >{{ t('pending') }}</span
                                         >
                                     </td>
                                     <td class="text-sm">
@@ -209,11 +223,23 @@ onMounted(() => {
                                             }}</span
                                         >
                                     </td>
+                                    <td class="align-middle">
+                                        <Link
+                                            :href="
+                                                route('payments.show', {
+                                                    payment: payment.id,
+                                                })
+                                            "
+                                            class="text-secondary font-weight-bold text-xs"
+                                        >
+                                            {{ t('detail') }}
+                                        </Link>
+                                    </td>
                                 </tr>
 
                                 <tr v-if="!data || data?.data.length < 1">
                                     <td
-                                        colspan="6"
+                                        colspan="7"
                                         class="text-secondary py-6 text-center"
                                     >
                                         <span>{{

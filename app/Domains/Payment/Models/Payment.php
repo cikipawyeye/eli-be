@@ -14,6 +14,13 @@ class Payment extends Model
 {
     use HasStates;
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = ['x_payment_id', 'x_payment_request_id', 'x_payment_method_id', 'amount', 'payment_method_type'];
+
     protected $casts = [
         'state' => PaymentState::class,
     ];

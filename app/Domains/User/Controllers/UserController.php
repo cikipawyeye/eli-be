@@ -2,6 +2,9 @@
 
 namespace App\Domains\User\Controllers;
 
+use App\Domains\Payment\Actions\StorePaymentAction;
+use App\Domains\Payment\DataTransferObjects\PaymentData;
+use App\Domains\Payment\Requests\StorePaymentRequest;
 use App\Domains\User\Actions\DeleteUserAction;
 use App\Domains\User\Actions\SaveUserAction;
 use App\Domains\User\Constants\PermissionConstant as Permission;
@@ -65,6 +68,7 @@ class UserController extends Controller
     {
         return Inertia::render('User/User/Show', [
             'data' => fn() => UserData::fromModel($user),
+            'payments' => Inertia::defer(fn() => $this->resource(PaymentData::class, $user->payments()->orderByDesc('created_at')->get())),
         ]);
     }
 
@@ -90,5 +94,17 @@ class UserController extends Controller
         return redirect()
             ->route('users.index')
             ->with('success', __('app.deleted_data', ['data' => __('app.user')]));
+    }
+
+    public function addPayment(StorePaymentRequest $request, int $user)
+    {
+        dispatch_sync(new StorePaymentAction(PaymentData::from([
+            ...$request->validated(),
+            'user_id' => $user,
+        ])));
+
+        return redirect()
+            ->route('users.show', ['user' => $user])
+            ->with('success', __('app.stored_data', ['data' => __('app.payment')]));
     }
 }
