@@ -21,8 +21,8 @@ class UserController extends Controller
     {
         $this->middleware(sprintf('permission:%s', Permission::BROWSE_USERS))->only('index');
         $this->middleware(sprintf('permission:%s', Permission::READ_USER))->only('show');
-        $this->middleware(sprintf('permission:%s', Permission::ADD_USER))->only('store', 'create');
-        $this->middleware(sprintf('permission:%s', Permission::EDIT_USER))->only('update', 'edit');
+        $this->middleware(sprintf('permission:%s', Permission::ADD_USER))->only('store');
+        $this->middleware(sprintf('permission:%s', Permission::EDIT_USER))->only('update');
         $this->middleware(sprintf('permission:%s', Permission::DELETE_USER))->only('destroy');
     }
 
@@ -47,14 +47,6 @@ class UserController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(SaveUserRequest $request)
@@ -74,14 +66,6 @@ class UserController extends Controller
         return Inertia::render('User/User/Show', [
             'data' => fn() => UserData::fromModel($user),
         ]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(User $user)
-    {
-        //
     }
 
     /**

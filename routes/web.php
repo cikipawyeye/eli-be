@@ -32,7 +32,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('/contents', ContentController::class)->only(['store', 'update', 'destroy']);
     Route::get('/contents/{content}/image', [ContentController::class, 'getImage'])->name('contents.image');
 
-    Route::resource('/users', UserController::class);
+    Route::resource('/users', UserController::class)->except(['edit', 'create']);
 });
 
 require __DIR__ . '/auth.php'; // NOSONAR
