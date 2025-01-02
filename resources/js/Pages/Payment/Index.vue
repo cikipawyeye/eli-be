@@ -128,7 +128,7 @@ onMounted(() => {
                                 <th
                                     class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2"
                                 >
-                                    {{ t('jumlah') }}
+                                    {{ t('amount') }}
                                 </th>
                                 <th
                                     class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2"

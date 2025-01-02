@@ -25,7 +25,7 @@ const sidebarActiveClass = (
         : true;
 
     return isRouteActive && areParamsMatching
-        ? `${sidebarColor.value} active`
+        ? `${sidebarColor.value} text-white active`
         : color.value;
 };
 
@@ -135,7 +135,9 @@ onMounted(() => {
                                         })
                                     "
                                 >
-                                    <span class="sidenav-mini-icon"> - </span>
+                                    <span class="sidenav-mini-icon">
+                                        &#x2022;
+                                    </span>
                                     <span class="sidenav-normal ms-1 ps-1">
                                         {{ t('motivation') }}
                                     </span>
@@ -165,7 +167,9 @@ onMounted(() => {
                                         })
                                     "
                                 >
-                                    <span class="sidenav-mini-icon"> - </span>
+                                    <span class="sidenav-mini-icon">
+                                        &#x2022;
+                                    </span>
                                     <span class="sidenav-normal ms-1 ps-1">
                                         {{ t('reminder') }}
                                     </span>

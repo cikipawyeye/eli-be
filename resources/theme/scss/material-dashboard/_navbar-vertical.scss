@@ -393,6 +393,17 @@
       }
     }
   }
+
+  .navbar-nav > .nav-item .nav-link {
+    & + .collapse,
+    & + .collapsing{
+      .nav-item{
+        .nav-link:not(.active) {
+          font-weight: 400 !important;
+        }
+      }
+    }
+  }
 }
 
 .navbar-main {
