@@ -5,6 +5,7 @@ declare(strict_types=1);
 use App\Domains\Content\Controllers\ContentController;
 use App\Domains\Content\Controllers\SubcategoryController;
 use App\Domains\User\Controllers\ProfileController;
+use App\Domains\User\Controllers\UserController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -30,6 +31,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('/subcategories', SubcategoryController::class)->except(['edit']);
     Route::resource('/contents', ContentController::class)->only(['store', 'update', 'destroy']);
     Route::get('/contents/{content}/image', [ContentController::class, 'getImage'])->name('contents.image');
+
+    Route::resource('/users', UserController::class);
 });
 
 require __DIR__ . '/auth.php'; // NOSONAR

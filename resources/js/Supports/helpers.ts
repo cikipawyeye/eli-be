@@ -1,3 +1,5 @@
+import { format } from 'date-fns';
+import { id } from 'date-fns/locale';
 import { TYPE, useToast } from 'vue-toastification';
 import { ToastOptions } from 'vue-toastification/dist/types/types';
 
@@ -87,4 +89,31 @@ export function flashError(
         rtl: false,
         ...config,
     });
+}
+
+export function textEllipsis(text: string, maxLength: number = 40): string {
+    return text.length <= maxLength
+        ? text
+        : text.substring(0, maxLength) + '...';
+}
+
+export function formatHumanDate(
+    date: string | number,
+    dateFormat = 'dd LLL yyyy',
+) {
+    return format(new Date(date), dateFormat, { locale: id });
+}
+
+export function formatHumanDateTime(
+    date: string | number,
+    dateFormat = 'dd LLL yyyy, hh:mm',
+) {
+    return format(new Date(date), dateFormat, { locale: id });
+}
+
+export function parseQueryString({ params }: { params: any }): string {
+    return Object.keys(params)
+        .filter((key) => null !== params[key])
+        .map((key) => key + '=' + params[key])
+        .join('&');
 }

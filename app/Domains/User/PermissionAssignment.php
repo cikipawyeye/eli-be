@@ -22,6 +22,7 @@ class PermissionAssignment
                 R::Admin,
             ],
 
+            // Subcategory
             P::MANAGE_SUBCATEGORIES => [
                 R::SuperAdmin,
                 R::Admin,
@@ -49,6 +50,7 @@ class PermissionAssignment
                 R::Admin,
             ],
 
+            // Content
             P::MANAGE_CONTENTS => [
                 R::SuperAdmin,
                 R::Admin,
@@ -74,6 +76,29 @@ class PermissionAssignment
             P::DELETE_CONTENT => [
                 R::SuperAdmin,
                 R::Admin,
+            ],
+
+            // User
+            P::MANAGE_USERS => [
+                R::SuperAdmin,
+                R::Admin,
+            ],
+            P::BROWSE_USERS => [
+                R::SuperAdmin,
+                R::Admin,
+            ],
+            P::READ_USER => [
+                R::SuperAdmin,
+                R::Admin,
+            ],
+            P::EDIT_USER => [
+                R::SuperAdmin,
+            ],
+            P::ADD_USER => [
+                R::SuperAdmin,
+            ],
+            P::DELETE_USER => [
+                R::SuperAdmin,
             ],
         ];
     }
