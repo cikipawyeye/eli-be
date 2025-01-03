@@ -79,4 +79,6 @@ return [
     'subcategory_id' => 'ID Sub-Kategori',
     'premium_content' => 'Konten Premium',
     'non_premium_content' => 'Konten Non-Premium',
+    'current_password' => 'Kata Sandi Saat Ini',
+    'new_password' => 'Kata Sandi Baru',
 ];

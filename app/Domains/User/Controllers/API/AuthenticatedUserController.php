@@ -2,14 +2,22 @@
 
 namespace App\Domains\User\Controllers\API;
 
+use App\Domains\User\Enums\RoleEnum;
+use App\Domains\User\Requests\API\ChangePasswordRequest;
 use App\Domains\User\Requests\API\LoginRequest;
 use App\Support\Controllers\ApiController;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class AuthenticatedUserController extends ApiController
 {
+    public function __construct()
+    {
+        $this->middleware(sprintf('role:%s', RoleEnum::User->value))->only('changePassword');
+    }
+
     public function login(LoginRequest $request): JsonResponse
     {
         $request->authenticate();
@@ -28,5 +36,14 @@ class AuthenticatedUserController extends ApiController
         Auth::guard('web')->logout();
 
         return $this->sendJsonResponse(message: 'User logged out successfully');
+    }
+
+    public function changePassword(ChangePasswordRequest $request): JsonResponse
+    {
+        $request->user()->update([
+            'password' => Hash::make($request->get('password')),
+        ]);
+
+        return $this->sendJsonResponse(message: 'Password changed successfully');
     }
 }

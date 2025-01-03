@@ -21,6 +21,8 @@ Route::prefix('v1')->name('api.')->middleware('auth:sanctum')->group(function ()
 
     Route::post('logout', [AuthenticatedUserController::class, 'logout'])->name('logout');
 
+    Route::post('change-password', [AuthenticatedUserController::class, 'changePassword'])->name('change-password');
+
     Route::get('/profile', [ProfileController::class, 'show'])->name('user.profile');
 
     Route::apiResource('/{category}/subcategories', SubcategoryController::class)->only('index', 'show');
