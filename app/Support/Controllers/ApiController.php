@@ -44,12 +44,12 @@ abstract class ApiController extends \Illuminate\Routing\Controller
     }
 
     /**
-     * Send resource
+     * Send data resource
      *
      * @param class-string                                                                                                      $dataClass
      * @param \Illuminate\Support\Collection|\Illuminate\Pagination\LengthAwarePaginator|\Illuminate\Pagination\CursorPaginator $items
      */
-    protected function resource(string $dataClass, $items, $includes = []): \Illuminate\Http\JsonResponse
+    protected function resource(string $dataClass, $items, ...$includes): \Illuminate\Http\JsonResponse
     {
         return $this->sendJsonResponse(
             ResourceTransformer::transform(

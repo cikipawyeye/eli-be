@@ -19,10 +19,20 @@ return new class extends Migration
             $table->string('email');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->date('birth_date')->nullable();
+            $table->string('phone_number', 20)->nullable();
+            $table->char('city_code', 4)->nullable();
+            $table->string('job', 50)->nullable();
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();
+
             $table->unique(['email', 'deleted_at']);
+            $table->foreign('city_code')
+                ->references('code')
+                ->on(config('laravolt.indonesia.table_prefix') . 'cities')
+                ->onUpdate('cascade')
+                ->onDelete('set null');
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {

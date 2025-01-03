@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Domains\User\Requests\Auth;
+namespace App\Domains\User\Requests\API;
 
 use App\Domains\User\Enums\RoleEnum;
 use App\Domains\User\Models\User;
@@ -15,14 +15,6 @@ use Illuminate\Validation\ValidationException;
 
 class LoginRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
-    public function authorize(): bool
-    {
-        return true;
-    }
-
     /**
      * Get the validation rules that apply to the request.
      *
@@ -47,8 +39,7 @@ class LoginRequest extends FormRequest
 
         if (! Auth::attemptWhen(
             $this->only('email', 'password'),
-            fn(User $user) => $user
-                ->hasAnyRole(RoleEnum::Admin->value, RoleEnum::SuperAdmin->value),
+            fn(User $user) => $user->hasRole(RoleEnum::User->value),
             $this->boolean('remember')
         )) {
             RateLimiter::hit($this->throttleKey());
