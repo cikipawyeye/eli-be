@@ -16,8 +16,9 @@ class UpdateContentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => ['required', 'string', 'max:255'],
+            'title' => ['required', 'string', 'max:100'],
             'image' => ['nullable', 'image', 'max:4096'],
+            'premium' => ['required', 'boolean'],
         ];
     }
 }

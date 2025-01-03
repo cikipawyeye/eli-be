@@ -4,10 +4,10 @@ import Modal from '@/Components/Modal.vue';
 import Pagination from '@/Components/Pagination.vue';
 import { debounce } from '@/Supports/helpers';
 import { Deferred, router, usePage } from '@inertiajs/vue3';
-import { computed, ref } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import AddContentForm from './AddContentForm.vue';
-import ContentImage from './ContentImage.vue';
+import ContentCard from './ContentCard.vue';
 import DeleteContent from './DeleteContent.vue';
 import EditContentForm from './EditContentForm.vue';
 
@@ -28,8 +28,9 @@ const isAdding = ref(false);
 const isEditing = ref(false);
 const isDeleting = ref(false);
 const selectedContent = ref<Content | null>(null);
+const type = ref<'premium_content' | 'non_premium_content' | null>(null);
 
-const reloadContents = (payload: Record<string, string | number>) => {
+const reloadContents = (payload: Record<string, string | number | null>) => {
     router.reload({
         only: ['contents', 'content_criteria'],
         data: {
@@ -42,7 +43,7 @@ const reloadContents = (payload: Record<string, string | number>) => {
     });
 };
 const handleSearch = debounce(() =>
-    reloadContents({ search: search.value, page: 1 }),
+    reloadContents({ type: type.value, search: search.value, page: 1 }),
 );
 const handlePagination = ({
     per_page,
@@ -53,6 +54,10 @@ const handlePagination = ({
 }) => {
     reloadContents({ limit: per_page, page });
 };
+watch(
+    () => type.value,
+    () => reloadContents({ type: type.value, search: search.value, page: 1 }),
+);
 
 const closeAddModal = () => {
     isAdding.value = false;
@@ -82,7 +87,7 @@ const closeDeleteModal = () => {
 <template>
     <div>
         <div class="d-flex align-items-center my-2 ms-auto flex-wrap gap-3">
-            <div>
+            <div class="d-flex gap-3">
                 <InputGroup>
                     <input
                         v-model="search"
@@ -96,6 +101,17 @@ const closeDeleteModal = () => {
                         "
                         @input="handleSearch"
                     />
+                </InputGroup>
+                <InputGroup>
+                    <select v-model="type" class="form-control">
+                        <option :value="null">All Content Type</option>
+                        <option value="premium_content">
+                            {{ t('premium_content') }}
+                        </option>
+                        <option value="non_premium_content">
+                            {{ t('non_premium_content') }}
+                        </option>
+                    </select>
                 </InputGroup>
             </div>
             <button
@@ -124,9 +140,9 @@ const closeDeleteModal = () => {
                 <div
                     v-for="content in data?.data"
                     :key="content.id"
-                    class="col-6 col-md-4 col-xl-3"
+                    class="col-6 col-md-4 col-xl-3 d-flex align-items-stretch"
                 >
-                    <ContentImage
+                    <ContentCard
                         :content="content"
                         v-on:edit="editContent"
                         v-on:destroy="deleteContent"

@@ -77,4 +77,6 @@ return [
     'payment_status' => 'Status Pembayaran',
     'payment_amount' => 'Jumlah Pembayaran',
     'subcategory_id' => 'ID Sub-Kategori',
+    'premium_content' => 'Konten Premium',
+    'non_premium_content' => 'Konten Non-Premium',
 ];

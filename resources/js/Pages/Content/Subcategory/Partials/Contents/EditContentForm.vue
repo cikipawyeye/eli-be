@@ -24,6 +24,7 @@ const form = useForm<{ image: File | null } & Content>({
     image: null,
     title: selected.value?.title ?? '',
     subcategory_id: selected.value?.subcategory_id ?? 0,
+    premium: selected.value?.premium ?? true,
 });
 
 const submit = () => {
@@ -99,6 +100,21 @@ watch(
                 />
 
                 <InputError :message="form.errors.image" />
+            </div>
+            <div class="mb-3">
+                <div class="form-check ms-0 ps-0">
+                    <input
+                        v-model="form.premium"
+                        class="form-check-input me-2"
+                        type="checkbox"
+                        value=""
+                        id="premium"
+                    />
+                    <label class="custom-control-label" for="premium"
+                        >Premium user only</label
+                    >
+                </div>
+                <InputError :message="form.errors.premium" />
             </div>
         </div>
 

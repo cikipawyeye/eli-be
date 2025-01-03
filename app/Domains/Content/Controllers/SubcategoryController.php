@@ -9,8 +9,6 @@ use App\Domains\Content\DataTransferObject\ContentData;
 use App\Domains\Content\DataTransferObject\SubcategoryData;
 use App\Domains\Content\Enums\ContentCategoryEnum;
 use App\Domains\Content\Models\Subcategory;
-use App\Domains\Content\Repositories\ContentCriteria;
-use App\Domains\Content\Repositories\ContentRepository;
 use App\Domains\Content\Repositories\SubcategoryCriteria;
 use App\Domains\Content\Repositories\SubcategoryRepository;
 use App\Domains\Content\Requests\SaveSubcategoryRequest;

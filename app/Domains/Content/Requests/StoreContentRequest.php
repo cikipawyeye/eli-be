@@ -17,8 +17,9 @@ class StoreContentRequest extends FormRequest
     {
         return [
             'subcategory_id' => ['required', 'integer', 'exists:subcategories,id'],
-            'title' => ['required', 'string', 'max:255'],
+            'title' => ['required', 'string', 'max:100'],
             'image' => ['required', 'image', 'max:4096'],
+            'premium' => ['required', 'boolean'],
         ];
     }
 }
