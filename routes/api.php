@@ -1,5 +1,7 @@
 <?php
 
+use App\Domains\Content\Controllers\API\ContentController;
+use App\Domains\Content\Controllers\API\SubcategoryController;
 use App\Domains\User\Controllers\API\AuthenticatedUserController;
 use App\Domains\User\Controllers\API\ProfileController;
 use App\Domains\User\Controllers\API\RegisterController;
@@ -20,4 +22,7 @@ Route::prefix('v1')->name('api.')->middleware('auth:sanctum')->group(function ()
     Route::post('logout', [AuthenticatedUserController::class, 'logout'])->name('logout');
 
     Route::get('/profile', [ProfileController::class, 'show'])->name('user.profile');
+
+    Route::apiResource('/{category}/subcategories', SubcategoryController::class)->only('index', 'show');
+    Route::apiResource('/contents', ContentController::class)->only('index', 'show');
 });

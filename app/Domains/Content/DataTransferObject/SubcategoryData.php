@@ -17,7 +17,8 @@ class SubcategoryData extends Data
         public readonly string|ContentCategoryEnum|null $category,
         public readonly ?bool $is_active,
         public readonly Lazy|int|null $contents_count,
-    ) {}
+        public readonly Lazy|string|null $category_name,
+        ) {}
 
     public static function fromModel(Subcategory $model): self
     {
@@ -27,6 +28,7 @@ class SubcategoryData extends Data
             category: $model->category,
             is_active: $model->is_active,
             contents_count: Lazy::create(fn() => $model->contents_count),
+            category_name: Lazy::create(fn() => $model->category == 0 ? __('app.motivation') : __('app.reminder')),
         );
     }
 }

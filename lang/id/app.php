@@ -76,4 +76,5 @@ return [
     'payment_detail' => 'Detail Pembayaran',
     'payment_status' => 'Status Pembayaran',
     'payment_amount' => 'Jumlah Pembayaran',
+    'subcategory_id' => 'ID Sub-Kategori',
 ];

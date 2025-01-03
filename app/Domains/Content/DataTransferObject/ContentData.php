@@ -18,6 +18,7 @@ class ContentData extends Data
         public readonly string|Carbon|null $created_at,
         public readonly string|Carbon|null $updated_at,
         public readonly Lazy|array|null $image_urls,
+        public readonly Lazy|SubcategoryData|null $subcategory,
     ) {}
 
     public static function fromModel(Content $model): self
@@ -29,6 +30,7 @@ class ContentData extends Data
             created_at: $model->created_at,
             updated_at: $model->updated_at,
             image_urls: Lazy::create(fn() => $model->imageUrls),
+            subcategory: Lazy::create(fn() => SubcategoryData::fromModel($model->subcategory)),
         );
     }
 }

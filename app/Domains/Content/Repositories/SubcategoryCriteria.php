@@ -13,5 +13,6 @@ class SubcategoryCriteria extends Criteria
         public readonly ?string $search,
         public readonly ?int $category,
         public readonly ?string $type,
+        public readonly ?string $active,
     ) {}
 }
