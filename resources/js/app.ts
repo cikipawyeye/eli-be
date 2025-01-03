@@ -1,4 +1,3 @@
-// import '../css/app.css';
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
 import 'filepond/dist/filepond.min.css';
 import 'vue-toastification/dist/index.css';

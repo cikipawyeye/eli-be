@@ -46,46 +46,18 @@ const submit = () => {
                                     class="bg-gradient-dark shadow-dark border-radius-lg py-3 pe-1"
                                 >
                                     <h4
-                                        class="font-weight-bolder mb-0 mt-2 text-center text-white"
+                                        class="font-weight-bolder mt-2 text-center text-white"
                                     >
                                         Sign in
                                     </h4>
-                                    <div class="row mt-3">
-                                        <div class="col-2 ms-auto text-center">
-                                            <a
-                                                class="btn btn-link px-3"
-                                                href="javascript:;"
-                                            >
-                                                <i
-                                                    class="fa fa-facebook text-lg text-white"
-                                                ></i>
-                                            </a>
-                                        </div>
-                                        <div class="col-2 px-1 text-center">
-                                            <a
-                                                class="btn btn-link px-3"
-                                                href="javascript:;"
-                                            >
-                                                <i
-                                                    class="fa fa-github text-lg text-white"
-                                                ></i>
-                                            </a>
-                                        </div>
-                                        <div class="col-2 me-auto text-center">
-                                            <a
-                                                class="btn btn-link px-3"
-                                                href="javascript:;"
-                                            >
-                                                <i
-                                                    class="fa fa-google text-lg text-white"
-                                                ></i>
-                                            </a>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                             <div class="card-body">
-                                <div v-if="status" class="mb-4">
+                                <div
+                                    v-if="status"
+                                    class="alert alert-warning text-sm text-white"
+                                    role="alert"
+                                >
                                     {{ status }}
                                 </div>
 
@@ -93,7 +65,7 @@ const submit = () => {
                                     @submit.prevent="submit"
                                     class="text-start"
                                 >
-                                    <div class="mb-3">
+                                    <div class="my-3">
                                         <InputGroup
                                             :is-invalid="!!form.errors.email"
                                         >
@@ -182,8 +154,7 @@ const submit = () => {
                                 class="copyright text-lg-start text-center text-sm text-white"
                             >
                                 ©
-                                {{ new Date().getFullYear() }}
-                                , made with
+                                {{ new Date().getFullYear() }}, made with
                                 <i class="fa fa-heart" aria-hidden="true"></i>
                                 by
                                 <a

@@ -262,16 +262,25 @@
         background-position: right $input-height-inner-quarter center;
         background-size: $input-height-inner-half $input-height-inner-half;
       }
-      &.is-focused,
-      &.is-filled {
+      &.is-focused {
         .form-label + .form-control {
           border-color: $success !important;
-          box-shadow: inset 1px 0 $success, inset -1px 0 $success, inset 0 -1px $success;
-          border-top-color: transparent !important;
         }
+  
         .form-label {
           color: $success;
-
+        }
+      }
+      &.is-filled {
+        .form-label + .form-control {
+          border-top-color: transparent !important;
+        }
+      }
+      &.is-filled.is-focused {
+        .form-label + .form-control {
+          box-shadow: inset 1px 0 $success, inset -1px 0 $success, inset 0 -1px $success;
+        }
+        .form-label {
           &:before,
           &:after {
             border-top-color: $success;
@@ -288,16 +297,25 @@
         background-position: right $input-height-inner-quarter center;
         background-size: $input-height-inner-half $input-height-inner-half;
       }
-      &.is-focused,
-      &.is-filled {
+      &.is-focused {
         .form-label + .form-control {
           border-color: $danger !important;
-          box-shadow: inset 1px 0 $danger, inset -1px 0 $danger, inset 0 -1px $danger;
-          border-top-color: transparent !important;
         }
+  
         .form-label {
           color: $danger;
-
+        }
+      }
+      &.is-filled {
+        .form-label + .form-control {
+          border-top-color: transparent !important;
+        }
+      }
+      &.is-filled.is-focused {
+        .form-label + .form-control {
+          box-shadow: inset 1px 0 $danger, inset -1px 0 $danger, inset 0 -1px $danger;
+        }
+        .form-label {
           &:before,
           &:after {
             border-top-color: $danger;

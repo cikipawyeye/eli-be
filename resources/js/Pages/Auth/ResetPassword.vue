@@ -1,15 +1,16 @@
 <script setup lang="ts">
 import InputError from '@/Components/InputError.vue';
-import InputLabel from '@/Components/InputLabel.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
-import TextInput from '@/Components/TextInput.vue';
+import InputGroup from '@/Components/InputGroup.vue';
 import Guest from '@/Layouts/Guest.vue';
 import { Head, useForm } from '@inertiajs/vue3';
+import { useI18n } from 'vue-i18n';
 
 const props = defineProps<{
     email: string;
     token: string;
 }>();
+
+const { t } = useI18n();
 
 const form = useForm({
     token: props.token,
@@ -31,67 +32,159 @@ const submit = () => {
     <Guest>
         <Head title="Reset Password" />
 
-        <form @submit.prevent="submit">
-            <div>
-                <InputLabel for="email" value="Email" />
+        <div
+            class="page-header align-items-start min-vh-100"
+            style="
+                background-image: url('https://images.unsplash.com/photo-1497294815431-9365093b7331?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1950&q=80');
+            "
+        >
+            <span class="mask bg-gradient-dark opacity-6"></span>
 
-                <TextInput
-                    id="email"
-                    type="email"
-                    class="mt-1 block w-full"
-                    v-model="form.email"
-                    required
-                    autofocus
-                    autocomplete="username"
-                />
+            <div class="container my-auto">
+                <div class="row">
+                    <div class="col-lg-4 col-md-8 col-12 mx-auto">
+                        <div class="card z-index-0 fadeIn3 fadeInBottom">
+                            <div
+                                class="card-header position-relative mt-n4 z-index-2 mx-3 p-0"
+                            >
+                                <div
+                                    class="bg-gradient-dark shadow-dark border-radius-lg py-3 pe-1"
+                                >
+                                    <h4
+                                        class="font-weight-bolder mt-2 text-center text-white"
+                                    >
+                                        Reset Password
+                                    </h4>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <form @submit.prevent="submit">
+                                    <div class="my-3">
+                                        <InputGroup
+                                            :is-invalid="!!form.errors.email"
+                                        >
+                                            <label
+                                                for="email"
+                                                class="form-label"
+                                                >{{ t('email') }}</label
+                                            >
+                                            <input
+                                                v-model="form.email"
+                                                id="email"
+                                                type="email"
+                                                class="form-control"
+                                                required
+                                                disabled
+                                            />
+                                        </InputGroup>
 
-                <InputError class="mt-2" :message="form.errors.email" />
+                                        <InputError
+                                            class="mt-2"
+                                            :message="form.errors.email"
+                                        />
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <InputGroup
+                                            :is-invalid="!!form.errors.password"
+                                        >
+                                            <label
+                                                for="password"
+                                                class="form-label"
+                                                >{{ t('new_password') }}</label
+                                            >
+                                            <input
+                                                v-model="form.password"
+                                                id="password"
+                                                type="password"
+                                                class="form-control"
+                                                required
+                                                autofocus
+                                            />
+                                        </InputGroup>
+
+                                        <InputError
+                                            class="mt-2"
+                                            :message="form.errors.password"
+                                        />
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <InputGroup
+                                            :is-invalid="
+                                                !!form.errors
+                                                    .password_confirmation
+                                            "
+                                        >
+                                            <label
+                                                for="password_confirmation"
+                                                class="form-label"
+                                                >{{
+                                                    t('password_confirmation')
+                                                }}</label
+                                            >
+                                            <input
+                                                v-model="
+                                                    form.password_confirmation
+                                                "
+                                                id="password_confirmation"
+                                                type="password"
+                                                class="form-control"
+                                                required
+                                                autofocus
+                                            />
+                                        </InputGroup>
+
+                                        <InputError
+                                            class="mt-2"
+                                            :message="
+                                                form.errors
+                                                    .password_confirmation
+                                            "
+                                        />
+                                    </div>
+
+                                    <div class="text-center">
+                                        <button
+                                            :disabled="form.processing"
+                                            type="submit"
+                                            class="btn bg-gradient-dark w-100 my-4 mb-2"
+                                        >
+                                            Reset Password
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            <div class="mt-4">
-                <InputLabel for="password" value="Password" />
-
-                <TextInput
-                    id="password"
-                    type="password"
-                    class="mt-1 block w-full"
-                    v-model="form.password"
-                    required
-                    autocomplete="new-password"
-                />
-
-                <InputError class="mt-2" :message="form.errors.password" />
-            </div>
-
-            <div class="mt-4">
-                <InputLabel
-                    for="password_confirmation"
-                    value="Confirm Password"
-                />
-
-                <TextInput
-                    id="password_confirmation"
-                    type="password"
-                    class="mt-1 block w-full"
-                    v-model="form.password_confirmation"
-                    required
-                    autocomplete="new-password"
-                />
-
-                <InputError
-                    class="mt-2"
-                    :message="form.errors.password_confirmation"
-                />
-            </div>
-
-            <div class="mt-4 flex items-center justify-end">
-                <PrimaryButton
-                    :class="{ 'opacity-25': form.processing }"
-                    :disabled="form.processing"
-                >
-                    Reset Password
-                </PrimaryButton>
-            </div>
-        </form>
+            <footer class="footer position-absolute w-100 bottom-2 py-2">
+                <div class="container">
+                    <div
+                        class="row align-items-center justify-content-lg-between"
+                    >
+                        <div class="col-12 col-md-6 my-auto">
+                            <div
+                                class="copyright text-lg-start text-center text-sm text-white"
+                            >
+                                ©
+                                {{ new Date().getFullYear() }}, made with
+                                <i class="fa fa-heart" aria-hidden="true"></i>
+                                by
+                                <a
+                                    href="https://whatthefun.id"
+                                    class="font-weight-bold text-white"
+                                    target="_blank"
+                                    >Whatthefun.id</a
+                                >
+                                for a better web.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
     </Guest>
 </template>
