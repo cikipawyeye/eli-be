@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { debounce } from '@/Supports/helpers';
-import { computed, defineEmits, defineProps } from 'vue';
+import { computed } from 'vue';
 import InputGroup from './InputGroup.vue';
 
 const emit = defineEmits<{
