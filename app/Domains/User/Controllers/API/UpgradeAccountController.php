@@ -1,0 +1,47 @@
+<?php
+
+namespace App\Domains\User\Controllers\API;
+
+use App\Domains\Payment\DataTransferObjects\PaymentData;
+use App\Domains\Payment\States\Payment\Pending;
+use App\Domains\User\Constants\AccountUpgradeStatus;
+use App\Domains\User\Enums\RoleEnum;
+use App\Support\Controllers\ApiController;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+
+class UpgradeAccountController extends ApiController
+{
+    public function __construct()
+    {
+        $this->middleware(sprintf('role:%s', RoleEnum::User->value));
+    }
+
+    public function status(Request $request): JsonResponse
+    {
+        $user = $request->user();
+
+        if ($user->is_premium) {
+            return $this->sendJsonResponse(
+                data: [
+                    'status' => AccountUpgradeStatus::PREMIUM,
+                    'payment' => null,
+                ],
+            );
+        }
+
+        $payment = $user->payments()
+            ->where('state', Pending::$name)
+            ->first();
+
+        return $this->sendJsonResponse(
+            data: [
+                'status' => $payment ? AccountUpgradeStatus::PENDING_PAYMENT : AccountUpgradeStatus::NOT_PREMIUM,
+                'payment' => $payment
+                    ? PaymentData::fromModel($payment)
+                        ->only('id', 'amount', 'payment_method_type', 'state')
+                    : null,
+            ],
+        );
+    }
+}
