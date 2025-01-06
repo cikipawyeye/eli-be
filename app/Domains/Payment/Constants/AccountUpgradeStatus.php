@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Domains\User\Constants;
+namespace App\Domains\Payment\Constants;
 
 use App\Support\Constants\Constant;
 

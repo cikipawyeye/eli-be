@@ -1,10 +1,12 @@
 <?php
 
-namespace App\Domains\User\Controllers\API;
+namespace App\Domains\Payment\Controllers\API;
 
 use App\Domains\Payment\DataTransferObjects\PaymentData;
 use App\Domains\Payment\States\Payment\Pending;
-use App\Domains\User\Constants\AccountUpgradeStatus;
+use App\Domains\Payment\Actions\UpgradeAccountAction;
+use App\Domains\Payment\Constants\AccountUpgradeStatus;
+use App\Domains\Payment\Requests\API\CreatePaymentRequest;
 use App\Domains\User\Enums\RoleEnum;
 use App\Support\Controllers\ApiController;
 use Illuminate\Http\JsonResponse;
@@ -42,6 +44,19 @@ class UpgradeAccountController extends ApiController
                         ->only('id', 'amount', 'payment_method_type', 'state')
                     : null,
             ],
+        );
+    }
+
+    public function createPayment(CreatePaymentRequest $request): JsonResponse
+    {
+        $payment = dispatch_sync(new UpgradeAccountAction(
+            method: $request->getPaymentType(),
+            channel: $request->getChannelCode(),
+            user: $request->user(),
+        ));
+
+        return $this->sendJsonResponse(
+            data: PaymentData::fromModel($payment),
         );
     }
 }

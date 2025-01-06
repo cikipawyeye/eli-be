@@ -87,4 +87,6 @@ return [
     'virtual_account' => 'Virtual Account',
     'ewallet' => 'E-Wallet',
     'qr_code' => 'QR Code',
+    'payment_type' => 'Tipe Pembayaran',
+    'payment_channel_code' => 'Kode Channel Pembayaran',
 ];

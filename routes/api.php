@@ -2,10 +2,10 @@
 
 use App\Domains\Content\Controllers\API\ContentController;
 use App\Domains\Content\Controllers\API\SubcategoryController;
+use App\Domains\Payment\Controllers\API\UpgradeAccountController;
 use App\Domains\User\Controllers\API\AuthenticatedUserController;
 use App\Domains\User\Controllers\API\ProfileController;
 use App\Domains\User\Controllers\API\RegisterController;
-use App\Domains\User\Controllers\API\UpgradeAccountController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -31,4 +31,5 @@ Route::prefix('v1')->name('api.')->middleware('auth:sanctum')->group(function ()
     Route::apiResource('/contents', ContentController::class)->only('index', 'show');
     
     Route::get('/upgrade/status', [UpgradeAccountController::class, 'status'])->name('upgrade.status');
+    Route::post('/upgrade', [UpgradeAccountController::class, 'createPayment'])->name('upgrade.create-payment');
 });
