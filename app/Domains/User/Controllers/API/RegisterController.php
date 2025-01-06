@@ -16,6 +16,10 @@ class RegisterController extends ApiController
     {
         $query = City::select('name', 'code');
 
+        if ($request->filled('limit')) {
+            $query->limit($request->get('limit'));
+        }
+
         if ($request->filled('search')) {
             $query->where('name', 'ilike', sprintf('%%%s%%', $request->get('search')));
         }

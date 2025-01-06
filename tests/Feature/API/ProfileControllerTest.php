@@ -6,7 +6,6 @@ use App\Domains\User\Models\User;
 use Illuminate\Support\Facades\Notification;
 use Laravolt\Indonesia\Models\City;
 use Laravolt\Indonesia\Seeds\CitiesSeeder;
-use Laravolt\Indonesia\Seeds\DistrictsSeeder;
 use Laravolt\Indonesia\Seeds\ProvincesSeeder;
 
 use function Pest\Laravel\actingAs;
@@ -14,7 +13,6 @@ use function Pest\Laravel\actingAs;
 beforeEach(function () {
     $this->artisan('db:seed', ['--class' => ProvincesSeeder::class]);
     $this->artisan('db:seed', ['--class' => CitiesSeeder::class]);
-    $this->artisan('db:seed', ['--class' => DistrictsSeeder::class]);
 });
 
 test('profile data is displayed', function () {
@@ -51,7 +49,7 @@ test('profile information can be updated', function () {
         'city_code' => City::select('code')->get()->random()->code,
     ])->make();
     actingAs($user)
-        ->post(route('api.profile.update'), $newProfile->toArray())
+        ->postJson(route('api.profile.update'), $newProfile->toArray())
         ->assertOk()
         ->assertJsonStructure(['data'])
         ->assertJsonFragment([
@@ -81,7 +79,7 @@ test('profile information can be updated', function () {
 
 test('email verification status is unchanged when the email address is unchanged', function () {
     Notification::fake();
-    
+
     $user = createUser([
         'city_code' => City::select('code')->get()->random()->code,
         'email_verified_at' => now(),
@@ -92,7 +90,7 @@ test('email verification status is unchanged when the email address is unchanged
         'city_code' => City::select('code')->get()->random()->code,
     ])->make();
     actingAs($user)
-        ->post(route('api.profile.update'), $newProfile->toArray())
+        ->postJson(route('api.profile.update'), $newProfile->toArray())
         ->assertOk()
         ->assertJsonStructure(['data'])
         ->assertJsonFragment([

@@ -29,6 +29,7 @@ class RegisterUserAction extends Action
         DB::transaction(function () use ($user) {
             $user->save();
             $user->assignRole(RoleEnum::User->value);
+            $user->sendEmailVerificationNotification();
         });
 
         event(new Registered($user));

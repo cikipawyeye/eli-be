@@ -37,7 +37,7 @@ class UserData extends Data
             name: $user->name,
             email: $user->email,
             email_verified_at: $user->email_verified_at,
-            is_premium: $user->is_premium,
+            is_premium: $user->is_premium ?? false,
             birth_date: $user->birth_date,
             job: $user->job,
             city_code: $user->city_code,
@@ -56,5 +56,16 @@ class UserData extends Data
     protected static function getCity(User $user): Lazy
     {
         return Lazy::create(fn() => $user->city ? CityData::fromModel($user->city) : null);
+    }
+
+    public function toArray(): array
+    {
+        $data = parent::toArray();
+
+        if ($this->birth_date instanceof Carbon) {
+            $data['birth_date'] = $this->birth_date->format('Y-m-d');
+        }
+
+        return $data;
     }
 }
