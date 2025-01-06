@@ -19,6 +19,7 @@ class UpdateUserProfileAction extends Action
         $this->model->city()->associate($this->data->city_code);
 
         if ($this->model->isDirty('email')) {
+            $this->model->sendEmailVerificationNotification();
             $this->model->email_verified_at = null;
         }
 

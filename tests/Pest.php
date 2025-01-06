@@ -69,10 +69,24 @@ function createUser(?array $attributes = null, ?RoleEnum $role = null): User
 
 function createSuperAdmin(?array $attributes = null): User
 {
-    return createUser($attributes, RoleEnum::SuperAdmin);
+    return createUser([
+        ...$attributes,
+        'city_code' => null,
+        'job' => null,
+        'birth_date' => null,
+        'is_premium' => false,
+        'phone_number' => null,
+    ], RoleEnum::SuperAdmin);
 }
 
 function createAdmin(?array $attributes = null): User
 {
-    return createUser($attributes, RoleEnum::Admin);
+    return createUser([
+        ...$attributes,
+        'city_code' => null,
+        'job' => null,
+        'birth_date' => null,
+        'is_premium' => false,
+        'phone_number' => null,
+    ], RoleEnum::Admin);
 }

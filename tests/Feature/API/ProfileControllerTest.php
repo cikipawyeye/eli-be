@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Domains\User\Models\User;
+use Illuminate\Support\Facades\Notification;
 use Laravolt\Indonesia\Models\City;
 use Laravolt\Indonesia\Seeds\CitiesSeeder;
 use Laravolt\Indonesia\Seeds\DistrictsSeeder;
@@ -40,6 +41,8 @@ test('profile data is displayed', function () {
 });
 
 test('profile information can be updated', function () {
+    Notification::fake();
+
     $user = createUser([
         'city_code' => City::select('code')->get()->random()->code,
     ]);
@@ -64,6 +67,8 @@ test('profile information can be updated', function () {
             'name' => $user->city->name,
         ]);
 
+    Notification::assertSentTo($user, Illuminate\Auth\Notifications\VerifyEmail::class);
+
     $user->refresh();
 
     $this->assertSame($newProfile->name, $user->name);
@@ -75,6 +80,8 @@ test('profile information can be updated', function () {
 });
 
 test('email verification status is unchanged when the email address is unchanged', function () {
+    Notification::fake();
+    
     $user = createUser([
         'city_code' => City::select('code')->get()->random()->code,
         'email_verified_at' => now(),
@@ -102,4 +109,6 @@ test('email verification status is unchanged when the email address is unchanged
         ]);
 
     $this->assertNotNull($user->refresh()->email_verified_at);
+
+    Notification::assertNothingSent();
 });
