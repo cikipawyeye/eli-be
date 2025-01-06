@@ -72,9 +72,6 @@ onMounted(() => {
                         {{ t(ContentCategory[data.category]) }}
                     </Link>
                 </li>
-                <li class="breadcrumb-item text-sm">
-                    {{ t('subcategory') }}
-                </li>
                 <li
                     class="breadcrumb-item text-dark active text-sm"
                     aria-current="page"
