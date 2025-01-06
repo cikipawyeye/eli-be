@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Domains\User\Controllers\Auth;
 
+use App\Domains\User\Enums\RoleEnum;
+use App\Domains\User\Models\User;
 use App\Support\Controllers\Controller;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Http\RedirectResponse;
@@ -61,6 +63,12 @@ class NewPasswordController extends Controller
         // the application's home authenticated view. If there is an error we can
         // redirect them back to where they came from with their error message.
         if (Password::PASSWORD_RESET == $status) {
+            $user = User::firstWhere('email', $request->email);
+
+            if ($user->hasRole(RoleEnum::User->value)) {
+                return redirect()->back()->with('success', __($status));
+            }
+
             return redirect()->route('login')->with('status', __($status));
         }
 

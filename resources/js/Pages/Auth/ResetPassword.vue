@@ -2,7 +2,8 @@
 import InputError from '@/Components/InputError.vue';
 import InputGroup from '@/Components/InputGroup.vue';
 import Guest from '@/Layouts/Guest.vue';
-import { Head, useForm } from '@inertiajs/vue3';
+import { Head, useForm, usePage } from '@inertiajs/vue3';
+import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 const props = defineProps<{
@@ -11,6 +12,8 @@ const props = defineProps<{
 }>();
 
 const { t } = useI18n();
+const page = usePage<SharedProps>();
+const status = computed(() => page.props.flash);
 
 const form = useForm({
     token: props.token,
@@ -58,6 +61,14 @@ const submit = () => {
                                 </div>
                             </div>
                             <div class="card-body">
+                                <div
+                                    v-if="status.success"
+                                    class="alert alert-warning text-sm text-white"
+                                    role="alert"
+                                >
+                                    {{ status.success }}
+                                </div>
+
                                 <form @submit.prevent="submit">
                                     <div class="my-3">
                                         <InputGroup
