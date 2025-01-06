@@ -83,4 +83,8 @@ return [
     'new_password' => 'Kata Sandi Baru',
     'profile' => 'Profil',
     'id' => 'ID :data',
+    'over_the_counter' => 'Over The Counter',
+    'virtual_account' => 'Virtual Account',
+    'ewallet' => 'E-Wallet',
+    'qr_code' => 'QR Code',
 ];

@@ -154,7 +154,7 @@ const closeDeleteModal = () => {
                             >{{ t('payment_method') }}:</strong
                         >
                         &nbsp;
-                        {{ payment.payment_method_type }}
+                        {{ payment.payment_method_type ? t(payment.payment_method_type.toLowerCase()) : '' }}
                     </li>
                     <li class="list-group-item border-0 ps-0 text-sm">
                         <strong class="text-dark">{{ t('status') }}:</strong>

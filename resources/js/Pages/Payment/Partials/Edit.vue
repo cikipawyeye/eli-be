@@ -82,7 +82,7 @@ const submit = () => {
                         id="va"
                     />
                     <label class="custom-control-label" for="va"
-                        >Virtual Account</label
+                        >{{t('virtual_account')}}</label
                     >
                 </div>
 
@@ -96,7 +96,7 @@ const submit = () => {
                         id="counter"
                     />
                     <label class="custom-control-label" for="counter"
-                        >Over the Counter</label
+                        >{{t('over_the_counter')}}</label
                     >
                 </div>
 
@@ -109,7 +109,7 @@ const submit = () => {
                         value="QR_CODE"
                         id="qr"
                     />
-                    <label class="custom-control-label" for="qr">QR Code</label>
+                    <label class="custom-control-label" for="qr">{{t('qr_code')}}</label>
                 </div>
 
                 <div class="form-check mb-3">
@@ -122,7 +122,7 @@ const submit = () => {
                         id="ewallet"
                     />
                     <label class="custom-control-label" for="ewallet"
-                        >E-Wallet</label
+                        >{{t('ewallet')}}</label
                     >
                 </div>
 
