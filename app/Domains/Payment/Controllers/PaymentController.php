@@ -2,6 +2,8 @@
 
 namespace App\Domains\Payment\Controllers;
 
+use App\Domains\Payment\Actions\DeletePaymentAction;
+use App\Domains\Payment\Actions\UpdatePaymentAction;
 use App\Domains\Payment\DataTransferObjects\PaymentData;
 use App\Domains\Payment\Models\Payment;
 use App\Domains\Payment\Repositories\PaymentCriteria;
@@ -19,7 +21,6 @@ class PaymentController extends Controller
     {
         $this->middleware(sprintf('permission:%s', Permission::BROWSE_PAYMENTS))->only('index');
         $this->middleware(sprintf('permission:%s', Permission::READ_PAYMENT))->only('show');
-        $this->middleware(sprintf('permission:%s', Permission::ADD_PAYMENT))->only('store');
         $this->middleware(sprintf('permission:%s', Permission::EDIT_PAYMENT))->only('update');
         $this->middleware(sprintf('permission:%s', Permission::DELETE_PAYMENT))->only('destroy');
     }
@@ -42,22 +43,6 @@ class PaymentController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StorePaymentRequest $request)
-    {
-        //
-    }
-
-    /**
      * Display the specified resource.
      */
     public function show(Payment $payment)
@@ -68,19 +53,21 @@ class PaymentController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Payment $payment)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      */
     public function update(UpdatePaymentRequest $request, Payment $payment)
     {
-        //
+        dispatch_sync(new UpdatePaymentAction(
+            $payment,
+            PaymentData::from([
+                ...$request->validated(),
+                'user_id' => $request->user()->id,
+            ])
+        ));
+
+        return redirect()
+            ->route('payments.show', ['payment' => $payment])
+            ->with('success', __('app.updated_data', ['data' => __('app.payment')]));
     }
 
     /**
@@ -88,6 +75,10 @@ class PaymentController extends Controller
      */
     public function destroy(Payment $payment)
     {
-        //
+        dispatch_sync(new DeletePaymentAction($payment));
+
+        return redirect()
+            ->route('payments.index')
+            ->with('success', __('app.deleted_data', ['data' => __('app.payment')]));
     }
 }

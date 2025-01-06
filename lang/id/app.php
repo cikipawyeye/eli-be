@@ -82,4 +82,5 @@ return [
     'current_password' => 'Kata Sandi Saat Ini',
     'new_password' => 'Kata Sandi Baru',
     'profile' => 'Profil',
+    'id' => 'ID :data',
 ];

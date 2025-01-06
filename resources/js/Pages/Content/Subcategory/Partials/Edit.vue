@@ -55,7 +55,7 @@ const submit = () => {
                     t('category')
                 }}</label>
 
-                <InputGroup :is-invalid="!!form.errors.name">
+                <InputGroup :is-invalid="!!form.errors.category">
                     <select
                         v-model="form.category"
                         id="category"

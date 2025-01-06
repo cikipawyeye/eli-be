@@ -74,5 +74,8 @@
     "payment_amount": "Jumlah Pembayaran",
     "subcategory_id": "ID Sub-Kategori",
     "premium_content": "Konten Premium",
-    "non_premium_content": "Konten Non-Premium"
+    "non_premium_content": "Konten Non-Premium",
+    "current_password": "Kata Sandi Saat Ini",
+    "profile": "Profil",
+    "id": "ID {data}"
 }

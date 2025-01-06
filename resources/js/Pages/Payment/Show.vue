@@ -8,8 +8,11 @@ import {
     formatMoney,
 } from '@/Supports/helpers';
 import { Head, Link, usePage } from '@inertiajs/vue3';
-import { computed, onMounted, PropType, ref } from 'vue';
+import { computed, PropType, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
+import Edit from './Partials/Edit.vue';
+import Modal from '@/Components/Modal.vue';
+import Delete from './Partials/Delete.vue';
 
 const props = defineProps({
     data: {
@@ -18,21 +21,33 @@ const props = defineProps({
     },
 });
 const payment = computed(() => props.data);
-const { success, error } = usePage<SharedProps>().props.flash;
+const page = usePage<SharedProps>();
+const flash = computed(() => page.props.flash);
 const isEditing = ref(false);
 const isDeleting = ref(false);
 
 const { t } = useI18n();
 
-onMounted(() => {
-    if (success) {
-        flashSuccess(success);
-    }
+watch(
+    () => flash.value,
+    (value) => {
+        if (value.error) {
+            flashError(value.error);
+        }
+        if (value.success) {
+            flashSuccess(value.success);
+        }
+    },
+    {deep: true}
+);
 
-    if (error) {
-        flashError(error);
-    }
-});
+const closeEditModal = () => {
+    isEditing.value = false;
+};
+
+const closeDeleteModal = () => {
+    isDeleting.value = false;
+};
 </script>
 
 <template>
@@ -112,6 +127,15 @@ onMounted(() => {
             <div class="card-body">
                 <ul class="list-group m-4">
                     <li class="list-group-item border-0 ps-0 pt-0 text-sm">
+                        <strong class="text-dark">{{ t('id', {
+                            data: t('payment'),
+                        }) }}:</strong>
+                        &nbsp;
+                        #{{
+                            payment.id
+                        }}
+                    </li>
+                    <li class="list-group-item border-0 ps-0 pt-0 text-sm">
                         <strong class="text-dark">{{ t('date') }}:</strong>
                         &nbsp;
                         {{
@@ -153,4 +177,30 @@ onMounted(() => {
             </div>
         </div>
     </AuthenticatedLayout>
+
+    <Modal
+        v-if="
+            ($page.props?.auth.user?.permissions_by_roles ?? []).includes(
+                Permissions.EDIT_PAYMENT,
+            ) && payment?.id
+        "
+        :show="isEditing"
+        id="edit-payment-modal"
+        @close="closeEditModal"
+    >
+        <Edit v-on:close-modal="closeEditModal" />
+    </Modal>
+
+    <Modal
+        v-if="
+            ($page.props?.auth.user?.permissions_by_roles ?? []).includes(
+                Permissions.DELETE_PAYMENT,
+            ) && payment?.id
+        "
+        :show="isDeleting"
+        id="delete-payment-modal"
+        @close="closeDeleteModal"
+    >
+        <Delete v-on:close-modal="closeDeleteModal"/>
+    </Modal>
 </template>
