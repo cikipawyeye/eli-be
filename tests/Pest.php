@@ -67,7 +67,7 @@ function createUser(?array $attributes = null, ?RoleEnum $role = null): User
     ])->assignRole($role);
 }
 
-function createSuperAdmin(?array $attributes = null): User
+function createSuperAdmin(array $attributes = []): User
 {
     return createUser([
         ...$attributes,
@@ -79,7 +79,7 @@ function createSuperAdmin(?array $attributes = null): User
     ], RoleEnum::SuperAdmin);
 }
 
-function createAdmin(?array $attributes = null): User
+function createAdmin(array $attributes = []): User
 {
     return createUser([
         ...$attributes,
