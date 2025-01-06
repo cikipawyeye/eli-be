@@ -23,7 +23,8 @@ Route::prefix('v1')->name('api.')->middleware('auth:sanctum')->group(function ()
 
     Route::post('change-password', [AuthenticatedUserController::class, 'changePassword'])->name('change-password');
 
-    Route::get('/profile', [ProfileController::class, 'show'])->name('user.profile');
+    Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
+    Route::post('/profile', [ProfileController::class, 'update'])->name('profile.update');
 
     Route::apiResource('/{category}/subcategories', SubcategoryController::class)->only('index', 'show');
     Route::apiResource('/contents', ContentController::class)->only('index', 'show');

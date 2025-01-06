@@ -61,7 +61,10 @@ function createUser(?array $attributes = null, ?RoleEnum $role = null): User
             $roleObject->givePermissionTo($permissionObject->name);
         });
 
-    return User::factory()->create($attributes)->assignRole($role);
+    return User::factory()->create([
+        'city_code' => null,
+        ...$attributes
+    ])->assignRole($role);
 }
 
 function createSuperAdmin(?array $attributes = null): User

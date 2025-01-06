@@ -55,6 +55,6 @@ class UserData extends Data
 
     protected static function getCity(User $user): Lazy
     {
-        return Lazy::create(fn() => CityData::fromModel($user->city));
+        return Lazy::create(fn() => $user->city ? CityData::fromModel($user->city) : null);
     }
 }

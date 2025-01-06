@@ -7,6 +7,7 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Laravolt\Indonesia\Models\City;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Domains\User\Models\User>
@@ -38,6 +39,11 @@ class UserFactory extends Factory
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
+            'city_code' => fake()->numberBetween(1101, 9471),
+            'job' => fake()->jobTitle(),
+            'birth_date' => fake()->date(),
+            'is_premium' => fake()->boolean(),
+            'phone_number' => fake()->phoneNumber(),
         ];
     }
 
