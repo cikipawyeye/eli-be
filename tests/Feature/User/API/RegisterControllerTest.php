@@ -11,6 +11,7 @@ use Laravolt\Indonesia\Seeds\ProvincesSeeder;
 
 use function Pest\Laravel\getJson;
 use function Pest\Laravel\postJson;
+use function Pest\Stressless\stress;
 
 beforeEach(function () {
     $this->artisan('db:seed', ['--class' => ProvincesSeeder::class]);
@@ -30,6 +31,17 @@ it('can get cities', function () {
             'name' => $city->name,
         ]);
     });
+});
+
+it('can get cities with good performance', function () {
+    $result = stress(route('api.register.origin.cities'))
+        // ->concurrently(requests: 200)
+        // ->for(5)
+        // ->seconds()
+        // ->dump()
+        ;
+ 
+    expect($result->requests()->duration()->med())->toBeLessThan(100); // < 100.00ms
 });
 
 it('can search cities', function () {
