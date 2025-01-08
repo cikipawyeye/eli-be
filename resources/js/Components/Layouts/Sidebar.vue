@@ -53,7 +53,7 @@ onMounted(() => {
                 <div class="navbar-brand m-0 px-4 py-3">
                     <img
                         v-if="sidebarType != 'bg-gradient-dark'"
-                        src="/assets/img/logo-ct-dark.png"
+                        src="/assets/img/small-logos/app-logo.webp"
                         class="navbar-brand-img"
                         width="26"
                         height="26"
@@ -61,7 +61,7 @@ onMounted(() => {
                     />
                     <img
                         v-else
-                        src="/assets/img/logo-ct.png"
+                        src="/assets/img/small-logos/app-logo.webp"
                         class="navbar-brand-img"
                         width="26"
                         height="26"
