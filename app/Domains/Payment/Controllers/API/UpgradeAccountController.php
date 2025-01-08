@@ -56,7 +56,7 @@ class UpgradeAccountController extends ApiController
         ));
 
         return $this->sendJsonResponse(
-            data: PaymentData::fromModel($payment),
+            data: $payment,
         );
     }
 }
