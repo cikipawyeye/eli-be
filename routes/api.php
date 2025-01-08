@@ -2,6 +2,7 @@
 
 use App\Domains\Content\Controllers\API\ContentController;
 use App\Domains\Content\Controllers\API\SubcategoryController;
+use App\Domains\Payment\Controllers\API\PaymentController;
 use App\Domains\Payment\Controllers\API\PaymentWebhookController;
 use App\Domains\Payment\Controllers\API\UpgradeAccountController;
 use App\Domains\User\Controllers\API\AuthenticatedUserController;
@@ -35,4 +36,6 @@ Route::prefix('v1')->name('api.')->middleware('auth:sanctum')->group(function ()
     
     Route::get('/upgrade/status', [UpgradeAccountController::class, 'status'])->name('upgrade.status');
     Route::post('/upgrade', [UpgradeAccountController::class, 'createPayment'])->name('upgrade.create-payment');
+
+    Route::get('/payments/{payment}', [PaymentController::class, 'show'])->name('payments.show');
 });

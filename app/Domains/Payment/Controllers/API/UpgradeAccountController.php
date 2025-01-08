@@ -35,6 +35,7 @@ class UpgradeAccountController extends ApiController
 
         $payment = $user->payments()
             ->where('state', Pending::$name)
+            ->orderByDesc('created_at')
             ->first();
 
         return $this->sendJsonResponse(

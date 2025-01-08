@@ -37,7 +37,10 @@ class UpgradeAccountAction extends Action
         $payment->user()->associate($this->user);
         $payment->save();
 
-        return $this->transformData($paymentRequest);
+        return [
+            'payment' => $this->transformData($paymentRequest),
+            'payment_id' => $payment->id,
+        ];
     }
 
     protected function makePaymentRequest(): PaymentRequest
