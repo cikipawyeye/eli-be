@@ -26,6 +26,11 @@ class HandlePaymentNotificationAction extends Action
         /** @var Payment $payment */
         $payment = Payment::firstWhere('x_payment_request_id', $callbackData->getPaymentRequestId());
 
+        if (! $payment) {
+            info('Payment not found', json_decode($callbackData->__toString(), true));
+            return;
+        }
+
         DB::transaction(function () use ($payment, $callbackData) {
             if ($payment->state->canTransitionTo($callbackData->getStatus())) {
                 $payment->state->transitionTo($callbackData->getStatus())->refresh();
