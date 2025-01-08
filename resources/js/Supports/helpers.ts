@@ -106,7 +106,7 @@ export function formatHumanDate(
 
 export function formatHumanDateTime(
     date: string | number,
-    dateFormat = 'dd LLL yyyy, hh:mm',
+    dateFormat = 'dd LLL yyyy, HH:mm',
 ) {
     return format(new Date(date), dateFormat, { locale: id });
 }

@@ -2,11 +2,11 @@
 
 use App\Domains\Content\Controllers\API\ContentController;
 use App\Domains\Content\Controllers\API\SubcategoryController;
+use App\Domains\Payment\Controllers\API\PaymentWebhookController;
 use App\Domains\Payment\Controllers\API\UpgradeAccountController;
 use App\Domains\User\Controllers\API\AuthenticatedUserController;
 use App\Domains\User\Controllers\API\ProfileController;
 use App\Domains\User\Controllers\API\RegisterController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 
@@ -20,11 +20,7 @@ Route::prefix('v1')->name('api.')->middleware('auth:sanctum')->group(function ()
 
         Route::post('login', [AuthenticatedUserController::class, 'login'])->name('login');
 
-        Route::post('payment/webhook', function(Request $request) {
-            info($request->all());
-    
-            return response()->json(['message' => 'Webhook received']);
-        })->name('payment.webhook');
+        Route::post('payment/webhook', PaymentWebhookController::class)->name('payment.webhook');
     });
 
     Route::post('logout', [AuthenticatedUserController::class, 'logout'])->name('logout');
