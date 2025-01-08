@@ -89,4 +89,9 @@ return [
     'qr_code' => 'QR Code',
     'payment_type' => 'Tipe Pembayaran',
     'payment_channel_code' => 'Kode Channel Pembayaran',
+    'payment_channel' => 'Channel Pembayaran',
+    'phone_number' => 'Nomor Telepon',
+    'expired_date' => 'Tanggal Kadaluarsa',
+    'qr_string' => 'Kode String QR',
+    'account_name' => 'Nama Akun',
 ];

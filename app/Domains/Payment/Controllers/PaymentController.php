@@ -3,6 +3,7 @@
 namespace App\Domains\Payment\Controllers;
 
 use App\Domains\Payment\Actions\DeletePaymentAction;
+use App\Domains\Payment\Actions\GetPaymentRequestAction;
 use App\Domains\Payment\Actions\UpdatePaymentAction;
 use App\Domains\Payment\DataTransferObjects\PaymentData;
 use App\Domains\Payment\Models\Payment;
@@ -14,6 +15,7 @@ use App\Domains\User\Constants\PermissionConstant as Permission;
 use App\Support\Controllers\Controller;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Xendit\PaymentRequest\PaymentRequestApi;
 
 class PaymentController extends Controller
 {
@@ -49,6 +51,7 @@ class PaymentController extends Controller
     {
         return Inertia::render('Payment/Show', [
             'data' => PaymentData::fromModel($payment)->include('user'),
+            'payment_info' => Inertia::defer(fn() => GetPaymentRequestAction::dispatchSync($payment)),
         ]);
     }
 

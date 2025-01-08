@@ -127,3 +127,11 @@ export function formatMoney(amount: number, digits = 0) {
 
     return formatter.format(amount);
 }
+
+export function toTitleCase(input: string): string {
+    return input
+      .toLowerCase() 
+      .split(' ') 
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ');
+  }

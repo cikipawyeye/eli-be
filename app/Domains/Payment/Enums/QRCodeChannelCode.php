@@ -11,7 +11,7 @@ enum QRCodeChannelCode: string
 {
     use EnumTrait;
 
-    case BRI = X::DANA;
+    case DANA = X::DANA;
     case LINKAJA = X::LINKAJA;
 
     public function translated(): string

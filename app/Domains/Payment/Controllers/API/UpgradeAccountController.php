@@ -6,6 +6,7 @@ use App\Domains\Payment\DataTransferObjects\PaymentData;
 use App\Domains\Payment\States\Payment\Pending;
 use App\Domains\Payment\Actions\UpgradeAccountAction;
 use App\Domains\Payment\Constants\AccountUpgradeStatus;
+use App\Domains\Payment\DataTransferObjects\PaymentRequest\CreatePaymentData;
 use App\Domains\Payment\Requests\API\CreatePaymentRequest;
 use App\Domains\User\Enums\RoleEnum;
 use App\Support\Controllers\ApiController;
@@ -50,8 +51,7 @@ class UpgradeAccountController extends ApiController
     public function createPayment(CreatePaymentRequest $request): JsonResponse
     {
         $payment = dispatch_sync(new UpgradeAccountAction(
-            method: $request->getPaymentType(),
-            channel: $request->getChannelCode(),
+            CreatePaymentData::fromRequest($request),
             user: $request->user(),
         ));
 

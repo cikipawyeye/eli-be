@@ -123,4 +123,6 @@ return [
         'driver' => env('APP_MAINTENANCE_DRIVER', 'file'),
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
+
+    'upgrade_price' => env('APP_UPGRADE_PRICE', 0),
 ];
