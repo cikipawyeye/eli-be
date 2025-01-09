@@ -28,6 +28,11 @@ class SaveUserAction extends Action
         $this->model->fill($this->data->only(
             'name',
             'email',
+            'birth_date',
+            'job',
+            'job_type',
+            'gender',
+            'phone_number',
         )->toArray());
 
         $this->model->email_verified_at = $this->data->email_verified_at;

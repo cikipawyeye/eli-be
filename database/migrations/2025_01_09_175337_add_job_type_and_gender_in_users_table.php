@@ -14,6 +14,8 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->char('job_type', 1)->default(JobTypeEnum::Other->value);
+            /** @see \App\Domains\User\Enums\GenderEnum::class */
+            $table->char('gender', 1)->nullable();
         });
     }
 
@@ -24,6 +26,7 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->dropColumn('job_type');
+            $table->dropColumn('gender');
         });
     }
 };

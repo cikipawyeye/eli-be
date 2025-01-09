@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domains\User\Requests\API;
 
+use App\Domains\User\Enums\GenderEnum;
 use App\Domains\User\Enums\JobTypeEnum;
 use App\Domains\User\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
@@ -21,6 +22,7 @@ class UpdateProfileRequest extends FormRequest
             'job_type' => __('app.job_type'),
             'job' => __('app.job'),
             'phone_number' => __('app.phone_number'),
+            'gender' => __('app.gender'),
         ];
     }
 
@@ -46,6 +48,7 @@ class UpdateProfileRequest extends FormRequest
             'job_type' => ['required', Rule::enum(JobTypeEnum::class)],
             'job' => [sprintf('exclude_unless:job_type,%s', JobTypeEnum::Other->value), sprintf('required_if:job_type,%s', JobTypeEnum::Other->value), 'string', 'max:50'],
             'phone_number' => 'required|string|max:19',
+            'gender' => ['required', Rule::enum(GenderEnum::class)],
         ];
     }
 

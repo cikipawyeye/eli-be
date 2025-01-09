@@ -4,16 +4,13 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import JobType from '@/Constants/JobType';
 import { Permissions } from '@/Permission';
 import {
-    flashError,
-    flashSuccess,
     formatHumanDateTime,
     toTitleCase,
 } from '@/Supports/helpers';
-import { Head, Link, usePage } from '@inertiajs/vue3';
-import { computed, onMounted, PropType, ref } from 'vue';
+import { Head, Link } from '@inertiajs/vue3';
+import { computed, PropType, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import Delete from './Partials/Delete.vue';
-import Edit from './Partials/Edit.vue';
 import PaymentList from './Partials/Payment/PaymentList.vue';
 import { differenceInYears } from 'date-fns';
 
@@ -24,7 +21,6 @@ const props = defineProps({
     },
 });
 const user = computed(() => props.data);
-const { success, error } = usePage<SharedProps>().props.flash;
 const isEditing = ref(false);
 const isDeleting = ref(false);
 
@@ -37,16 +33,6 @@ const closeEditModal = () => {
 const closeDeleteModal = () => {
     isDeleting.value = false;
 };
-
-onMounted(() => {
-    if (success) {
-        flashSuccess(success);
-    }
-
-    if (error) {
-        flashError(error);
-    }
-});
 </script>
 
 <template>
@@ -78,12 +64,13 @@ onMounted(() => {
                     <span v-if="user.is_premium" class="badge bg-gradient-primary my-auto">Premium</span>
 
                     <div class="d-flex align-items-center justify-content-end ms-auto flex-wrap gap-3">
-                        <button v-if="
+                        <Link v-if="
                             (
                                 $page.props?.auth.user
                                     ?.permissions_by_roles ?? []
                             ).includes(Permissions.EDIT_USER)
-                        " class="btn btn-sm btn-warning mb-0 text-nowrap" @click="isEditing = true">
+                        " :href="route('users.edit', user.id)">
+                        <button class="btn btn-sm btn-warning mb-0 text-nowrap" @click="isEditing = true">
                             <i class="fa fa-pencil"></i>
                             <span class="d-none d-md-inline ms-2">{{
                                 t('edit', {
@@ -91,6 +78,7 @@ onMounted(() => {
                                 })
                             }}</span>
                         </button>
+                        </Link>
                         <button v-if="
                             (
                                 $page.props?.auth.user
@@ -119,6 +107,16 @@ onMounted(() => {
                         <strong class="text-dark">{{ t('email') }}:</strong>
                         &nbsp;
                         {{ user.email }}
+                    </li>
+                    <li class="list-group-item border-0 ps-0 text-sm">
+                        <strong class="text-dark">{{ t('phone_number') }}:</strong>
+                        &nbsp;
+                        {{ user.phone_number ?? '-' }}
+                    </li>
+                    <li class="list-group-item border-0 ps-0 text-sm">
+                        <strong class="text-dark">{{ t('gender') }}:</strong>
+                        &nbsp;
+                        {{ user.gender ? t(user.gender == 'F' ? 'female' : 'male') : '-' }}
                     </li>
                     <li class="list-group-item border-0 ps-0 text-sm">
                         <strong class="text-dark">{{ t('age') }}:</strong>
@@ -160,14 +158,6 @@ onMounted(() => {
 
         <PaymentList />
     </AuthenticatedLayout>
-
-    <Modal v-if="
-        ($page.props?.auth.user?.permissions_by_roles ?? []).includes(
-            Permissions.EDIT_USER,
-        )
-    " :show="isEditing" id="edit-modal" @close="closeEditModal">
-        <Edit v-on:close-modal="closeEditModal" />
-    </Modal>
 
     <Modal v-if="
         ($page.props?.auth.user?.permissions_by_roles ?? []).includes(

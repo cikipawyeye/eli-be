@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domains\User\Requests\API;
 
+use App\Domains\User\Enums\GenderEnum;
 use App\Domains\User\Enums\JobTypeEnum;
 use App\Domains\User\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
@@ -22,6 +23,7 @@ class RegisterRequest extends FormRequest
             'job_type' => __('app.job_type'),
             'job' => __('app.job'),
             'phone_number' => __('app.phone_number'),
+            'gender' => __('app.gender'),
         ];
     }
 
@@ -32,8 +34,6 @@ class RegisterRequest extends FormRequest
      */
     public function rules(): array
     {
-        info(Rule::unique(User::class, 'email')->withoutTrashed());
-        
         return [
             'name' => 'required|string|max:255',
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', Rule::unique(User::class, 'email')->withoutTrashed()],
@@ -42,6 +42,7 @@ class RegisterRequest extends FormRequest
             'city_code' => ['required', Rule::exists(config('laravolt.indonesia.table_prefix') . 'cities', 'code')],
             'job_type' => ['required', Rule::enum(JobTypeEnum::class)],
             'job' => [sprintf('exclude_unless:job_type,%s', JobTypeEnum::Other->value), sprintf('required_if:job_type,%s', JobTypeEnum::Other->value), 'string', 'max:50'],
+            'gender' => ['required', Rule::enum(GenderEnum::class)],
             'phone_number' => 'required|string|max:19',
         ];
     }

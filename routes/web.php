@@ -24,7 +24,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('/contents', ContentController::class)->only(['store', 'update', 'destroy']);
     Route::get('/contents/{content}/image', [ContentController::class, 'getImage'])->name('contents.image');
 
-    Route::resource('/users', UserController::class)->except(['edit', 'create']);
+    Route::resource('/users', UserController::class);
     Route::post('/users/{user}/add-payment', [UserController::class, 'addPayment'])->name('users.add-payment');
 
     Route::resource('/payments', PaymentController::class)->except(['create', 'edit']);

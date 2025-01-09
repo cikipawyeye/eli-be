@@ -3,6 +3,7 @@
 namespace App\Domains\User\DataTransferObjects;
 
 use App\Domains\Payment\DataTransferObjects\PaymentData;
+use App\Domains\User\Enums\GenderEnum;
 use App\Domains\User\Enums\JobTypeEnum;
 use App\Domains\User\Models\User;
 use Carbon\Carbon;
@@ -22,11 +23,14 @@ class UserData extends Data
         public readonly ?string $email,
         public readonly ?string $email_verified_at,
         public readonly ?bool $is_premium,
+        public readonly ?string $phone_number,
         #[WithCast(DateTimeInterfaceCast::class, timeZone: 'Asia/Jakarta', format: 'Y-m-d')]
         public readonly string|Carbon|null $birth_date,
         #[WithCast(EnumCast::class)]
         public readonly JobTypeEnum|null $job_type,
         public readonly ?string $job,
+        #[WithCast(EnumCast::class)]
+        public readonly GenderEnum|null $gender,
         public readonly ?string $city_code,
         public readonly string|Carbon|null $created_at,
         public readonly Lazy|string|null $password,
@@ -39,12 +43,14 @@ class UserData extends Data
         return new self(
             id: $user->id,
             name: $user->name,
+            phone_number: $user->phone_number,
             email: $user->email,
             email_verified_at: $user->email_verified_at,
             is_premium: $user->is_premium ?? false,
             birth_date: $user->birth_date,
             job_type: JobTypeEnum::fromValue($user->job_type),
             job: $user->job,
+            gender: GenderEnum::fromValue($user->gender),
             city_code: $user->city_code,
             created_at: $user->created_at,
             password: Lazy::create(fn() => null),

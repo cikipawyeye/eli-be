@@ -15,6 +15,7 @@ use App\Domains\User\Repositories\UserCriteria;
 use App\Domains\User\Repositories\UserRepository;
 use App\Domains\User\Requests\SaveUserRequest;
 use App\Support\Controllers\Controller;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -24,8 +25,8 @@ class UserController extends Controller
     {
         $this->middleware(sprintf('permission:%s', Permission::BROWSE_USERS))->only('index');
         $this->middleware(sprintf('permission:%s', Permission::READ_USER))->only('show');
-        $this->middleware(sprintf('permission:%s', Permission::ADD_USER))->only('store');
-        $this->middleware(sprintf('permission:%s', Permission::EDIT_USER))->only('update');
+        $this->middleware(sprintf('permission:%s', Permission::ADD_USER))->only('create', 'store');
+        $this->middleware(sprintf('permission:%s', Permission::EDIT_USER))->only('edit', 'update');
         $this->middleware(sprintf('permission:%s', Permission::DELETE_USER))->only('destroy');
         $this->middleware(sprintf('permission:%s', Permission::ADD_PAYMENT))->only('addPayment');
     }
@@ -33,7 +34,7 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index(Request $request): \Inertia\Response
     {
         $criteria = UserCriteria::from([
             ...$request->all(),
@@ -50,10 +51,15 @@ class UserController extends Controller
         ]);
     }
 
+    public function create(): \Inertia\Response
+    {
+        return inertia('User/User/Add');
+    }
+
     /**
      * Store a newly created resource in storage.
      */
-    public function store(SaveUserRequest $request)
+    public function store(SaveUserRequest $request): RedirectResponse
     {
         $user = dispatch_sync(new SaveUserAction(new User(), UserData::from($request->validated())));
 
@@ -65,7 +71,7 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(User $user)
+    public function show(User $user): \Inertia\Response
     {
         return Inertia::render('User/User/Show', [
             'data' => fn() => UserData::fromModel($user)->include('city'),
@@ -73,10 +79,18 @@ class UserController extends Controller
         ]);
     }
 
+    public function edit(User $user): \Inertia\Response
+    {
+        return inertia('User/User/Edit', [
+            'data' => UserData::fromModel($user),
+        ]);
+    }
+
+
     /**
      * Update the specified resource in storage.
      */
-    public function update(SaveUserRequest $request, User $user)
+    public function update(SaveUserRequest $request, User $user): RedirectResponse
     {
         dispatch_sync(new SaveUserAction($user, UserData::from($request->validated())));
 
@@ -88,7 +102,7 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(int $user)
+    public function destroy(int $user):RedirectResponse
     {
         dispatch_sync(new DeleteUserAction($user));
 
@@ -97,7 +111,7 @@ class UserController extends Controller
             ->with('success', __('app.deleted_data', ['data' => __('app.user')]));
     }
 
-    public function addPayment(StorePaymentRequest $request, int $user)
+    public function addPayment(StorePaymentRequest $request, int $user): RedirectResponse
     {
         dispatch_sync(new StorePaymentAction(PaymentData::from([
             ...$request->validated(),

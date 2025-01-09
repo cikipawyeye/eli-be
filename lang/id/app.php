@@ -112,4 +112,5 @@ return [
     'entrepreneur' => 'Wiraswasta/Pengusaha',
     'unemployed' => 'Tidak Bekerja',
     'job_type' => 'Tipe Pekerjaan',
+    'gender' => 'Jenis Kelamin',
 ];

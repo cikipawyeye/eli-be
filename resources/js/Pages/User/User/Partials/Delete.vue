@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { flashSuccess } from '@/Supports/helpers';
 import { useForm, usePage } from '@inertiajs/vue3';
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
@@ -19,7 +20,10 @@ const deleteSubcategory = () => {
             user: user.value.id,
         }),
         {
-            onSuccess: () => emit('closeModal'),
+            onSuccess: () => {
+                flashSuccess(t('deleted_data', { data: t('user') }));
+                emit('closeModal')
+            },
         },
     );
 };

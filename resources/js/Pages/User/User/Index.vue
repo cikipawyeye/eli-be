@@ -1,20 +1,16 @@
 <script setup lang="ts">
 import InputGroup from '@/Components/InputGroup.vue';
-import Modal from '@/Components/Modal.vue';
 import Pagination from '@/Components/Pagination.vue';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Permissions } from '@/Permission';
 import {
     debounce,
-    flashError,
-    flashSuccess,
     formatHumanDateTime,
     rowNumber,
 } from '@/Supports/helpers';
-import { Deferred, Head, Link, router, usePage } from '@inertiajs/vue3';
+import { Deferred, Head, Link, router } from '@inertiajs/vue3';
 import { computed, onMounted, PropType, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
-import Add from './Partials/Add.vue';
 
 const { t } = useI18n();
 
@@ -30,7 +26,6 @@ const props = defineProps({
         required: false,
     },
 });
-const { success, error } = usePage<SharedProps>().props.flash;
 const meta = computed(() => props.data?.meta);
 const criteria = computed(() => props.criteria);
 const premium = ref<'true' | 'false' | null>(null);
@@ -65,12 +60,6 @@ watch(
 
 onMounted(() => {
     search.value = props.criteria?.search ?? '';
-    if (success) {
-        flashSuccess(success);
-    }
-    if (error) {
-        flashError(error);
-    }
 });
 
 const closeAddModal = () => {
@@ -79,23 +68,18 @@ const closeAddModal = () => {
 </script>
 
 <template>
+
     <Head :title="t('users')" />
 
     <AuthenticatedLayout>
         <template #header>
             <ol class="breadcrumb m-auto bg-transparent">
                 <li class="breadcrumb-item text-sm">
-                    <Link
-                        class="text-dark opacity-5"
-                        :href="route('dashboard')"
-                    >
-                        <i class="fa fa-house"></i>
+                    <Link class="text-dark opacity-5" :href="route('dashboard')">
+                    <i class="fa fa-house"></i>
                     </Link>
                 </li>
-                <li
-                    class="breadcrumb-item text-dark active text-sm"
-                    aria-current="page"
-                >
+                <li class="breadcrumb-item text-dark active text-sm" aria-current="page">
                     {{ t('users') }}
                 </li>
             </ol>
@@ -110,10 +94,7 @@ const closeAddModal = () => {
 
                     <div class="d-flex align-items-center ms-auto gap-3">
                         <InputGroup>
-                            <select
-                                v-model="premium"
-                                class="form-control form-control-sm"
-                            >
+                            <select v-model="premium" class="form-control form-control-sm">
                                 <option :value="null">
                                     All Account Status
                                 </option>
@@ -126,35 +107,24 @@ const closeAddModal = () => {
                             </select>
                         </InputGroup>
                         <InputGroup>
-                            <input
-                                v-model="search"
-                                id="search"
-                                type="search"
-                                class="form-control form-control-sm"
-                                placeholder="Search"
-                                @input="handleSearch"
-                            />
+                            <input v-model="search" id="search" type="search" class="form-control form-control-sm"
+                                placeholder="Search" @input="handleSearch" />
                         </InputGroup>
-                        <div
-                            v-if="
-                                (
-                                    $page.props?.auth.user
-                                        ?.permissions_by_roles ?? []
-                                ).includes(Permissions.ADD_USER)
-                            "
-                        >
-                            <button
-                                class="btn btn-primary btn-sm mb-0 text-nowrap"
-                                @click="isAdding = true"
-                            >
-                                <i class="fa fa-plus me-2"></i>
-                                {{
-                                    t('add', {
-                                        data: t('user'),
-                                    })
-                                }}
-                            </button>
-                        </div>
+                        <Link v-if="
+                            (
+                                $page.props?.auth.user
+                                    ?.permissions_by_roles ?? []
+                            ).includes(Permissions.ADD_USER)
+                        " :href="route('users.create')">
+                        <button class="btn btn-primary btn-sm mb-0 text-nowrap">
+                            <i class="fa fa-plus me-2"></i>
+                            {{
+                                t('add', {
+                                    data: t('user'),
+                                })
+                            }}
+                        </button>
+                        </Link>
                     </div>
                 </div>
             </div>
@@ -164,29 +134,19 @@ const closeAddModal = () => {
                     <table class="align-items-center mb-0 table">
                         <thead>
                             <tr>
-                                <th
-                                    class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
-                                >
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                     #
                                 </th>
-                                <th
-                                    class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2"
-                                >
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                     {{ t('account_status') }}
                                 </th>
-                                <th
-                                    class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2"
-                                >
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                     {{ t('name') }}
                                 </th>
-                                <th
-                                    class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2"
-                                >
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                     {{ t('email') }}
                                 </th>
-                                <th
-                                    class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2"
-                                >
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                     {{ t('registered_at') }}
                                 </th>
                                 <th class="text-secondary opacity-7"></th>
@@ -196,92 +156,60 @@ const closeAddModal = () => {
                             <Deferred :data="['data']">
                                 <template #fallback>
                                     <tr>
-                                        <td
-                                            colspan="7"
-                                            class="text-secondary py-6 text-center"
-                                        >
+                                        <td colspan="7" class="text-secondary py-6 text-center">
                                             <span>{{ t('loading_data') }}</span>
                                         </td>
                                     </tr>
                                 </template>
 
-                                <tr
-                                    v-for="(user, index) in data?.data"
-                                    :key="user.id"
-                                >
+                                <tr v-for="(user, index) in data?.data" :key="user.id">
                                     <td class="ps-4">
-                                        <span
-                                            class="font-weight-bold mb-0 text-sm"
-                                            >{{
-                                                rowNumber(
-                                                    index,
-                                                    data?.meta?.from ?? 1,
-                                                )
-                                            }}.</span
-                                        >
+                                        <span class="font-weight-bold mb-0 text-sm">{{
+                                            rowNumber(
+                                                index,
+                                                data?.meta?.from ?? 1,
+                                            )
+                                        }}.</span>
                                     </td>
                                     <td>
-                                        <span
-                                            v-if="user.is_premium"
-                                            class="badge bg-gradient-primary badge-sm"
-                                            >Premium</span
-                                        >
-                                        <span
-                                            v-else
-                                            class="badge badge-secondary badge-sm"
-                                            >Regular</span
-                                        >
+                                        <span v-if="user.is_premium"
+                                            class="badge bg-gradient-primary badge-sm">Premium</span>
+                                        <span v-else class="badge badge-secondary badge-sm">Regular</span>
                                     </td>
                                     <td>
-                                        <Link
-                                            :href="
-                                                route('users.show', {
-                                                    user: user.id,
-                                                })
-                                            "
-                                        >
-                                            <h6 class="mb-0 text-sm">
-                                                {{ user.name }}
-                                            </h6>
+                                        <Link :href="route('users.show', {
+                                            user: user.id,
+                                        })
+                                            ">
+                                        <h6 class="mb-0 text-sm">
+                                            {{ user.name }}
+                                        </h6>
                                         </Link>
                                     </td>
                                     <td class="text-sm">
-                                        <span
-                                            class="font-weight-bold mb-0 text-sm"
-                                            >{{ user.email }}</span
-                                        >
+                                        <span class="font-weight-bold mb-0 text-sm">{{ user.email }}</span>
                                     </td>
                                     <td class="text-sm">
-                                        <span
-                                            class="font-weight-bold mb-0 text-sm"
-                                            >{{
-                                                user.created_at
-                                                    ? formatHumanDateTime(
-                                                          user.created_at,
-                                                      )
-                                                    : '-'
-                                            }}</span
-                                        >
+                                        <span class="font-weight-bold mb-0 text-sm">{{
+                                            user.created_at
+                                                ? formatHumanDateTime(
+                                                    user.created_at,
+                                                )
+                                                : '-'
+                                        }}</span>
                                     </td>
                                     <td class="align-middle">
-                                        <Link
-                                            :href="
-                                                route('users.show', {
-                                                    user: user.id,
-                                                })
-                                            "
-                                            class="text-secondary font-weight-bold text-xs"
-                                        >
-                                            {{ t('detail') }}
+                                        <Link :href="route('users.show', {
+                                            user: user.id,
+                                        })
+                                            " class="text-secondary font-weight-bold text-xs">
+                                        {{ t('detail') }}
                                         </Link>
                                     </td>
                                 </tr>
 
                                 <tr v-if="!data || data?.data.length < 1">
-                                    <td
-                                        colspan="7"
-                                        class="text-secondary py-6 text-center"
-                                    >
+                                    <td colspan="7" class="text-secondary py-6 text-center">
                                         <span>{{
                                             criteria?.search
                                                 ? t('no_data_found')
@@ -300,17 +228,4 @@ const closeAddModal = () => {
             </div>
         </div>
     </AuthenticatedLayout>
-
-    <Modal
-        v-if="
-            ($page.props?.auth.user?.permissions_by_roles ?? []).includes(
-                Permissions.ADD_USER,
-            )
-        "
-        :show="isAdding"
-        id="add-user-modal"
-        @close="closeAddModal"
-    >
-        <Add v-on:close-modal="closeAddModal" />
-    </Modal>
 </template>

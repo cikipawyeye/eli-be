@@ -7,6 +7,7 @@ namespace App\Domains\User\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
 use App\Domains\Payment\Models\Payment;
+use App\Domains\User\Enums\GenderEnum;
 use App\Domains\User\Enums\JobTypeEnum;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -41,7 +42,8 @@ class User extends Authenticatable
         'birth_date',
         'job_type',
         'job',
-        'phone_number'
+        'phone_number',
+        'gender'
     ];
 
     /**
@@ -66,6 +68,7 @@ class User extends Authenticatable
             $validator = Validator::make($user->attributesToArray(), [
                 'job_type' => ['required', 'in:' . implode(',', JobTypeEnum::toArray())],
                 'job' => [sprintf('required_if:job_type,%s', JobTypeEnum::Other->value)],
+                'gender' => ['nullable', 'in:' . implode(',', GenderEnum::toArray())],
             ]);
 
             if ($validator->fails()) {
