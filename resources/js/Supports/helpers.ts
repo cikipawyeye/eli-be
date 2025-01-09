@@ -130,8 +130,19 @@ export function formatMoney(amount: number, digits = 0) {
 
 export function toTitleCase(input: string): string {
     return input
-      .toLowerCase() 
-      .split(' ') 
-      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-      .join(' ');
-  }
+        .toLowerCase()
+        .split(' ')
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(' ');
+}
+
+
+export function formatAverageAge(averageAge: number): string {
+    const decimalPart = averageAge % 1;
+
+    if (decimalPart !== 0) {
+        return averageAge.toFixed(1);
+    }
+
+    return averageAge.toFixed(0);
+}

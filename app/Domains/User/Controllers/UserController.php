@@ -68,7 +68,7 @@ class UserController extends Controller
     public function show(User $user)
     {
         return Inertia::render('User/User/Show', [
-            'data' => fn() => UserData::fromModel($user),
+            'data' => fn() => UserData::fromModel($user)->include('city'),
             'payments' => Inertia::defer(fn() => $this->resource(PaymentData::class, $user->payments()->orderByDesc('created_at')->get())),
         ]);
     }

@@ -88,5 +88,13 @@
     "phone_number": "Nomor Telepon",
     "expired_date": "Tanggal Kadaluarsa",
     "qr_string": "Kode String QR",
-    "account_name": "Nama Akun"
+    "account_name": "Nama Akun",
+    "city": "Kota",
+    "city_code": "Kode Kota",
+    "job": "Pekerjaan",
+    "birth_date": "Tanggal Lahir",
+    "age": "Usia",
+    "non_premium_user": "Pengguna Non-Premium",
+    "premium_user": "Pengguna Premium",
+    "average_age": "Rata-rata Usia"
 }

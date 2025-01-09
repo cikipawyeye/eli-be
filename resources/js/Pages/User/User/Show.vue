@@ -6,6 +6,7 @@ import {
     flashError,
     flashSuccess,
     formatHumanDateTime,
+    toTitleCase,
 } from '@/Supports/helpers';
 import { Head, Link, usePage } from '@inertiajs/vue3';
 import { computed, onMounted, PropType, ref } from 'vue';
@@ -13,6 +14,7 @@ import { useI18n } from 'vue-i18n';
 import Delete from './Partials/Delete.vue';
 import Edit from './Partials/Edit.vue';
 import PaymentList from './Partials/Payment/PaymentList.vue';
+import { differenceInYears } from 'date-fns';
 
 const props = defineProps({
     data: {
@@ -47,24 +49,19 @@ onMounted(() => {
 </script>
 
 <template>
+
     <Head :title="data?.name" />
 
     <AuthenticatedLayout>
         <template #header>
             <ol class="breadcrumb m-auto bg-transparent">
                 <li class="breadcrumb-item text-sm">
-                    <Link
-                        class="text-dark opacity-5"
-                        :href="route('dashboard')"
-                    >
-                        <i class="fa fa-house"></i>
+                    <Link class="text-dark opacity-5" :href="route('dashboard')">
+                    <i class="fa fa-house"></i>
                     </Link>
                 </li>
                 <li class="breadcrumb-item text-sm">{{ t('users') }}</li>
-                <li
-                    class="breadcrumb-item text-dark active text-sm"
-                    aria-current="page"
-                >
+                <li class="breadcrumb-item text-dark active text-sm" aria-current="page">
                     {{ data?.name }}
                 </li>
             </ol>
@@ -72,32 +69,20 @@ onMounted(() => {
 
         <div class="card mb-4 mt-5">
             <div class="card-header position-relative mt-n4 z-index-2 mx-3 p-0">
-                <div
-                    class="shadow-secondary border-radius-lg d-flex flex-wrap gap-4 p-3"
-                >
+                <div class="shadow-secondary border-radius-lg d-flex flex-wrap gap-4 p-3">
                     <h6 class="text-capitalize my-auto">
                         {{ user?.name }}
                     </h6>
 
-                    <span
-                        v-if="user.is_premium"
-                        class="badge bg-gradient-primary my-auto"
-                        >Premium</span
-                    >
+                    <span v-if="user.is_premium" class="badge bg-gradient-primary my-auto">Premium</span>
 
-                    <div
-                        class="d-flex align-items-center justify-content-end ms-auto flex-wrap gap-3"
-                    >
-                        <button
-                            v-if="
-                                (
-                                    $page.props?.auth.user
-                                        ?.permissions_by_roles ?? []
-                                ).includes(Permissions.EDIT_USER)
-                            "
-                            class="btn btn-sm btn-warning mb-0 text-nowrap"
-                            @click="isEditing = true"
-                        >
+                    <div class="d-flex align-items-center justify-content-end ms-auto flex-wrap gap-3">
+                        <button v-if="
+                            (
+                                $page.props?.auth.user
+                                    ?.permissions_by_roles ?? []
+                            ).includes(Permissions.EDIT_USER)
+                        " class="btn btn-sm btn-warning mb-0 text-nowrap" @click="isEditing = true">
                             <i class="fa fa-pencil"></i>
                             <span class="d-none d-md-inline ms-2">{{
                                 t('edit', {
@@ -105,16 +90,12 @@ onMounted(() => {
                                 })
                             }}</span>
                         </button>
-                        <button
-                            v-if="
-                                (
-                                    $page.props?.auth.user
-                                        ?.permissions_by_roles ?? []
-                                ).includes(Permissions.DELETE_USER)
-                            "
-                            class="btn btn-sm btn-danger mb-0 text-nowrap"
-                            @click="isDeleting = true"
-                        >
+                        <button v-if="
+                            (
+                                $page.props?.auth.user
+                                    ?.permissions_by_roles ?? []
+                            ).includes(Permissions.DELETE_USER)
+                        " class="btn btn-sm btn-danger mb-0 text-nowrap" @click="isDeleting = true">
                             <i class="fa fa-trash"></i>
                             <span class="d-none d-md-inline ms-2">{{
                                 t('delete', {
@@ -139,16 +120,27 @@ onMounted(() => {
                         {{ user.email }}
                     </li>
                     <li class="list-group-item border-0 ps-0 text-sm">
-                        <strong class="text-dark"
-                            >{{ t('email_verified_at') }}:</strong
-                        >
+                        <strong class="text-dark">{{ t('age') }}:</strong>
+                        &nbsp;
+                        {{ user.birth_date ? differenceInYears(new Date(), new Date(user.birth_date)) : '-' }}
+                    </li>
+                    <li class="list-group-item border-0 ps-0 text-sm">
+                        <strong class="text-dark">{{ t('job') }}:</strong>
+                        &nbsp;
+                        {{ user.job ?? '-' }}
+                    </li>
+                    <li class="list-group-item border-0 ps-0 text-sm">
+                        <strong class="text-dark">{{ t('city') }}:</strong>
+                        &nbsp;
+                        {{ user.city?.name ? toTitleCase(user.city.name) : '-' }}
+                    </li>
+                    <li class="list-group-item border-0 ps-0 text-sm">
+                        <strong class="text-dark">{{ t('email_verified_at') }}:</strong>
                         &nbsp;
                         {{ user.email_verified_at ?? t('not_verified') }}
                     </li>
                     <li class="list-group-item border-0 ps-0 text-sm">
-                        <strong class="text-dark"
-                            >{{ t('registered_at') }}:</strong
-                        >
+                        <strong class="text-dark">{{ t('registered_at') }}:</strong>
                         &nbsp;
                         {{
                             user.created_at
@@ -163,29 +155,19 @@ onMounted(() => {
         <PaymentList />
     </AuthenticatedLayout>
 
-    <Modal
-        v-if="
-            ($page.props?.auth.user?.permissions_by_roles ?? []).includes(
-                Permissions.EDIT_USER,
-            )
-        "
-        :show="isEditing"
-        id="edit-modal"
-        @close="closeEditModal"
-    >
+    <Modal v-if="
+        ($page.props?.auth.user?.permissions_by_roles ?? []).includes(
+            Permissions.EDIT_USER,
+        )
+    " :show="isEditing" id="edit-modal" @close="closeEditModal">
         <Edit v-on:close-modal="closeEditModal" />
     </Modal>
 
-    <Modal
-        v-if="
-            ($page.props?.auth.user?.permissions_by_roles ?? []).includes(
-                Permissions.DELETE_USER,
-            )
-        "
-        :show="isDeleting"
-        id="delete-modal"
-        @close="closeDeleteModal"
-    >
+    <Modal v-if="
+        ($page.props?.auth.user?.permissions_by_roles ?? []).includes(
+            Permissions.DELETE_USER,
+        )
+    " :show="isDeleting" id="delete-modal" @close="closeDeleteModal">
         <Delete v-on:close-modal="closeDeleteModal" />
     </Modal>
 </template>
