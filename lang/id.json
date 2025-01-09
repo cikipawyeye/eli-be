@@ -107,5 +107,20 @@
     "entrepreneur": "Wiraswasta\/Pengusaha",
     "unemployed": "Tidak Bekerja",
     "job_type": "Tipe Pekerjaan",
-    "gender": "Jenis Kelamin"
+    "gender": "Jenis Kelamin",
+    "range": "Rentang",
+    "user_age": "{data} Tahun",
+    "more_than": "Lebih dari {data}",
+    "less_than": "Kurang dari {data}",
+    "not_filled": "Tidak Diisi",
+    "than": "Dari {data}",
+    "years": "Tahun",
+    "today": "Hari Ini",
+    "this_month": "Bulan Ini",
+    "this_year": "Tahun Ini",
+    "last_month": "Bulan Lalu",
+    "last_year": "Tahun Lalu",
+    "all_time": "Sepanjang Waktu",
+    "yesterday": "Kemarin",
+    "revenue": "Pendapatan"
 }
