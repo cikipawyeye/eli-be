@@ -111,4 +111,5 @@ return [
     'housewife' => 'Ibu Rumah Tangga',
     'entrepreneur' => 'Wiraswasta/Pengusaha',
     'unemployed' => 'Tidak Bekerja',
+    'job_type' => 'Tipe Pekerjaan',
 ];

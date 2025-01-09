@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import Modal from '@/Components/Modal.vue';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import JobType from '@/Constants/JobType';
 import { Permissions } from '@/Permission';
 import {
     flashError,
@@ -127,7 +128,12 @@ onMounted(() => {
                     <li class="list-group-item border-0 ps-0 text-sm">
                         <strong class="text-dark">{{ t('job') }}:</strong>
                         &nbsp;
-                        {{ user.job ?? '-' }}
+                        <span v-if="user.job_type">
+                            {{ t(JobType[user.job_type as keyof typeof JobType]) }}
+                        </span>
+                        <span v-if="user.job_type == '0'">
+                            - {{ user.job }}
+                        </span>
                     </li>
                     <li class="list-group-item border-0 ps-0 text-sm">
                         <strong class="text-dark">{{ t('city') }}:</strong>

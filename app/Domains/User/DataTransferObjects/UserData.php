@@ -3,12 +3,14 @@
 namespace App\Domains\User\DataTransferObjects;
 
 use App\Domains\Payment\DataTransferObjects\PaymentData;
+use App\Domains\User\Enums\JobTypeEnum;
 use App\Domains\User\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Laravolt\Indonesia\Models\City;
 use Spatie\LaravelData\Attributes\WithCast;
 use Spatie\LaravelData\Casts\DateTimeInterfaceCast;
+use Spatie\LaravelData\Casts\EnumCast;
 use Spatie\LaravelData\Data;
 use Spatie\LaravelData\Lazy;
 
@@ -22,6 +24,8 @@ class UserData extends Data
         public readonly ?bool $is_premium,
         #[WithCast(DateTimeInterfaceCast::class, timeZone: 'Asia/Jakarta', format: 'Y-m-d')]
         public readonly string|Carbon|null $birth_date,
+        #[WithCast(EnumCast::class)]
+        public readonly JobTypeEnum|null $job_type,
         public readonly ?string $job,
         public readonly ?string $city_code,
         public readonly string|Carbon|null $created_at,
@@ -39,6 +43,7 @@ class UserData extends Data
             email_verified_at: $user->email_verified_at,
             is_premium: $user->is_premium ?? false,
             birth_date: $user->birth_date,
+            job_type: JobTypeEnum::fromValue($user->job_type),
             job: $user->job,
             city_code: $user->city_code,
             created_at: $user->created_at,

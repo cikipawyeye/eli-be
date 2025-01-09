@@ -96,5 +96,15 @@
     "age": "Usia",
     "non_premium_user": "Pengguna Non-Premium",
     "premium_user": "Pengguna Premium",
-    "average_age": "Rata-rata Usia"
+    "average_age": "Rata-rata Usia",
+    "other": "Lainnya",
+    "student": "Pelajar",
+    "college_student": "Mahasiswa",
+    "government_employee": "Pegawai Negeri (ASN)",
+    "private_employee": "Pegawai Swasta\/Karyawan Swasta",
+    "professional": "Profesional\/Ahli",
+    "housewife": "Ibu Rumah Tangga",
+    "entrepreneur": "Wiraswasta\/Pengusaha",
+    "unemployed": "Tidak Bekerja",
+    "job_type": "Tipe Pekerjaan"
 }
