@@ -23,7 +23,8 @@ const { t } = useI18n();
                         <template #fallback>
                             <h6 class="h6 text-secondary">Loading...</h6>
                         </template>
-                        <h4 class="mb-0">{{ formatAverageAge(+(page.props.averageAge ?? '0')) }}</h4>
+                        <h4 class="mb-0">{{ page.props.averageAge ? formatAverageAge(+page.props.averageAge) : '-' }}
+                        </h4>
                     </Deferred>
                 </div>
                 <div class="icon icon-md icon-shape bg-gradient-dark shadow-dark shadow text-center border-radius-lg">
