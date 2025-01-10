@@ -9,23 +9,23 @@ import AgeStatsCard from './Partials/AgeStatsCard.vue';
 import GenderStatsCard from './Partials/GenderStatsCard.vue';
 import RevenueCard from './Partials/RevenueCard.vue';
 import TabNavs from '@/Components/TabNavs.vue';
-
-defineProps<{
-    premiumUser: number;
-    nonPremiumUser: number;
-    averageAge: string;
-}>();
+import { ref, watch } from 'vue';
 
 const { t } = useI18n();
 
+const range = ref<'today' | 'week' | 'month' | 'year'>('today');
+
 const reload = (range: string) => {
     router.reload({
-        only: [],
+        only: ['revenue'],
         data: {
             range
-        }
+        },
+        showProgress: true
     });
 };
+
+watch(range, reload);
 </script>
 
 <template>
@@ -51,21 +51,21 @@ const reload = (range: string) => {
             <div class="col-12 col-lg-8 mb-4">
                 <TabNavs border variant="nav-pills-primary" :items="[{
                     id: 'today',
-                    name: 'Today',
+                    name: t('today'),
                     active: true,
                 }, {
                     id: 'week',
-                    name: 'This Week',
+                    name: t('this_week'),
                     active: false,
                 }, {
                     id: 'month',
-                    name: 'This Month',
+                    name: t('this_month'),
                     active: false,
                 }, {
                     id: 'year',
-                    name: 'This Year',
+                    name: t('this_year'),
                     active: false,
-                }]" v-on:click="reload" />
+                }]" v-on:click="(selected) => (range = (selected as any))" />
             </div>
         </div>
 
@@ -80,7 +80,7 @@ const reload = (range: string) => {
                 <AverageAgeCard />
             </div>
             <div class="col-xl-3 col-sm-6">
-                <RevenueCard />
+                <RevenueCard :range="range" />
             </div>
         </div>
 

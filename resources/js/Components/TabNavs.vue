@@ -13,7 +13,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, onUnmounted, ref, watch } from 'vue';
+import { onMounted, onUnmounted, ref } from 'vue';
 
 const emit = defineEmits<{
     click: [id: string];
@@ -127,8 +127,6 @@ const initNavs = () => {
     // Resize event
     window.addEventListener('resize', handleResize);
 };
-
-watch(() => props.items, handleResize, { deep: true });
 
 onMounted(() => {
     initNavs();

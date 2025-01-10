@@ -1,11 +1,9 @@
 <script setup lang="ts">
-import { usePage } from '@inertiajs/vue3';
+import { Deferred, usePage } from '@inertiajs/vue3';
 import { useI18n } from 'vue-i18n';
 
 const page = usePage<SharedProps & {
-    premiumUser: number;
-    nonPremiumUser: number;
-    ageStats: Record<'range0'  | 'range1' | 'range2' | 'range3' | 'range4' | 'range5', number>;
+    ageStats: Record<'range0' | 'range1' | 'range2' | 'range3' | 'range4' | 'range5', number>;
 }>()
 
 const { t } = useI18n();
@@ -37,7 +35,12 @@ const { t } = useI18n();
                                 }) }}</h6>
                             </td>
                             <td>
-                                <h6 class="mb-0 text-sm">{{ page.props.ageStats.range0 }} {{ t('users') }}</h6>
+                                <Deferred :data="['ageStats']">
+                                    <template #fallback>
+                                        <p class="text-sm mb-0 text-secondary">Loading...</p>
+                                    </template>
+                                    <h6 class="mb-0 text-sm">{{ page.props.ageStats.range0 }} {{ t('users') }}</h6>
+                                </Deferred>
                             </td>
                         </tr>
                         <tr>
@@ -47,7 +50,12 @@ const { t } = useI18n();
                                 }) }}</h6>
                             </td>
                             <td>
-                                <h6 class="mb-0 text-sm">{{ page.props.ageStats.range1 }} {{ t('users') }}</h6>
+                                <Deferred :data="['ageStats']">
+                                    <template #fallback>
+                                        <p class="text-sm mb-0 text-secondary">Loading...</p>
+                                    </template>
+                                    <h6 class="mb-0 text-sm">{{ page.props.ageStats.range1 }} {{ t('users') }}</h6>
+                                </Deferred>
                             </td>
                         </tr>
                         <tr>
@@ -57,7 +65,12 @@ const { t } = useI18n();
                                 }) }}</h6>
                             </td>
                             <td>
-                                <h6 class="mb-0 text-sm">{{ page.props.ageStats.range2 }} {{ t('users') }}</h6>
+                                <Deferred :data="['ageStats']">
+                                    <template #fallback>
+                                        <p class="text-sm mb-0 text-secondary">Loading...</p>
+                                    </template>
+                                    <h6 class="mb-0 text-sm">{{ page.props.ageStats.range2 }} {{ t('users') }}</h6>
+                                </Deferred>
                             </td>
                         </tr>
                         <tr>
@@ -67,7 +80,12 @@ const { t } = useI18n();
                                 }) }}</h6>
                             </td>
                             <td>
-                                <h6 class="mb-0 text-sm">{{ page.props.ageStats.range3 }} {{ t('users') }}</h6>
+                                <Deferred :data="['ageStats']">
+                                    <template #fallback>
+                                        <p class="text-sm mb-0 text-secondary">Loading...</p>
+                                    </template>
+                                    <h6 class="mb-0 text-sm">{{ page.props.ageStats.range3 }} {{ t('users') }}</h6>
+                                </Deferred>
                             </td>
                         </tr>
                         <tr>
@@ -77,7 +95,12 @@ const { t } = useI18n();
                                 }) }}</h6>
                             </td>
                             <td>
-                                <h6 class="mb-0 text-sm">{{ page.props.ageStats.range4 }} {{ t('users') }}</h6>
+                                <Deferred :data="['ageStats']">
+                                    <template #fallback>
+                                        <p class="text-sm mb-0 text-secondary">Loading...</p>
+                                    </template>
+                                    <h6 class="mb-0 text-sm">{{ page.props.ageStats.range4 }} {{ t('users') }}</h6>
+                                </Deferred>
                             </td>
                         </tr>
                         <tr>
@@ -89,7 +112,12 @@ const { t } = useI18n();
                                 }) }}</h6>
                             </td>
                             <td>
-                                <h6 class="mb-0 text-sm">{{ page.props.ageStats.range5 }} {{ t('users') }}</h6>
+                                <Deferred :data="['ageStats']">
+                                    <template #fallback>
+                                        <p class="text-sm mb-0 text-secondary">Loading...</p>
+                                    </template>
+                                    <h6 class="mb-0 text-sm">{{ page.props.ageStats.range5 }} {{ t('users') }}</h6>
+                                </Deferred>
                             </td>
                         </tr>
                     </tbody>
