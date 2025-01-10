@@ -32,6 +32,10 @@ const percentage = computed(() => {
         return 0;
     }
 
+    if (!page.props.revenue.current && !page.props.revenue.previous) {
+        return 0;
+    }
+
     if (!page.props.revenue.previous) {
         return 100;
     }
