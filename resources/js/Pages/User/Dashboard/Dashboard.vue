@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { Head, router } from '@inertiajs/vue3';
 import { useI18n } from 'vue-i18n';
+import { ref, watch } from 'vue';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import PremiumUserCard from './Partials/PremiumUserCard.vue';
 import NonPremiumUserCard from './Partials/NonPremiumUserCard.vue';
@@ -9,7 +10,7 @@ import AgeStatsCard from './Partials/AgeStatsCard.vue';
 import GenderStatsCard from './Partials/GenderStatsCard.vue';
 import RevenueCard from './Partials/RevenueCard.vue';
 import TabNavs from '@/Components/TabNavs.vue';
-import { ref, watch } from 'vue';
+import CityStatsCard from './Partials/CityStatsCard.vue';
 
 const { t } = useI18n();
 
@@ -85,8 +86,11 @@ watch(range, reload);
         </div>
 
         <div class="row mb-4">
-            <div class="col-lg-8 col-md-6 mb-4 d-flex">
+            <div class="col-lg-4 col-md-6 mb-4 d-flex">
                 <AgeStatsCard />
+            </div>
+            <div class="col-lg-4 col-md-6 mb-4 d-flex">
+                <CityStatsCard />
             </div>
             <div class="col-lg-4 col-md-6 mb-4 d-flex">
                 <GenderStatsCard />

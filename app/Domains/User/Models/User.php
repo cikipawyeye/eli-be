@@ -20,7 +20,6 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 use Laravel\Sanctum\HasApiTokens;
-use Laravolt\Indonesia\Models\City;
 use Spatie\Permission\Traits\HasRoles;
 
 /**

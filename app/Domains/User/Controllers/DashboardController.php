@@ -36,6 +36,7 @@ class DashboardController extends Controller
             'ageStats' => Inertia::defer(fn() => $repo->getAgeStats()),
             'genderStats' => Inertia::defer(fn() => $repo->getGenderStats()),
             'revenue' => Inertia::defer(fn() => $repo->getRevenue()),
+            'topCities' => Inertia::defer(fn() => $repo->getTopCities($request->get('city_cursor'))),
         ]);
     }
 }

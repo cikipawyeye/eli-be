@@ -6,8 +6,11 @@ use App\Domains\Payment\Models\Payment;
 use App\Domains\Payment\States\Payment\Succeeded;
 use App\Domains\User\Enums\GenderEnum;
 use App\Domains\User\Enums\RoleEnum;
+use App\Domains\User\Models\City;
 use App\Domains\User\Models\User;
 use Carbon\Carbon;
+use Illuminate\Pagination\CursorPaginator;
+use Illuminate\Support\Facades\DB;
 
 class DashboardRepository
 {
@@ -86,5 +89,21 @@ class DashboardRepository
             ->first();
 
         return $genderStats->toArray();
+    }
+
+    public function getTopCities(?string $cursor = null): CursorPaginator
+    {
+        $adminIds = User::role([RoleEnum::Admin->value, RoleEnum::SuperAdmin->value])
+            ->pluck('id');
+
+        $cityStats = City::rightJoin('users', 'indonesia_cities.code', '=', 'users.city_code')
+            ->select('indonesia_cities.code', 'indonesia_cities.name', DB::raw('COUNT(DISTINCT users.id) as users_count'))
+            ->whereNull('users.deleted_at')
+            ->whereNotIn('users.id', $adminIds)
+            ->groupBy('indonesia_cities.id')
+            ->orderBy('users_count', 'desc')
+            ->orderBy('indonesia_cities.name', 'asc');
+
+        return $cityStats->cursorPaginate(perPage: 6, cursor: $cursor);
     }
 }

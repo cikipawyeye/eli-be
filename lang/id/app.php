@@ -131,4 +131,5 @@ return [
     'all_time' => 'Sepanjang Waktu',
     'revenue' => 'Pendapatan',
     'registered_user' => 'Pengguna Terdaftar',
+    'unknown' => 'Tidak Diketahui',
 ];
