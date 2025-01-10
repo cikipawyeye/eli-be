@@ -20,20 +20,24 @@ class DashboardRepository
     {
         $interval = $this->since->diff($this->until);
 
-        $currentRevenue = Payment::where('state', Succeeded::$name)
-            ->whereBetween('updated_at', [$this->since, $this->until])
-            ->sum('amount');
-
         $previousSince = $this->since->copy()->sub($interval);
         $previousUntil = $this->until->copy()->sub($interval);
-    
-        $previousRevenue = Payment::where('state', Succeeded::$name)
-            ->whereBetween('updated_at', [$previousSince, $previousUntil])
-            ->sum('amount');
-    
+
+        $revenues = Payment::where('state', Succeeded::$name)
+            ->selectRaw("
+            SUM(CASE WHEN updated_at BETWEEN ? AND ? THEN amount ELSE 0 END) AS current,
+            SUM(CASE WHEN updated_at BETWEEN ? AND ? THEN amount ELSE 0 END) AS previous
+        ", [
+                $this->since,
+                $this->until, // Periode saat ini
+                $previousSince,
+                $previousUntil // Periode sebelumnya
+            ])
+            ->first();
+
         return [
-            'current' => $currentRevenue,
-            'previous' => $previousRevenue,
+            'current' => $revenues->current ?? 0,
+            'previous' => $revenues->previous ?? 0,
         ];
     }
 
