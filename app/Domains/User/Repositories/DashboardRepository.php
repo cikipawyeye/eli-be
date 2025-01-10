@@ -60,7 +60,7 @@ class DashboardRepository
 
     public function getUserAverageAge(): ?float
     {
-        return User::selectRaw('AVG(EXTRACT(YEAR FROM AGE(birth_date))) as average_age')
+        return User::selectRaw('AVG(DATE_PART(\'year\', AGE(birth_date))) as average_age')
             ->value('average_age');
     }
 

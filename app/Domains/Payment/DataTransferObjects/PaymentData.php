@@ -40,7 +40,7 @@ class PaymentData extends Data
             payment_method_type: PaymentMethodType::from($payment->payment_method_type),
             state: $payment->state,
             created_at: $payment->created_at,
-            user: Lazy::create(fn() => UserData::fromModel($payment->user)),
+            user: Lazy::create(fn() => $payment->user ? UserData::fromModel($payment->user) : null),
         );
     }
 }
