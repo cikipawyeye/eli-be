@@ -37,6 +37,7 @@ class SaveUserAction extends Action
 
         $this->model->email_verified_at = $this->data->email_verified_at;
         $this->model->is_premium = $this->data->is_premium;
+        $this->model->city()->associate($this->data->city_code);
 
         if (!empty($this->data->password)) {
             $this->model->password = Hash::make($this->data->password);

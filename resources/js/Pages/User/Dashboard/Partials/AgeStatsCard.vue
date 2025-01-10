@@ -22,7 +22,7 @@ const { t } = useI18n();
                             <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                 {{ t('range') }}</th>
                             <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                {{ t('amount') }}</th>
+                                {{ t('user') }}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -39,7 +39,7 @@ const { t } = useI18n();
                                     <template #fallback>
                                         <p class="text-sm mb-0 text-secondary">Loading...</p>
                                     </template>
-                                    <h6 class="mb-0 text-sm">{{ page.props.ageStats.range0 }} {{ t('users') }}</h6>
+                                    <h6 class="mb-0 text-sm">{{ page.props.ageStats.range0 }}</h6>
                                 </Deferred>
                             </td>
                         </tr>
@@ -54,7 +54,7 @@ const { t } = useI18n();
                                     <template #fallback>
                                         <p class="text-sm mb-0 text-secondary">Loading...</p>
                                     </template>
-                                    <h6 class="mb-0 text-sm">{{ page.props.ageStats.range1 }} {{ t('users') }}</h6>
+                                    <h6 class="mb-0 text-sm">{{ page.props.ageStats.range1 }}</h6>
                                 </Deferred>
                             </td>
                         </tr>
@@ -69,7 +69,7 @@ const { t } = useI18n();
                                     <template #fallback>
                                         <p class="text-sm mb-0 text-secondary">Loading...</p>
                                     </template>
-                                    <h6 class="mb-0 text-sm">{{ page.props.ageStats.range2 }} {{ t('users') }}</h6>
+                                    <h6 class="mb-0 text-sm">{{ page.props.ageStats.range2 }}</h6>
                                 </Deferred>
                             </td>
                         </tr>
@@ -84,7 +84,7 @@ const { t } = useI18n();
                                     <template #fallback>
                                         <p class="text-sm mb-0 text-secondary">Loading...</p>
                                     </template>
-                                    <h6 class="mb-0 text-sm">{{ page.props.ageStats.range3 }} {{ t('users') }}</h6>
+                                    <h6 class="mb-0 text-sm">{{ page.props.ageStats.range3 }}</h6>
                                 </Deferred>
                             </td>
                         </tr>
@@ -99,7 +99,7 @@ const { t } = useI18n();
                                     <template #fallback>
                                         <p class="text-sm mb-0 text-secondary">Loading...</p>
                                     </template>
-                                    <h6 class="mb-0 text-sm">{{ page.props.ageStats.range4 }} {{ t('users') }}</h6>
+                                    <h6 class="mb-0 text-sm">{{ page.props.ageStats.range4 }}</h6>
                                 </Deferred>
                             </td>
                         </tr>
@@ -116,7 +116,7 @@ const { t } = useI18n();
                                     <template #fallback>
                                         <p class="text-sm mb-0 text-secondary">Loading...</p>
                                     </template>
-                                    <h6 class="mb-0 text-sm">{{ page.props.ageStats.range5 }} {{ t('users') }}</h6>
+                                    <h6 class="mb-0 text-sm">{{ page.props.ageStats.range5 }}</h6>
                                 </Deferred>
                             </td>
                         </tr>

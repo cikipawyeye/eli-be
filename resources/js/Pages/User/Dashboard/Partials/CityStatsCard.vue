@@ -42,9 +42,9 @@ const reload = (cursor: {
                     <thead>
                         <tr>
                             <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                {{ t('range') }}</th>
+                                {{ t('city') }}</th>
                             <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                {{ t('amount') }}</th>
+                                {{ t('user') }}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -62,7 +62,7 @@ const reload = (cursor: {
                                     <h6 v-else class="mb-0 text-sm text-secondary">{{ t('unknown') }}</h6>
                                 </td>
                                 <td>
-                                    <h6 class="mb-0 text-sm">{{ city.users_count }} {{ t('users') }}</h6>
+                                    <h6 class="mb-0 text-sm">{{ city.users_count }}</h6>
                                 </td>
                             </tr>
                         </Deferred>

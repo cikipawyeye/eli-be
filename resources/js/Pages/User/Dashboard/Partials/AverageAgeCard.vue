@@ -23,7 +23,12 @@ const { t } = useI18n();
                         <template #fallback>
                             <h6 class="h6 text-secondary">Loading...</h6>
                         </template>
-                        <h4 class="mb-0">{{ page.props.averageAge ? formatAverageAge(+page.props.averageAge) : '-' }}
+                        <h4 v-if="page.props.averageAge" class="mb-0">{{ t('user_age', {
+                            data:
+                                formatAverageAge(+page.props.averageAge)
+                        }) }}
+                        </h4>
+                        <h4 v-else class="mb-0">{{ '-' }}
                         </h4>
                     </Deferred>
                 </div>

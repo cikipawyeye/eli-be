@@ -10,6 +10,7 @@ use App\Domains\User\Actions\SaveUserAction;
 use App\Domains\User\Constants\PermissionConstant as Permission;
 use App\Domains\User\DataTransferObjects\UserData;
 use App\Domains\User\Enums\RoleEnum;
+use App\Domains\User\Models\City;
 use App\Domains\User\Models\User;
 use App\Domains\User\Repositories\UserCriteria;
 use App\Domains\User\Repositories\UserRepository;
@@ -53,7 +54,9 @@ class UserController extends Controller
 
     public function create(): \Inertia\Response
     {
-        return inertia('User/User/Add');
+        return inertia('User/User/Add', [
+            'cities' => City::select('code', 'name')->orderBy('name', 'asc')->get(),
+        ]);
     }
 
     /**
@@ -83,6 +86,7 @@ class UserController extends Controller
     {
         return inertia('User/User/Edit', [
             'data' => UserData::fromModel($user),
+            'cities' => City::select('code', 'name')->orderBy('name', 'asc')->get(),
         ]);
     }
 

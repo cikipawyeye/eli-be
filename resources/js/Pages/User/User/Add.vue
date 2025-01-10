@@ -3,11 +3,18 @@ import InputError from '@/Components/InputError.vue';
 import InputGroup from '@/Components/InputGroup.vue';
 import JobType from '@/Constants/JobType';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { flashSuccess } from '@/Supports/helpers';
+import { flashSuccess, toTitleCase } from '@/Supports/helpers';
 import { Head, Link, useForm } from '@inertiajs/vue3';
 import { useI18n } from 'vue-i18n';
 
 const { t } = useI18n();
+
+defineProps<{
+    cities: {
+        name: string
+        code: string
+    }[];
+}>();
 
 const form = useForm<
     {
@@ -26,6 +33,7 @@ const form = useForm<
     phone_number: undefined,
     gender: undefined,
     birth_date: undefined,
+    city_code: undefined,
 });
 
 const submit = () => {
@@ -112,7 +120,7 @@ const submit = () => {
 
                             <InputGroup :is-invalid="!!form.errors.phone_number">
                                 <input v-model="form.phone_number" id="phone_number" type="text" class="form-control"
-                                    :placeholder="t('phone_number')" autofocus />
+                                    :placeholder="t('phone_number')" />
                             </InputGroup>
 
                             <InputError :message="form.errors.phone_number" />
@@ -124,8 +132,8 @@ const submit = () => {
                             }}</label>
 
                             <InputGroup :is-invalid="!!form.errors.birth_date">
-                                <input v-model="form.birth_date" id="birth_date" type="date"
-                                    class="form-control" :placeholder="t('birth_date')" />
+                                <input v-model="form.birth_date" id="birth_date" type="date" class="form-control"
+                                    :placeholder="t('birth_date')" />
                             </InputGroup>
 
                             <InputError :message="form.errors.birth_date" />
@@ -175,10 +183,24 @@ const submit = () => {
 
                             <InputGroup :is-invalid="!!form.errors.job">
                                 <input v-model="form.job" id="job" type="text" class="form-control"
-                                    :placeholder="t('job')" autofocus />
+                                    :placeholder="t('job')" />
                             </InputGroup>
 
                             <InputError :message="form.errors.job" />
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="city_code" class="form-label">{{ t('city') }}</label>
+
+                            <InputGroup>
+                                <select v-model="form.city_code" class="form-control">
+                                    <option selected disabled value>{{ t('city') }}</option>
+                                    <option v-for="city, index in cities" :key="index" :value="city.code">
+                                        {{ toTitleCase(city.name) }}</option>
+                                </select>
+                            </InputGroup>
+
+                            <InputError :message="form.errors.city_code" />
                         </div>
 
                         <div class="mb-4">

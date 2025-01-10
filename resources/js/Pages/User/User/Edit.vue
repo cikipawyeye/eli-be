@@ -3,7 +3,7 @@ import InputError from '@/Components/InputError.vue';
 import InputGroup from '@/Components/InputGroup.vue';
 import JobType from '@/Constants/JobType';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { flashSuccess } from '@/Supports/helpers';
+import { flashSuccess, toTitleCase } from '@/Supports/helpers';
 import { Head, Link, useForm } from '@inertiajs/vue3';
 import { useI18n } from 'vue-i18n';
 
@@ -11,6 +11,10 @@ const { t } = useI18n();
 
 const props = defineProps<{
     data: User;
+    cities: {
+        name: string
+        code: string
+    }[];
 }>();
 
 const form = useForm<
@@ -30,6 +34,7 @@ const form = useForm<
     phone_number: props.data.phone_number,
     gender: props.data.gender,
     birth_date: props.data.birth_date,
+    city_code: props.data.city_code,
 });
 
 const submit = () => {
@@ -105,7 +110,7 @@ const submit = () => {
                         <div class="mb-3">
                             <label for="email_verified_at" class="form-label">{{
                                 t('email_verified_at')
-                                }}</label>
+                            }}</label>
 
                             <InputGroup :is-invalid="!!form.errors.email_verified_at">
                                 <input v-model="form.email_verified_at" id="email_verified_at" type="datetime-local"
@@ -129,7 +134,7 @@ const submit = () => {
                         <div class="mb-3">
                             <label for="birth_date" class="form-label">{{
                                 t('birth_date')
-                                }}</label>
+                            }}</label>
 
                             <InputGroup :is-invalid="!!form.errors.birth_date">
                                 <input v-model="form.birth_date" id="birth_date" type="date" class="form-control"
@@ -142,7 +147,7 @@ const submit = () => {
                         <div class="mb-3">
                             <label for="" class="form-label">{{
                                 t('gender')
-                                }}</label>
+                            }}</label>
 
                             <div class="d-flex mb-3 mt-2">
                                 <div class="form-check">
@@ -164,7 +169,7 @@ const submit = () => {
                         <div class="mb-3">
                             <label for="job_type" class="form-label">{{
                                 t('job_type')
-                                }}</label>
+                            }}</label>
 
                             <InputGroup :is-invalid="!!form.errors.job_type">
                                 <select v-model="form.job_type" id="job_type" class="form-control">
@@ -189,17 +194,31 @@ const submit = () => {
                             <InputError :message="form.errors.job" />
                         </div>
 
+                        <div class="mb-3">
+                            <label for="city_code" class="form-label">{{ t('city') }}</label>
+
+                            <InputGroup>
+                                <select v-model="form.city_code" class="form-control">
+                                    <option selected disabled value>{{ t('city') }}</option>
+                                    <option v-for="city, index in cities" :key="index" :value="city.code">
+                                        {{ toTitleCase(city.name) }}</option>
+                                </select>
+                            </InputGroup>
+
+                            <InputError :message="form.errors.city_code" />
+                        </div>
+
                         <div class="mb-4">
                             <label for="is_premium" class="form-label">{{
                                 t('account_status')
-                                }}</label>
+                            }}</label>
                             <div class="mx-1">
                                 <div class="form-check form-switch d-flex align-items-center mb-3">
                                     <input v-model="form.is_premium" class="form-check-input" type="checkbox"
                                         id="is_premium" name="is_premium" />
                                     <label class="form-check-label mb-0 ms-3" for="is_premium">{{
                                         form.is_premium ? t('premium') : t('regular')
-                                        }}</label>
+                                    }}</label>
                                 </div>
                             </div>
 
@@ -209,7 +228,7 @@ const submit = () => {
                         <div class="mb-3">
                             <label for="password" class="form-label">{{
                                 t('new_password')
-                                }}</label>
+                            }}</label>
 
                             <InputGroup :is-invalid="!!form.errors.password">
                                 <input v-model="form.password" id="password" type="password" class="form-control"
@@ -222,7 +241,7 @@ const submit = () => {
                         <div v-if="form.password && form.password !== ''" class="mb-3">
                             <label for="password_confirmation" class="form-label">{{
                                 t('password_confirmation')
-                                }}</label>
+                            }}</label>
 
                             <InputGroup :is-invalid="!!form.errors.password_confirmation">
                                 <input v-model="form.password_confirmation" id="password_confirmation" type="password"
