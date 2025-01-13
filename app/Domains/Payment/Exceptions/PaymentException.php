@@ -11,4 +11,9 @@ class PaymentException extends JsonResponseException {
     {
         return new self('Selected payment type is invalid.', 422);
     }
+
+    public static function notFound(): self
+    {
+        return new self('Payment not found.', 404);
+    }
 }

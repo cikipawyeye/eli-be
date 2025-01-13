@@ -3,6 +3,7 @@
 namespace App\Domains\Payment\Controllers\API;
 
 use App\Domains\Payment\Actions\GetPaymentRequestAction;
+use App\Domains\Payment\Exceptions\PaymentException;
 use App\Domains\Payment\Models\Payment;
 use App\Support\Controllers\ApiController;
 use Illuminate\Http\JsonResponse;
@@ -14,6 +15,11 @@ class PaymentController extends ApiController
      */
     public function show(Payment $payment): JsonResponse
     {
+        /** @disregard P1013 */
+        if ($payment->user_id !== auth()->user()->id) {
+            throw PaymentException::notFound();
+        }
+
         /** @var \Xendit\PaymentRequest\PaymentRequest */
         $paymentRequest = GetPaymentRequestAction::dispatchSync($payment);
         /** @var \Xendit\PaymentRequest\PaymentMethod */
