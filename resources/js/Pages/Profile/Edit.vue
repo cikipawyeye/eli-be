@@ -22,7 +22,7 @@ defineProps<{
                         class="text-dark opacity-5"
                         :href="route('dashboard')"
                     >
-                        Dashboard
+                        <i class="fa fa-house"></i>
                     </Link>
                 </li>
                 <li

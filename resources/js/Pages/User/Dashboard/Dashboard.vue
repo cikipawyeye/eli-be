@@ -37,7 +37,7 @@ watch(range, reload);
         <template #header>
             <ol class="breadcrumb m-auto bg-transparent">
                 <li class="breadcrumb-item text-dark active text-sm" aria-current="page">
-                    Dashboard
+                    <i class="fa fa-house me-2"></i> Dashboard
                 </li>
             </ol>
         </template>

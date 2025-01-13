@@ -28,7 +28,7 @@ onMounted(() => {
             <nav
                 v-if="$slots.header"
                 aria-label="breadcrumb"
-                class="me-sm-6 d-flex me-5"
+                class="d-flex me-2"
             >
                 <slot name="header"></slot>
             </nav>

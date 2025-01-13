@@ -30,7 +30,6 @@ const meta = computed(() => props.data?.meta);
 const criteria = computed(() => props.criteria);
 const premium = ref<'true' | 'false' | null>(null);
 const search = ref('');
-const isAdding = ref(false);
 
 const reloadContent = (payload: Record<string, string | number | null>) => {
     router.reload({
@@ -61,10 +60,6 @@ watch(
 onMounted(() => {
     search.value = props.criteria?.search ?? '';
 });
-
-const closeAddModal = () => {
-    isAdding.value = false;
-};
 </script>
 
 <template>
@@ -87,7 +82,7 @@ const closeAddModal = () => {
 
         <div class="card mb-4 mt-5">
             <div class="card-header position-relative mt-n4 z-index-2 mx-3 p-0">
-                <div class="shadow-secondary border-radius-lg d-flex gap-4 p-3">
+                <div class="shadow-secondary border-radius-lg d-flex gap-4 p-3 flex-wrap">
                     <h6 class="text-capitalize my-auto">
                         {{ t('users') }}
                     </h6>
@@ -110,6 +105,7 @@ const closeAddModal = () => {
                             <input v-model="search" id="search" type="search" class="form-control form-control-sm"
                                 placeholder="Search" @input="handleSearch" />
                         </InputGroup>
+                    </div>
                         <Link v-if="
                             (
                                 $page.props?.auth.user
@@ -125,7 +121,6 @@ const closeAddModal = () => {
                             }}
                         </button>
                         </Link>
-                    </div>
                 </div>
             </div>
 

@@ -101,7 +101,7 @@ onMounted(() => {
 
         <div class="card mb-4 mt-5">
             <div class="card-header position-relative mt-n4 z-index-2 mx-3 p-0">
-                <div class="shadow-secondary border-radius-lg d-flex gap-4 p-3">
+                <div class="shadow-secondary border-radius-lg d-flex gap-4 p-3 flex-wrap">
                     <h6 class="text-capitalize my-auto">
                         {{ category }}
                     </h6>
@@ -131,26 +131,28 @@ onMounted(() => {
                                 @input="handleSearch"
                             />
                         </InputGroup>
-                        <Link
-                            :href="
-                                route('subcategories.create', {
-                                    _query: {
-                                        category: criteria?.category,
-                                    },
-                                })
-                            "
-                        >
-                            <button
-                                class="btn btn-primary btn-sm mb-0 text-nowrap"
-                            >
-                                {{
-                                    t('create', {
-                                        data: t('subcategory'),
-                                    })
-                                }}
-                            </button></Link
-                        >
                     </div>
+
+                    <Link
+                        :href="
+                            route('subcategories.create', {
+                                _query: {
+                                    category: criteria?.category,
+                                },
+                            })
+                        "
+                    >
+                        <button
+                            class="btn btn-primary btn-sm mb-0 text-nowrap"
+                        >
+                            <i class="fa fa-plus me-2"></i>
+                            {{
+                                t('create', {
+                                    data: t('subcategory'),
+                                })
+                            }}
+                        </button></Link
+                    >
                 </div>
             </div>
 

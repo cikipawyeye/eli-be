@@ -147,12 +147,12 @@ const closeDeleteModal = () => {
                             <li class="list-group-item border-0 ps-0 text-sm">
                                 <strong class="text-dark">{{ t('status') }}:</strong>
                                 &nbsp;
-                                <span v-if="payment.state === 'SUCCEEDED'" class="badge bg-gradient-primary badge-sm">{{
+                                <span v-if="payment.state === 'SUCCEEDED'" class="badge bg-gradient-primary">{{
                                     t('succeeded') }}</span>
-                                <span v-else-if="payment.state === 'FAILED'" class="badge badge-warning badge-sm">{{
+                                <span v-else-if="payment.state === 'FAILED'" class="badge badge-warning">{{
                                     t('failed')
                                 }}</span>
-                                <span v-else class="badge badge-secondary badge-sm">{{
+                                <span v-else class="badge badge-secondary">{{
                                     t('pending')
                                 }}</span>
                             </li>
