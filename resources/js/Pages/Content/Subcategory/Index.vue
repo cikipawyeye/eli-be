@@ -101,12 +101,12 @@ onMounted(() => {
 
         <div class="card mb-4 mt-5">
             <div class="card-header position-relative mt-n4 z-index-2 mx-3 p-0">
-                <div class="shadow-secondary border-radius-lg d-flex gap-4 p-3 flex-wrap">
+                <div class="shadow-secondary border-radius-lg d-flex gap-4 p-3 flex-sm-nowrap flex-wrap">
                     <h6 class="text-capitalize my-auto">
                         {{ category }}
                     </h6>
 
-                    <div class="d-flex align-items-center ms-auto gap-3">
+                    <div class="d-flex align-items-center ms-auto gap-3 flex-sm-nowrap flex-wrap">
                         <InputGroup>
                             <select
                                 v-model="type"

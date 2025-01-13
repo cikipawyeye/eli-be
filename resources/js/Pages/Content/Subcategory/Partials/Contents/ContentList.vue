@@ -87,7 +87,7 @@ const closeDeleteModal = () => {
 <template>
     <div>
         <div class="d-flex align-items-center my-2 ms-auto flex-wrap gap-3">
-            <div class="d-flex gap-3">
+            <div class="d-flex gap-3 flex-sm-nowrap flex-wrap">
                 <InputGroup>
                     <input
                         v-model="search"
@@ -140,7 +140,7 @@ const closeDeleteModal = () => {
                 <div
                     v-for="content in data?.data"
                     :key="content.id"
-                    class="col-6 col-md-4 col-xl-3 d-flex align-items-stretch"
+                    class="col-12 col-sm-6 col-md-4 col-xl-3 d-flex align-items-stretch"
                 >
                     <ContentCard
                         :content="content"

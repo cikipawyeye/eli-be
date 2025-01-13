@@ -87,7 +87,7 @@ onMounted(() => {
                         {{ t('users') }}
                     </h6>
 
-                    <div class="d-flex align-items-center ms-auto gap-3">
+                    <div class="d-flex align-items-center ms-auto gap-3 flex-sm-nowrap flex-wrap">
                         <InputGroup>
                             <select v-model="premium" class="form-control form-control-sm">
                                 <option :value="null">
@@ -113,12 +113,12 @@ onMounted(() => {
                             ).includes(Permissions.ADD_USER)
                         " :href="route('users.create')">
                         <button class="btn btn-primary btn-sm mb-0 text-nowrap">
-                            <i class="fa fa-plus me-2"></i>
-                            {{
+                            <i class="fa fa-plus"></i>
+                            <span class="ms-2 d-none d-sm-inline">{{
                                 t('add', {
                                     data: t('user'),
                                 })
-                            }}
+                            }}</span>
                         </button>
                         </Link>
                 </div>
