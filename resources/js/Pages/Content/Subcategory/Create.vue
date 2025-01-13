@@ -84,9 +84,13 @@ const submit = () => {
         </template>
 
         <div class="ms-2 my-3">
-            <h3 class="mb-0 h5 font-weight-bolder">{{ t('add', {
-                data: t('subcategory'),
-            }) }}</h3>
+            <h3 class="mb-0 h5 font-weight-bolder">
+                {{
+                    t('add', {
+                        data: t('subcategory'),
+                    })
+                }}
+            </h3>
         </div>
 
         <div class="card mb-4">

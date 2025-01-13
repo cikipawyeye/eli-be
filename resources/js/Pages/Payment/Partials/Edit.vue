@@ -81,9 +81,9 @@ const submit = () => {
                         value="VIRTUAL_ACCOUNT"
                         id="va"
                     />
-                    <label class="custom-control-label" for="va"
-                        >{{t('virtual_account')}}</label
-                    >
+                    <label class="custom-control-label" for="va">{{
+                        t('virtual_account')
+                    }}</label>
                 </div>
 
                 <div class="form-check mb-3">
@@ -95,9 +95,9 @@ const submit = () => {
                         value="OVER_THE_COUNTER"
                         id="counter"
                     />
-                    <label class="custom-control-label" for="counter"
-                        >{{t('over_the_counter')}}</label
-                    >
+                    <label class="custom-control-label" for="counter">{{
+                        t('over_the_counter')
+                    }}</label>
                 </div>
 
                 <div class="form-check mb-3">
@@ -109,7 +109,9 @@ const submit = () => {
                         value="QR_CODE"
                         id="qr"
                     />
-                    <label class="custom-control-label" for="qr">{{t('qr_code')}}</label>
+                    <label class="custom-control-label" for="qr">{{
+                        t('qr_code')
+                    }}</label>
                 </div>
 
                 <div class="form-check mb-3">
@@ -121,9 +123,9 @@ const submit = () => {
                         value="EWALLET"
                         id="ewallet"
                     />
-                    <label class="custom-control-label" for="ewallet"
-                        >{{t('ewallet')}}</label
-                    >
+                    <label class="custom-control-label" for="ewallet">{{
+                        t('ewallet')
+                    }}</label>
                 </div>
 
                 <InputError :message="form.errors.payment_method_type" />

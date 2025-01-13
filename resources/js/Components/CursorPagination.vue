@@ -35,10 +35,15 @@ const handleSetLimit = debounce((perPage?: number) => {
 <template>
     <div class="d-flex flex-wrap w-100">
         <div v-if="withPageSetting" class="d-flex">
-            <span style="text-wrap: nowrap" class="my-auto me-2 text-sm">Per Page:</span>
+            <span style="text-wrap: nowrap" class="my-auto me-2 text-sm"
+                >Per Page:</span
+            >
             <InputGroup>
-                <select v-model="meta.per_page" class="form-control form-control-sm my-auto me-auto"
-                    @change="handleSetLimit(meta.per_page)">
+                <select
+                    v-model="meta.per_page"
+                    class="form-control form-control-sm my-auto me-auto"
+                    @change="handleSetLimit(meta.per_page)"
+                >
                     <option :value="5">5</option>
                     <option :value="10">10</option>
                     <option :value="25">25</option>
@@ -48,28 +53,40 @@ const handleSetLimit = debounce((perPage?: number) => {
             </InputGroup>
         </div>
 
-        <ul v-if="meta?.prev_cursor || meta?.next_cursor"
-            :class="`pagination pagination-info my-auto ms-auto ${size ? `pagination-${size}` : ''}`">
+        <ul
+            v-if="meta?.prev_cursor || meta?.next_cursor"
+            :class="`pagination pagination-info my-auto ms-auto ${size ? `pagination-${size}` : ''}`"
+        >
             <!-- Previous Button -->
             <li class="page-item" :class="{ disabled: !meta?.prev_cursor }">
-                <a class="page-link" href="javascript:;" @click.prevent="
-                    $emit('navigate', {
-                        per_page: meta.per_page,
-                        cursor: meta.prev_cursor,
-                    })
-                    " aria-label="Previous">
+                <a
+                    class="page-link"
+                    href="javascript:;"
+                    @click.prevent="
+                        $emit('navigate', {
+                            per_page: meta.per_page,
+                            cursor: meta.prev_cursor,
+                        })
+                    "
+                    aria-label="Previous"
+                >
                     &laquo;
                 </a>
             </li>
 
             <!-- Next Button -->
             <li class="page-item" :class="{ disabled: !meta?.next_cursor }">
-                <a class="page-link" href="javascript:;" @click.prevent="
-                    $emit('navigate', {
-                        per_page: meta.per_page,
-                        cursor: meta.next_cursor,
-                    })
-                    " aria-label="Next">
+                <a
+                    class="page-link"
+                    href="javascript:;"
+                    @click.prevent="
+                        $emit('navigate', {
+                            per_page: meta.per_page,
+                            cursor: meta.next_cursor,
+                        })
+                    "
+                    aria-label="Next"
+                >
                     &raquo;
                 </a>
             </li>

@@ -24,7 +24,9 @@ const closeAddModal = () => {
 <template>
     <div class="card mb-4 mt-5">
         <div class="card-header position-relative mt-n4 z-index-2 mx-3 p-0">
-            <div class="shadow-secondary border-radius-lg d-flex gap-4 p-3 flex-wrap">
+            <div
+                class="shadow-secondary border-radius-lg d-flex gap-4 p-3 flex-wrap"
+            >
                 <h6 class="text-capitalize my-auto">
                     {{ t('payments') }}
                 </h6>
@@ -44,11 +46,12 @@ const closeAddModal = () => {
                         >
                             <i class="fa fa-plus"></i>
                             <span class="ms-2 d-none d-sm-inline">
-                            {{
-                                t('add', {
-                                    data: t('payment'),
-                                })
-                            }}</span>
+                                {{
+                                    t('add', {
+                                        data: t('payment'),
+                                    })
+                                }}</span
+                            >
                         </button>
                     </div>
                 </div>

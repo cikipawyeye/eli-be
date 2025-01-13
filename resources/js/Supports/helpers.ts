@@ -132,10 +132,9 @@ export function toTitleCase(input: string): string {
     return input
         .toLowerCase()
         .split(' ')
-        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
         .join(' ');
 }
-
 
 export function formatAverageAge(averageAge: number): string {
     const decimalPart = averageAge % 1;

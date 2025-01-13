@@ -22,7 +22,7 @@ const deleteSubcategory = () => {
         {
             onSuccess: () => {
                 flashSuccess(t('deleted_data', { data: t('user') }));
-                emit('closeModal')
+                emit('closeModal');
             },
         },
     );

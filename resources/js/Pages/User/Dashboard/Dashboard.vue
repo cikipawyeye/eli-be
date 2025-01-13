@@ -1,16 +1,16 @@
 <script setup lang="ts">
-import { Head, router } from '@inertiajs/vue3';
-import { useI18n } from 'vue-i18n';
-import { ref, watch } from 'vue';
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import PremiumUserCard from './Partials/PremiumUserCard.vue';
-import NonPremiumUserCard from './Partials/NonPremiumUserCard.vue';
-import AverageAgeCard from './Partials/AverageAgeCard.vue';
-import AgeStatsCard from './Partials/AgeStatsCard.vue';
-import GenderStatsCard from './Partials/GenderStatsCard.vue';
-import RevenueCard from './Partials/RevenueCard.vue';
 import TabNavs from '@/Components/TabNavs.vue';
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import { Head, router } from '@inertiajs/vue3';
+import { ref, watch } from 'vue';
+import { useI18n } from 'vue-i18n';
+import AgeStatsCard from './Partials/AgeStatsCard.vue';
+import AverageAgeCard from './Partials/AverageAgeCard.vue';
 import CityStatsCard from './Partials/CityStatsCard.vue';
+import GenderStatsCard from './Partials/GenderStatsCard.vue';
+import NonPremiumUserCard from './Partials/NonPremiumUserCard.vue';
+import PremiumUserCard from './Partials/PremiumUserCard.vue';
+import RevenueCard from './Partials/RevenueCard.vue';
 
 const { t } = useI18n();
 
@@ -20,9 +20,9 @@ const reload = (range: string) => {
     router.reload({
         only: ['revenue'],
         data: {
-            range
+            range,
         },
-        showProgress: true
+        showProgress: true,
     });
 };
 
@@ -30,13 +30,15 @@ watch(range, reload);
 </script>
 
 <template>
-
     <Head title="Dashboard" />
 
     <AuthenticatedLayout>
         <template #header>
             <ol class="breadcrumb m-auto bg-transparent">
-                <li class="breadcrumb-item text-dark active text-sm" aria-current="page">
+                <li
+                    class="breadcrumb-item text-dark active text-sm"
+                    aria-current="page"
+                >
                     <i class="fa fa-house me-2"></i> Dashboard
                 </li>
             </ol>
@@ -46,27 +48,40 @@ watch(range, reload);
             <div class="col-12 col-lg-4 mb-4 ps-4">
                 <h3 class="mb-0 h5 font-weight-bolder">Dashboard</h3>
                 <p class="mb-0">
-                    Welcome, <span class="text-primary">{{ $page.props.auth.user.name }}</span>
+                    Welcome,
+                    <span class="text-primary">{{
+                        $page.props.auth.user.name
+                    }}</span>
                 </p>
             </div>
             <div class="col-12 col-lg-8 mb-4">
-                <TabNavs border variant="nav-pills-primary" :items="[{
-                    id: 'today',
-                    name: t('today'),
-                    active: true,
-                }, {
-                    id: 'week',
-                    name: t('this_week'),
-                    active: false,
-                }, {
-                    id: 'month',
-                    name: t('this_month'),
-                    active: false,
-                }, {
-                    id: 'year',
-                    name: t('this_year'),
-                    active: false,
-                }]" v-on:click="(selected) => (range = (selected as any))" />
+                <TabNavs
+                    border
+                    variant="nav-pills-primary"
+                    :items="[
+                        {
+                            id: 'today',
+                            name: t('today'),
+                            active: true,
+                        },
+                        {
+                            id: 'week',
+                            name: t('this_week'),
+                            active: false,
+                        },
+                        {
+                            id: 'month',
+                            name: t('this_month'),
+                            active: false,
+                        },
+                        {
+                            id: 'year',
+                            name: t('this_year'),
+                            active: false,
+                        },
+                    ]"
+                    v-on:click="(selected) => (range = selected as any)"
+                />
             </div>
         </div>
 
