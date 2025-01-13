@@ -44,7 +44,7 @@ class UpdateProfileRequest extends FormRequest
                 Rule::unique(User::class)->ignore($this->user()->id)->withoutTrashed(),
             ],
             'birth_date' => 'required|date|before:today',
-            'city_code' => ['required', Rule::exists(config('laravolt.indonesia.table_prefix') . 'cities', 'code')],
+            'city_code' => ['required', Rule::exists(config('laravolt.indonesia.table_prefix').'cities', 'code')],
             'job_type' => ['required', Rule::enum(JobTypeEnum::class)],
             'job' => [sprintf('exclude_unless:job_type,%s', JobTypeEnum::Other->value), sprintf('required_if:job_type,%s', JobTypeEnum::Other->value), 'string', 'max:50'],
             'phone_number' => 'required|string|max:19',

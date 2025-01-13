@@ -22,12 +22,12 @@ use Xendit\PaymentRequest\PaymentMethodReusability;
 use Xendit\PaymentRequest\PaymentMethodType;
 use Xendit\PaymentRequest\PaymentRequest;
 use Xendit\PaymentRequest\PaymentRequestApi;
-use Xendit\PaymentRequest\PaymentRequestParameters;
 use Xendit\PaymentRequest\PaymentRequestCurrency;
+use Xendit\PaymentRequest\PaymentRequestParameters;
 use Xendit\PaymentRequest\QRCodeChannelProperties;
 use Xendit\PaymentRequest\QRCodeParameters;
-use Xendit\PaymentRequest\VirtualAccountParameters;
 use Xendit\PaymentRequest\VirtualAccountChannelProperties;
+use Xendit\PaymentRequest\VirtualAccountParameters;
 
 class PaymentService extends AbstractPaymentService
 {
@@ -63,14 +63,14 @@ class PaymentService extends AbstractPaymentService
 
     protected function setApiInstance(): self
     {
-        $this->apiInstance = new PaymentRequestApi();
+        $this->apiInstance = new PaymentRequestApi;
 
         return $this;
     }
 
     protected function setPaymentRequest(): self
     {
-        $this->parameter = (new PaymentRequestParameters())
+        $this->parameter = (new PaymentRequestParameters)
             ->setAmount($this->amount)
             ->setCurrency(PaymentRequestCurrency::IDR);
 
@@ -101,16 +101,16 @@ class PaymentService extends AbstractPaymentService
 
     protected function useVirtualAccount(VirtualAccountObjectData $property): self
     {
-        $vaObject = (new VirtualAccountParameters())
+        $vaObject = (new VirtualAccountParameters)
             ->setChannelCode($property->channel_code->value)
             ->setAmount($this->amount)
             ->setChannelProperties(
-                (new VirtualAccountChannelProperties())
+                (new VirtualAccountChannelProperties)
                     ->setCustomerName($this->custName)
                     ->setExpiresAt(now()->addDays())
             );
 
-        $paymentMethod = (new PaymentMethodParameters())
+        $paymentMethod = (new PaymentMethodParameters)
             ->setVirtualAccount($vaObject)
             ->setType(PaymentMethodType::VIRTUAL_ACCOUNT)
             ->setReusability(PaymentMethodReusability::ONE_TIME_USE);
@@ -122,16 +122,16 @@ class PaymentService extends AbstractPaymentService
 
     protected function useOverTheCounter(OverTheCounterObjectData $property): self
     {
-        $counterObject = (new OverTheCounterParameters())
+        $counterObject = (new OverTheCounterParameters)
             ->setChannelCode($property->channel_code->value)
             ->setAmount($this->amount)
             ->setChannelProperties(
-                (new OverTheCounterChannelProperties())
+                (new OverTheCounterChannelProperties)
                     ->setCustomerName($this->custName)
                     ->setExpiresAt(now()->addDays())
             );
 
-        $paymentMethod = (new PaymentMethodParameters())
+        $paymentMethod = (new PaymentMethodParameters)
             ->setType(PaymentMethodType::OVER_THE_COUNTER)
             ->setOverTheCounter($counterObject)
             ->setReusability(PaymentMethodReusability::ONE_TIME_USE);
@@ -143,15 +143,15 @@ class PaymentService extends AbstractPaymentService
 
     protected function useQR(QRCodeObjectData $property): self
     {
-        $qrObject = (new QRCodeParameters())
+        $qrObject = (new QRCodeParameters)
             ->setChannelCode($property->channel_code->value)
             ->setChannelProperties(
-                (new QRCodeChannelProperties())
+                (new QRCodeChannelProperties)
                     ->setQrString(Str::orderedUuid()->toString())
                     ->setExpiresAt(now()->addDays())
             );
 
-        $paymentMethod = (new PaymentMethodParameters())
+        $paymentMethod = (new PaymentMethodParameters)
             ->setType(PaymentMethodType::QR_CODE)
             ->setQrCode($qrObject)
             ->setReusability(PaymentMethodReusability::ONE_TIME_USE);
@@ -163,7 +163,7 @@ class PaymentService extends AbstractPaymentService
 
     protected function useEWallet(EWalletObjectData $property): self
     {
-        $channelProperty = (new EWalletChannelProperties())
+        $channelProperty = (new EWalletChannelProperties)
             ->setSuccessReturnUrl(config('app.url'))
             ->setFailureReturnUrl(config('app.url')); // change this
 
@@ -171,13 +171,13 @@ class PaymentService extends AbstractPaymentService
             $channelProperty->setMobileNumber($property->phone_number);
         }
 
-        $eWalletObject = (new EWalletParameters())
+        $eWalletObject = (new EWalletParameters)
             ->setChannelCode($property->channel_code->value)
             ->setChannelProperties(
                 $channelProperty
             );
 
-        $paymentMethod = (new PaymentMethodParameters())
+        $paymentMethod = (new PaymentMethodParameters)
             ->setType(PaymentMethodType::EWALLET)
             ->setEwallet($eWalletObject)
             ->setReusability(PaymentMethodReusability::ONE_TIME_USE);
@@ -214,7 +214,7 @@ class PaymentService extends AbstractPaymentService
     public function getPaymentStatus(string $paymentRequestId): \Xendit\PaymentRequest\PaymentRequestStatus|string
     {
         /** @var \Xendit\PaymentRequest\PaymentRequestStatus */
-        $status = (new PaymentRequestApi()) // NOSONAR
+        $status = (new PaymentRequestApi) // NOSONAR
             ->getPaymentRequestByID($paymentRequestId)
             ->getStatus();
 
@@ -230,10 +230,10 @@ class PaymentService extends AbstractPaymentService
             return;
         }
 
-        $pm = new PaymentMethodApi();
+        $pm = new PaymentMethodApi;
         $pm->simulatePayment(
             payment_method_id: $paymentMethodId,
-            simulate_payment_request: (new \Xendit\PaymentMethod\SimulatePaymentRequest())->setAmount($amount)
+            simulate_payment_request: (new \Xendit\PaymentMethod\SimulatePaymentRequest)->setAmount($amount)
         );
     }
 
@@ -246,7 +246,7 @@ class PaymentService extends AbstractPaymentService
             return;
         }
 
-        $pm = new PaymentMethodApi();
+        $pm = new PaymentMethodApi;
         $pm->expirePaymentMethod(
             payment_method_id: $paymentMethodId
         );

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Domains\User\Controllers\Auth;
 
-use App\Domains\User\Enums\RoleEnum;
 use App\Domains\User\Requests\Auth\LoginRequest;
 use App\Support\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;

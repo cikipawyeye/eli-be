@@ -39,7 +39,7 @@ class SaveUserAction extends Action
         $this->model->is_premium = $this->data->is_premium;
         $this->model->city()->associate($this->data->city_code);
 
-        if (!empty($this->data->password)) {
+        if (! empty($this->data->password)) {
             $this->model->password = Hash::make($this->data->password);
         }
 

@@ -34,13 +34,12 @@ it('can get cities', function () {
 });
 
 it('can get cities with good performance', function () {
-    $result = stress(route('api.register.origin.cities'))
-        // ->concurrently(requests: 200)
-        // ->for(5)
-        // ->seconds()
-        // ->dump()
-        ;
- 
+    $result = stress(route('api.register.origin.cities'));
+    // ->concurrently(requests: 200)
+    // ->for(5)
+    // ->seconds()
+    // ->dump()
+
     expect($result->requests()->duration()->med())->toBeLessThan(100); // < 100.00ms
 });
 

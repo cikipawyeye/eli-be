@@ -12,7 +12,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::redirect('/', '/login');
 
-
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', DashboardController::class)->name('dashboard');
 
@@ -30,4 +29,4 @@ Route::middleware('auth')->group(function () {
     Route::resource('/payments', PaymentController::class)->except(['create', 'edit']);
 });
 
-require __DIR__ . '/auth.php'; // NOSONAR
+require __DIR__.'/auth.php'; // NOSONAR

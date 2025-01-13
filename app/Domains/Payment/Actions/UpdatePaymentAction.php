@@ -1,11 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Domains\Payment\Actions;
 
 use App\Domains\Payment\DataTransferObjects\PaymentData;
 use App\Domains\Payment\Models\Payment;
-use App\Domains\Payment\States\Payment\PaymentState;
-use App\Domains\Payment\States\Payment\Pending;
 use App\Domains\Payment\States\Payment\Succeeded;
 use App\Domains\User\Models\User;
 use App\Support\Actions\Action;
@@ -31,7 +31,7 @@ class UpdatePaymentAction extends Action
         DB::transaction(function () use ($otherUserPaymentCount) {
             $this->model->save();
 
-            if (!($this->model->state instanceof Succeeded) && $otherUserPaymentCount == 0) {
+            if (! ($this->model->state instanceof Succeeded) && 0 == $otherUserPaymentCount) {
                 User::where('id', $this->model->user_id)->update([
                     'is_premium' => false,
                 ]);

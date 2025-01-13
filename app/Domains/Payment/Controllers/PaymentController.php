@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Domains\Payment\Controllers;
 
 use App\Domains\Payment\Actions\DeletePaymentAction;
@@ -9,13 +11,11 @@ use App\Domains\Payment\DataTransferObjects\PaymentData;
 use App\Domains\Payment\Models\Payment;
 use App\Domains\Payment\Repositories\PaymentCriteria;
 use App\Domains\Payment\Repositories\PaymentRepository;
-use App\Domains\Payment\Requests\StorePaymentRequest;
 use App\Domains\Payment\Requests\UpdatePaymentRequest;
 use App\Domains\User\Constants\PermissionConstant as Permission;
 use App\Support\Controllers\Controller;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use Xendit\PaymentRequest\PaymentRequestApi;
 
 class PaymentController extends Controller
 {
@@ -38,7 +38,7 @@ class PaymentController extends Controller
 
         return Inertia::render('Payment/Index', [
             'criteria' => Inertia::always($criteria),
-            'data' => Inertia::defer(fn() => $this->resource(PaymentData::class, $paginate
+            'data' => Inertia::defer(fn () => $this->resource(PaymentData::class, $paginate
                 ? $repository->get()
                 : $repository->paginate($request->all()), 'user')),
         ]);
@@ -51,7 +51,7 @@ class PaymentController extends Controller
     {
         return Inertia::render('Payment/Show', [
             'data' => PaymentData::fromModel($payment)->include('user'),
-            'payment_info' => Inertia::defer(fn() => GetPaymentRequestAction::dispatchSync($payment)),
+            'payment_info' => Inertia::defer(fn () => GetPaymentRequestAction::dispatchSync($payment)),
         ]);
     }
 

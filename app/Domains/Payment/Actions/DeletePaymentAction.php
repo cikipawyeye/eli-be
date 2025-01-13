@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Domains\Payment\Actions;
 
 use App\Domains\Payment\Models\Payment;
@@ -24,7 +26,7 @@ class DeletePaymentAction extends Action
         DB::transaction(function () use ($userPaymentCount, $userId) {
             $this->model->delete();
 
-            if ($userPaymentCount === 1) {
+            if (1 === $userPaymentCount) {
                 User::where('id', $userId)->update([
                     'is_premium' => false,
                 ]);

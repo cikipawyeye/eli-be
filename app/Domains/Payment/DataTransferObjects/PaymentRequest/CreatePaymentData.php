@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace App\Domains\Payment\DataTransferObjects\PaymentRequest;
 
-use App\Domains\Payment\Enums\PaymentMethodType as Type;
-use App\Domains\Payment\Requests\API\CreatePaymentRequest;
-use App\Domains\Payment\Enums\OverTheCounterChannelCode;
 use App\Domains\Payment\Enums\EWalletChannelCode;
+use App\Domains\Payment\Enums\OverTheCounterChannelCode;
+use App\Domains\Payment\Enums\PaymentMethodType as Type;
 use App\Domains\Payment\Enums\QRCodeChannelCode;
 use App\Domains\Payment\Enums\VirtualAccountChannelCode;
 use App\Domains\Payment\Exceptions\PaymentException;
+use App\Domains\Payment\Requests\API\CreatePaymentRequest;
 use Spatie\LaravelData\Attributes\WithCast;
 use Spatie\LaravelData\Casts\EnumCast;
 use Spatie\LaravelData\Data;

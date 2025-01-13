@@ -20,7 +20,7 @@ class GenerateTranslationKeys extends Command
     {
         foreach (['en', 'id'] as $lang) {
             $filename = sprintf('%s.json', $lang);
-            exec('rm ' . lang_path($filename));
+            exec('rm '.lang_path($filename));
 
             $keys = Lang::get('app', [], $lang);
             $count = count($keys);

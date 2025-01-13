@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Domains\Payment\Controllers\API;
 
 use App\Domains\Payment\Actions\GetPaymentRequestAction;
@@ -34,7 +36,7 @@ class PaymentController extends ApiController
                 'over_the_counter' => $paymentMethod->getOverTheCounter(),
                 'qr_code' => $paymentMethod->getQrCode(),
                 'virtual_account' => $paymentMethod->getVirtualAccount(),
-            ]
+            ],
         ]);
     }
 }

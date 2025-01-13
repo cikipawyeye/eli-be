@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Domains\User\Controllers;
 
 use App\Domains\Payment\Actions\StorePaymentAction;
@@ -46,7 +48,7 @@ class UserController extends Controller
 
         return Inertia::render('User/User/Index', [
             'criteria' => Inertia::always($criteria),
-            'data' => Inertia::defer(fn() => $this->resource(UserData::class, $paginate
+            'data' => Inertia::defer(fn () => $this->resource(UserData::class, $paginate
                 ? $repository->get()
                 : $repository->paginate($request->all()))),
         ]);
@@ -64,7 +66,7 @@ class UserController extends Controller
      */
     public function store(SaveUserRequest $request): RedirectResponse
     {
-        $user = dispatch_sync(new SaveUserAction(new User(), UserData::from($request->validated())));
+        $user = dispatch_sync(new SaveUserAction(new User, UserData::from($request->validated())));
 
         return redirect()
             ->route('users.show', ['user' => $user->id])
@@ -77,8 +79,8 @@ class UserController extends Controller
     public function show(User $user): \Inertia\Response
     {
         return Inertia::render('User/User/Show', [
-            'data' => fn() => UserData::fromModel($user)->include('city'),
-            'payments' => Inertia::defer(fn() => $this->resource(PaymentData::class, $user->payments()->orderByDesc('created_at')->get())),
+            'data' => fn () => UserData::fromModel($user)->include('city'),
+            'payments' => Inertia::defer(fn () => $this->resource(PaymentData::class, $user->payments()->orderByDesc('created_at')->get())),
         ]);
     }
 
@@ -89,7 +91,6 @@ class UserController extends Controller
             'cities' => City::select('code', 'name')->orderBy('name', 'asc')->get(),
         ]);
     }
-
 
     /**
      * Update the specified resource in storage.
@@ -106,7 +107,7 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(int $user):RedirectResponse
+    public function destroy(int $user): RedirectResponse
     {
         dispatch_sync(new DeleteUserAction($user));
 

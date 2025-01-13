@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Domains\Payment\Actions;
 
 use App\Domains\Payment\DataTransferObjects\PaymentRequest\CreatePaymentData;
-use App\Domains\Payment\Models\Payment;
 use App\Domains\Payment\Exceptions\UpgradeAccountException;
+use App\Domains\Payment\Models\Payment;
 use App\Domains\Payment\Services\Facade\PaymentService;
 use App\Domains\User\Models\User;
 use App\Support\Actions\Action;
@@ -29,8 +29,8 @@ class UpgradeAccountAction extends Action
 
         $payment = new Payment([
             'x_payment_id' => null,
-            'x_payment_request_id'  => $paymentRequest?->getId(),
-            'x_payment_method_id'  => $paymentRequest?->getPaymentMethod()->getId(),
+            'x_payment_request_id' => $paymentRequest?->getId(),
+            'x_payment_method_id' => $paymentRequest?->getPaymentMethod()->getId(),
             'amount' => $paymentRequest->getAmount(),
             'payment_method_type' => $paymentRequest->getPaymentMethod()->getType(),
         ]);
@@ -65,7 +65,7 @@ class UpgradeAccountAction extends Action
                 'over_the_counter' => $paymentMethod->getOverTheCounter(),
                 'qr_code' => $paymentMethod->getQrCode(),
                 'virtual_account' => $paymentMethod->getVirtualAccount(),
-            ]
+            ],
         ];
     }
 }

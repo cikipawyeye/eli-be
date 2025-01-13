@@ -56,7 +56,7 @@ class ContentController extends ApiController
             ->firstOrFail();
 
         /** @disregard P1013 */
-        if ($content->premium && !auth()->user()->is_premium) {
+        if ($content->premium && ! auth()->user()->is_premium) {
             throw ContentException::premiumContent();
         }
 

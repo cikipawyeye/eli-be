@@ -57,7 +57,7 @@ class Content extends Model implements HasMedia
     public function imageUrls(): Attribute
     {
         $image = $this->getFirstMedia('content');
-        if (!$image) {
+        if (! $image) {
             return Attribute::make(null);
         }
 
@@ -71,13 +71,13 @@ class Content extends Model implements HasMedia
         $optimizedUrl = sprintf('%s&type=optimized', $baseUrl);
         /** @var \Illuminate\Support\Collection<ResponsiveImage> */
         $responsiveImages = $image?->responsiveImages('optimized')->files ?? collect();
-        $responsives = $responsiveImages->map(fn(ResponsiveImage $file) => [
+        $responsives = $responsiveImages->map(fn (ResponsiveImage $file) => [
             'width' => $file->width(),
             'height' => $file->height(),
             'url' => sprintf('%s&type=%s', $baseUrl, sprintf('responsive/%s', $file->fileName)),
         ])->toArray();
 
-        return Attribute::make(fn() => [
+        return Attribute::make(fn () => [
             'original' => $originalUrl,
             'optimized' => $optimizedUrl,
             'responsives' => $responsives,

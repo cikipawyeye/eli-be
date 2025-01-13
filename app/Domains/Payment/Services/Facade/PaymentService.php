@@ -12,21 +12,14 @@ use Illuminate\Support\Facades\Facade;
  */
 
 /**
- * @method static ?int getAmount()
- *
- * @method static \App\Domains\Payment\Services\PaymentService setAmount(int $amount)
- *
+ * @method static ?int                                                                      getAmount()
+ * @method static \App\Domains\Payment\Services\PaymentService                              setAmount(int $amount)
  * @method static \App\Domains\Payment\DataTransferObjects\PaymentRequest\CreatePaymentData getData()
- *
- * @method static \App\Domains\Payment\Services\PaymentService setData(\App\Domains\Payment\DataTransferObjects\PaymentRequest\CreatePaymentData $paymentData)
- *
- * @method static \Xendit\PaymentRequest\PaymentRequest requestPayment(int $amount, \App\Domains\Payment\DataTransferObjects\PaymentRequest\CreatePaymentData $paymentData)
- *
- * @method static void simulate(string $paymentMethodId, int $amount)
- *
- * @method static void expire(string $paymentMethodId)
- *
- * @method static \Xendit\PaymentRequest\PaymentRequestStatus|string getPaymentStatus(string $paymentRequestId)
+ * @method static \App\Domains\Payment\Services\PaymentService                              setData(\App\Domains\Payment\DataTransferObjects\PaymentRequest\CreatePaymentData $paymentData)
+ * @method static \Xendit\PaymentRequest\PaymentRequest                                     requestPayment(int $amount, \App\Domains\Payment\DataTransferObjects\PaymentRequest\CreatePaymentData $paymentData)
+ * @method static void                                                                      simulate(string $paymentMethodId, int $amount)
+ * @method static void                                                                      expire(string $paymentMethodId)
+ * @method static \Xendit\PaymentRequest\PaymentRequestStatus|string                        getPaymentStatus(string $paymentRequestId)
  */
 class PaymentService extends Facade
 {

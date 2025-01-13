@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Domains\User\DataTransferObjects;
 
 use Laravolt\Indonesia\Models\City;
@@ -25,7 +27,7 @@ class CityData extends Data
             code: $model->code,
             province_code: $model->province_code,
             meta: $model->meta,
-            province: Lazy::create(fn() => ProvinceData::fromModel($model->province)),
+            province: Lazy::create(fn () => ProvinceData::fromModel($model->province)),
         );
     }
 }

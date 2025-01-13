@@ -45,7 +45,7 @@ class SubcategoryController extends Controller
 
         return Inertia::render('Content/Subcategory/Index', [
             'criteria' => $criteria,
-            'data' => Inertia::defer(fn() => $this->resource(SubcategoryData::class, $paginate
+            'data' => Inertia::defer(fn () => $this->resource(SubcategoryData::class, $paginate
                 ? $repository->get()
                 : $repository->paginate($request->all()), 'contents_count')),
         ]);
@@ -79,9 +79,9 @@ class SubcategoryController extends Controller
     public function show(ShowSubcategoryRequest $request, int $subcategory): Response
     {
         return Inertia::render('Content/Subcategory/Show', [
-            'data' => fn() => Subcategory::findOrFail($subcategory),
+            'data' => fn () => Subcategory::findOrFail($subcategory),
             'contents' => Inertia::defer(
-                fn() => $this->resource(ContentData::class, $request->getContents(), 'image_urls')
+                fn () => $this->resource(ContentData::class, $request->getContents(), 'image_urls')
             ),
             'content_criteria' => $request->getContentCriteria(),
         ]);

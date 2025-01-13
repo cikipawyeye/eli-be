@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Domains\User\DataTransferObjects;
 
 use App\Domains\Payment\DataTransferObjects\PaymentData;
@@ -27,10 +29,10 @@ class UserData extends Data
         #[WithCast(DateTimeInterfaceCast::class, timeZone: 'Asia/Jakarta', format: 'Y-m-d')]
         public readonly string|Carbon|null $birth_date,
         #[WithCast(EnumCast::class)]
-        public readonly JobTypeEnum|null $job_type,
+        public readonly ?JobTypeEnum $job_type,
         public readonly ?string $job,
         #[WithCast(EnumCast::class)]
-        public readonly GenderEnum|null $gender,
+        public readonly ?GenderEnum $gender,
         public readonly ?string $city_code,
         public readonly string|Carbon|null $created_at,
         public readonly Lazy|string|null $password,
@@ -53,7 +55,7 @@ class UserData extends Data
             gender: GenderEnum::fromValue($user->gender),
             city_code: $user->city_code,
             created_at: $user->created_at,
-            password: Lazy::create(fn() => null),
+            password: Lazy::create(fn () => null),
             payments: self::getPayments($user),
             city: self::getCity($user),
         );
@@ -61,12 +63,12 @@ class UserData extends Data
 
     protected static function getPayments(User $user): Lazy
     {
-        return Lazy::create(fn() => PaymentData::collect($user->payments, Collection::class));
+        return Lazy::create(fn () => PaymentData::collect($user->payments, Collection::class));
     }
 
     protected static function getCity(User $user): Lazy
     {
-        return Lazy::create(fn() => $user->city ? CityData::fromModel($user->city) : null);
+        return Lazy::create(fn () => $user->city ? CityData::fromModel($user->city) : null);
     }
 
     public function toArray(): array

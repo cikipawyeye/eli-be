@@ -63,7 +63,7 @@ function createUser(?array $attributes = null, ?RoleEnum $role = null): User
 
     return User::factory()->create([
         'city_code' => null,
-        ...$attributes
+        ...$attributes,
     ])->assignRole($role);
 }
 

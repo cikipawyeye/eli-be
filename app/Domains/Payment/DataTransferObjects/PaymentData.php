@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Domains\Payment\DataTransferObjects;
 
 use App\Domains\Payment\Enums\PaymentMethodType;
@@ -40,7 +42,7 @@ class PaymentData extends Data
             payment_method_type: PaymentMethodType::from($payment->payment_method_type),
             state: $payment->state,
             created_at: $payment->created_at,
-            user: Lazy::create(fn() => $payment->user ? UserData::fromModel($payment->user) : null),
+            user: Lazy::create(fn () => $payment->user ? UserData::fromModel($payment->user) : null),
         );
     }
 }

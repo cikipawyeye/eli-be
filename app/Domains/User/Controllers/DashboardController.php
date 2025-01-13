@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Domains\User\Controllers;
 
 use App\Domains\User\Repositories\DashboardRepository;
@@ -30,13 +32,13 @@ class DashboardController extends Controller
         $repo = new DashboardRepository($since, $until);
 
         return inertia('User/Dashboard/Dashboard', [
-            'premiumUser' => Inertia::defer(fn() => $repo->getPremiumUser()),
-            'nonPremiumUser' => Inertia::defer(fn() => $repo->getNonPremiumUser()),
-            'averageAge' => Inertia::defer(fn() => $repo->getUserAverageAge()),
-            'ageStats' => Inertia::defer(fn() => $repo->getAgeStats()),
-            'genderStats' => Inertia::defer(fn() => $repo->getGenderStats()),
-            'revenue' => Inertia::defer(fn() => $repo->getRevenue()),
-            'topCities' => Inertia::defer(fn() => $repo->getTopCities($request->get('city_cursor'))),
+            'premiumUser' => Inertia::defer(fn () => $repo->getPremiumUser()),
+            'nonPremiumUser' => Inertia::defer(fn () => $repo->getNonPremiumUser()),
+            'averageAge' => Inertia::defer(fn () => $repo->getUserAverageAge()),
+            'ageStats' => Inertia::defer(fn () => $repo->getAgeStats()),
+            'genderStats' => Inertia::defer(fn () => $repo->getGenderStats()),
+            'revenue' => Inertia::defer(fn () => $repo->getRevenue()),
+            'topCities' => Inertia::defer(fn () => $repo->getTopCities($request->get('city_cursor'))),
         ]);
     }
 }

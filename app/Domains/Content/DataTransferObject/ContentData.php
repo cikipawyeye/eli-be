@@ -31,8 +31,8 @@ class ContentData extends Data
             premium: $model->premium,
             created_at: $model->created_at,
             updated_at: $model->updated_at,
-            image_urls: Lazy::create(fn() => $model->imageUrls),
-            subcategory: Lazy::create(fn() => SubcategoryData::fromModel($model->subcategory)),
+            image_urls: Lazy::create(fn () => $model->imageUrls),
+            subcategory: Lazy::create(fn () => SubcategoryData::fromModel($model->subcategory)),
         );
     }
 }

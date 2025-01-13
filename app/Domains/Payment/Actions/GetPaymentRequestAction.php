@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Domains\Payment\Actions;
 
 use App\Domains\Payment\Models\Payment;
@@ -19,7 +21,7 @@ class GetPaymentRequestAction extends Action
             return null;
         }
 
-        return (new PaymentRequestApi())
+        return (new PaymentRequestApi)
             ->getPaymentRequestByID($this->model->x_payment_request_id);
     }
 }

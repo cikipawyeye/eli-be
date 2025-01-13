@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Domains\Payment\Requests;
 
 use App\Domains\Payment\Enums\PaymentMethodType;

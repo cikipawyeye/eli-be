@@ -1,13 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Domains\Payment\Controllers\API;
 
-use App\Domains\Payment\DataTransferObjects\PaymentData;
-use App\Domains\Payment\States\Payment\Pending;
 use App\Domains\Payment\Actions\UpgradeAccountAction;
 use App\Domains\Payment\Constants\AccountUpgradeStatus;
+use App\Domains\Payment\DataTransferObjects\PaymentData;
 use App\Domains\Payment\DataTransferObjects\PaymentRequest\CreatePaymentData;
 use App\Domains\Payment\Requests\API\CreatePaymentRequest;
+use App\Domains\Payment\States\Payment\Pending;
 use App\Domains\User\Enums\RoleEnum;
 use App\Support\Controllers\ApiController;
 use Illuminate\Http\JsonResponse;

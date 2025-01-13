@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Domains\User\Repositories;
 
 use App\Domains\Payment\Models\Payment;
@@ -27,14 +29,14 @@ class DashboardRepository
         $previousUntil = $this->until->copy()->sub($interval);
 
         $revenues = Payment::where('state', Succeeded::$name)
-            ->selectRaw("
+            ->selectRaw('
             SUM(CASE WHEN updated_at BETWEEN ? AND ? THEN amount ELSE 0 END) AS current,
             SUM(CASE WHEN updated_at BETWEEN ? AND ? THEN amount ELSE 0 END) AS previous
-        ", [
+        ', [
                 $this->since,
                 $this->until, // Periode saat ini
                 $previousSince,
-                $previousUntil // Periode sebelumnya
+                $previousUntil, // Periode sebelumnya
             ])
             ->first();
 
@@ -81,11 +83,11 @@ class DashboardRepository
     public function getGenderStats(): array
     {
         $genderStats = User::role(RoleEnum::User->value)
-            ->selectRaw("
+            ->selectRaw('
                 COUNT(CASE WHEN gender = ? THEN 1 END) AS male,
                 COUNT(CASE WHEN gender = ? THEN 1 END) AS female,
                 COUNT(CASE WHEN gender IS NULL THEN 1 END) AS unknown
-            ", [GenderEnum::Male->value, GenderEnum::Female->value])
+            ', [GenderEnum::Male->value, GenderEnum::Female->value])
             ->first();
 
         return $genderStats->toArray();

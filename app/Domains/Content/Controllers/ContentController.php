@@ -65,7 +65,7 @@ class ContentController extends Controller
     public function getImage(Request $request, int $content)
     {
         if (! $request->hasValidSignatureWhileIgnoring(['type'])) {
-            throw new InvalidSignatureException();
+            throw new InvalidSignatureException;
         }
 
         /** @var Content */
@@ -73,12 +73,13 @@ class ContentController extends Controller
         $media = $content->getFirstMedia('content');
         $type = $request->get('type');
 
-        if (!$type) {
+        if (! $type) {
             return $media;
         }
 
-        if ($type === 'optimized') {
+        if ('optimized' === $type) {
             $path = $media->getPath('optimized');
+
             return file_exists($path) ? response()->file($path) : $media;
         }
 

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Laravolt\Indonesia\Models\City as BaseCityModel;
 
 /**
- * @mixin IdeHelperUser
+ * @mixin IdeHelperCity
  */
 class City extends BaseCityModel
 {

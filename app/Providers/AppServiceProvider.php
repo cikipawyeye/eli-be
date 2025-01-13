@@ -19,7 +19,7 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->bind(AbstractPaymentService::class, function () {
-            return new PaymentService();
+            return new PaymentService;
         });
     }
 
@@ -29,7 +29,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Configuration::setXenditKey(config('services.xendit.api_key'));
-        
+
         Vite::prefetch(concurrency: 3);
 
         Model::preventsLazyLoading();

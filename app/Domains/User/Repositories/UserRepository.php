@@ -32,9 +32,9 @@ class UserRepository extends Repository
 
     public function isPremium(?string $status): self
     {
-        if ($status == 'true') {
+        if ('true' == $status) {
             $this->query->where('is_premium', true);
-        } elseif ($status == 'false') {
+        } elseif ('false' == $status) {
             $this->query->where('is_premium', false);
         }
 

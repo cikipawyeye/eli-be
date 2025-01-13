@@ -44,7 +44,7 @@ class SaveUserRequest extends FormRequest
                 'required',
                 'string',
                 'max:255',
-                $emailRule
+                $emailRule,
             ],
             'password' => [$this->route('user') ? 'nullable' : 'required', 'string', 'min:8', 'confirmed'],
             'email_verified_at' => ['nullable', 'date'],
@@ -54,7 +54,7 @@ class SaveUserRequest extends FormRequest
             'job' => [sprintf('exclude_unless:job_type,%s', JobTypeEnum::Other->value), sprintf('required_if:job_type,%s', JobTypeEnum::Other->value), 'string', 'max:50'],
             'gender' => ['required', Rule::enum(GenderEnum::class)],
             'phone_number' => 'required|string|max:19',
-            'city_code' => ['required', Rule::exists(config('laravolt.indonesia.table_prefix') . 'cities', 'code')],
+            'city_code' => ['required', Rule::exists(config('laravolt.indonesia.table_prefix').'cities', 'code')],
         ];
     }
 

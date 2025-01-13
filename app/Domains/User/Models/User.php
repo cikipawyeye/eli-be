@@ -28,7 +28,7 @@ use Spatie\Permission\Traits\HasRoles;
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, HasRoles, Notifiable, SoftDeletes, HasApiTokens;
+    use HasApiTokens, HasFactory, HasRoles, Notifiable, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -42,7 +42,7 @@ class User extends Authenticatable
         'job_type',
         'job',
         'phone_number',
-        'gender'
+        'gender',
     ];
 
     /**
@@ -65,9 +65,9 @@ class User extends Authenticatable
         static::saving(function ($user) {
             // make sure job is filled if job_type is "Other"
             $validator = Validator::make($user->attributesToArray(), [
-                'job_type' => ['required', 'in:' . implode(',', JobTypeEnum::toArray())],
+                'job_type' => ['required', 'in:'.implode(',', JobTypeEnum::toArray())],
                 'job' => [sprintf('required_if:job_type,%s', JobTypeEnum::Other->value)],
-                'gender' => ['nullable', 'in:' . implode(',', GenderEnum::toArray())],
+                'gender' => ['nullable', 'in:'.implode(',', GenderEnum::toArray())],
             ]);
 
             if ($validator->fails()) {
@@ -107,8 +107,8 @@ class User extends Authenticatable
     public function permissionsByRoles(): Attribute
     {
         return Attribute::make(
-            get: fn() => $this->roles
-                ->map(fn($role) => $role->permissions)
+            get: fn () => $this->roles
+                ->map(fn ($role) => $role->permissions)
                 ->flatten()
                 ->pluck('name')
                 ->toArray(),

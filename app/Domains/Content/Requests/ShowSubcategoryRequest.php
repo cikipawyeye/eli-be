@@ -20,7 +20,7 @@ class ShowSubcategoryRequest extends FormRequest
         ]);
     }
 
-    public function getContents(): Collection | LengthAwarePaginator
+    public function getContents(): Collection|LengthAwarePaginator
     {
         $contentRepo = new ContentRepository($this->getContentCriteria());
         $paginate = 'false' == $this->boolean('content.paginate');

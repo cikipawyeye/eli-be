@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Domains\User\DataTransferObjects;
 
 use Laravolt\Indonesia\Models\Province;

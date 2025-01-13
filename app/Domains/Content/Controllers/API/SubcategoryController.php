@@ -29,7 +29,7 @@ class SubcategoryController extends ApiController
     public function index(int $category, Request $request): JsonResponse
     {
         if (
-            !in_array($category, ContentCategoryEnum::toArray())
+            ! in_array($category, ContentCategoryEnum::toArray())
         ) {
             throw SubcategoryException::invalidCategory();
         }

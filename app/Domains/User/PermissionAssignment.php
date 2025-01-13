@@ -132,7 +132,7 @@ class PermissionAssignment
         $permissions = [];
 
         foreach (self::assignments() as $permission => $roles) {
-            if (in_array($role, array_map(fn(R $role) => $role->value, $roles), true)) {
+            if (in_array($role, array_map(fn (R $role) => $role->value, $roles), true)) {
                 $permissions[] = $permission;
             }
         }

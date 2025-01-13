@@ -6,7 +6,8 @@ namespace App\Domains\Payment\Exceptions;
 
 use App\Support\Exceptions\JsonResponseException;
 
-class UpgradeAccountException extends JsonResponseException {
+class UpgradeAccountException extends JsonResponseException
+{
     public static function alreadyPremium(): self
     {
         return new self('Your account is already premium', 422);

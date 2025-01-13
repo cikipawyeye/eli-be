@@ -24,7 +24,7 @@ class HandlePaymentMethodNotificationAction extends Action
         $event = $this->data->getEvent();
 
         // Only handle failed payment
-        if ($event != 'payment_method.expired') {
+        if ('payment_method.expired' != $event) {
             return;
         }
 
@@ -35,6 +35,7 @@ class HandlePaymentMethodNotificationAction extends Action
 
         if (! $payment) {
             info('Payment not found for payment method', json_decode($this->data->__toString(), true));
+
             return;
         }
 

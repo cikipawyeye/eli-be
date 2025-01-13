@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Domains\Payment\Enums\PaymentMethodType;
 use App\Domains\Payment\States\Payment\Failed;
 use App\Domains\Payment\States\Payment\Pending;

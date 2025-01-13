@@ -37,7 +37,7 @@ class CreatePaymentRequest extends FormRequest
             ],
             'channel_code' => [
                 'required',
-                fn(string $attr, mixed $val, \Closure $fail) => $this->validatePaymentMethod($attr, $val, $fail),
+                fn (string $attr, mixed $val, \Closure $fail) => $this->validatePaymentMethod($attr, $val, $fail),
             ],
             'phone_number' => [
                 'string',
@@ -58,25 +58,21 @@ class CreatePaymentRequest extends FormRequest
                     $fail(__('validation.in', ['attribute' => $attribute]));
                 }
                 break;
-
             case PaymentMethodType::OVER_THE_COUNTER->value:
                 if (! in_array($value, OverTheCounterChannelCode::toArray())) {
                     $fail(__('validation.in', ['attribute' => $attribute]));
                 }
                 break;
-
             case PaymentMethodType::QR_CODE->value:
                 if (! in_array($value, QRCodeChannelCode::toArray())) {
                     $fail(__('validation.in', ['attribute' => $attribute]));
                 }
                 break;
-
             case PaymentMethodType::EWALLET->value:
                 if (! in_array($value, EWalletChannelCode::toArray())) {
                     $fail(__('validation.in', ['attribute' => $attribute]));
                 }
                 break;
-
             default:
                 $fail(__('validation.in', ['attribute' => $attribute]));
                 break;

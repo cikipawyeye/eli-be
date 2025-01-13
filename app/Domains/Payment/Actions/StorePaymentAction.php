@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Domains\Payment\Actions;
 
 use App\Domains\Payment\DataTransferObjects\PaymentData;
@@ -18,7 +20,7 @@ class StorePaymentAction extends Action
 
     public function handle()
     {
-        $payment = new Payment();
+        $payment = new Payment;
         $payment->fill($this->data->toArray());
         $payment->user()->associate($this->data->user_id);
 

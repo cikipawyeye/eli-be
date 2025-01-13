@@ -21,11 +21,11 @@ class RegisterUserAction extends Action
 
     public function handle(): User
     {
-        $user = new User();
+        $user = new User;
         $user->fill($this->data->toArray());
         $user->password = Hash::make($this->data->password);
         $user->city()->associate($this->data->city_code);
-        
+
         DB::transaction(function () use ($user) {
             $user->save();
             $user->assignRole(RoleEnum::User->value);

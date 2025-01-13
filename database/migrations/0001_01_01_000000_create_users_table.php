@@ -30,7 +30,7 @@ return new class extends Migration
             $table->unique(['email', 'deleted_at']);
             $table->foreign('city_code')
                 ->references('code')
-                ->on(config('laravolt.indonesia.table_prefix') . 'cities')
+                ->on(config('laravolt.indonesia.table_prefix').'cities')
                 ->onUpdate('cascade')
                 ->onDelete('set null');
         });

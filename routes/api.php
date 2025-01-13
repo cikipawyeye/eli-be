@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Domains\Content\Controllers\API\ContentController;
 use App\Domains\Content\Controllers\API\SubcategoryController;
 use App\Domains\Payment\Controllers\API\PaymentController;
@@ -9,8 +11,6 @@ use App\Domains\User\Controllers\API\AuthenticatedUserController;
 use App\Domains\User\Controllers\API\ProfileController;
 use App\Domains\User\Controllers\API\RegisterController;
 use Illuminate\Support\Facades\Route;
-
-
 
 Route::prefix('v1')->name('api.')->middleware('auth:sanctum')->group(function () {
     Route::withoutMiddleware('auth:sanctum')->group(function () {
@@ -34,7 +34,7 @@ Route::prefix('v1')->name('api.')->middleware('auth:sanctum')->group(function ()
 
     Route::apiResource('/{category}/subcategories', SubcategoryController::class)->only('index', 'show');
     Route::apiResource('/contents', ContentController::class)->only('index', 'show');
-    
+
     Route::get('/upgrade/status', [UpgradeAccountController::class, 'status'])->name('upgrade.status');
     Route::post('/upgrade', [UpgradeAccountController::class, 'createPayment'])->name('upgrade.create-payment');
 

@@ -28,6 +28,7 @@ class HandlePaymentNotificationAction extends Action
 
         if (! $payment) {
             info('Payment not found', json_decode($this->data->__toString(), true));
+
             return;
         }
 

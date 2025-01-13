@@ -34,10 +34,10 @@ class SubcategoryRepository extends Repository
     protected function type(?string $type): static
     {
         if (
-            $type == 'active' ||
-            $type == 'inactive'
+            'active' == $type ||
+            'inactive' == $type
         ) {
-            $this->query->where('is_active', $type == 'active');
+            $this->query->where('is_active', 'active' == $type);
         }
 
         return $this;
