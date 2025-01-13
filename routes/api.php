@@ -22,6 +22,7 @@ Route::prefix('v1')->name('api.')->middleware('auth:sanctum')->group(function ()
         Route::post('login', [AuthenticatedUserController::class, 'login'])->name('login');
 
         Route::post('payment/webhook', PaymentWebhookController::class)->name('payment.webhook');
+        Route::post('payment/webhook/pm', [PaymentWebhookController::class, 'paymentMethod'])->name('payment.webhook.pm');
     });
 
     Route::post('logout', [AuthenticatedUserController::class, 'logout'])->name('logout');
