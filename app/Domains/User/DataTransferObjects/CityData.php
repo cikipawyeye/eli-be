@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace App\Domains\User\DataTransferObjects;
 
-use Laravolt\Indonesia\Models\City;
+use App\Domains\User\Models\City;
 use Spatie\LaravelData\Data;
 use Spatie\LaravelData\Lazy;
 
 class CityData extends Data
 {
     public function __construct(
-        public readonly ?int $id,
+        public readonly string|int|null $id,
         public readonly string $name,
         public readonly ?string $code,
         public readonly ?string $province_code,
