@@ -40,9 +40,9 @@ class AuthenticatedUserController extends ApiController
 
     public function changePassword(ChangePasswordRequest $request): JsonResponse
     {
-        $request->user()->update([
-            'password' => Hash::make($request->get('password')),
-        ]);
+        $user = $request->user();
+        $user->password = Hash::make($request->get('password'));
+        $user->save();
 
         return $this->sendJsonResponse(message: 'Password changed successfully');
     }

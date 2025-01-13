@@ -24,7 +24,7 @@ const form = useForm<{ image: File | null } & Content>({
     image: null,
     title: selected.value?.title ?? '',
     subcategory_id: selected.value?.subcategory_id ?? 0,
-    premium: selected.value?.premium ?? true,
+    premium: selected.value?.premium ?? false,
 });
 
 const submit = () => {
@@ -48,6 +48,7 @@ watch(
 
         form.title = value.title;
         form.subcategory_id = value.subcategory_id;
+        form.premium = value.premium;
     },
     { immediate: true },
 );
