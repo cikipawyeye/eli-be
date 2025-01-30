@@ -12,6 +12,5 @@ class ContentCriteria extends Criteria
         public readonly ?int $limit,
         public readonly ?string $search,
         public readonly ?int $subcategory,
-        public readonly ?string $type,
     ) {}
 }

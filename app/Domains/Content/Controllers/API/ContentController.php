@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace App\Domains\Content\Controllers\API;
 
 use App\Domains\Content\DataTransferObject\ContentData;
-use App\Domains\Content\Enums\ContentTypeEnum;
-use App\Domains\Content\Exceptions\ContentException;
 use App\Domains\Content\Models\Content;
 use App\Domains\Content\Repositories\ContentCriteria;
 use App\Domains\Content\Repositories\ContentRepository;
@@ -31,7 +29,6 @@ class ContentController extends ApiController
         $criteria = ContentCriteria::from([
             ...$request->all(),
             'subcategory' => $request->subcategory_id,
-            'type' => $request->user()->is_premium ? null : ContentTypeEnum::NonPremium->value,
         ]);
         $repository = new ContentRepository($criteria);
         $data = 'false' == $request->boolean('paginate')
@@ -54,11 +51,6 @@ class ContentController extends ApiController
             ->with('subcategory')
             ->where('id', $content)
             ->firstOrFail();
-
-        /** @disregard P1013 */
-        if ($content->premium && ! auth()->user()->is_premium) {
-            throw ContentException::premiumContent();
-        }
 
         return $this->sendJsonResponse(
             ContentData::fromModel($content)

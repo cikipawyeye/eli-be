@@ -46,13 +46,7 @@ const download = () => {
 
 <template>
     <div class="w-100 card mt-6" data-animation="true">
-        <div class="card-header position-relative mt-n4 z-index-2 mx-3 p-0">
-            <span
-                v-if="content.premium"
-                class="badge bg-gradient-primary position-absolute"
-                style="top: 10px; left: 10px"
-                >Premium Content</span
-            >
+        <div class="card-header mt-n4 z-index-2 mx-3 p-0">
             <picture class="d-block">
                 <source
                     v-for="(item, index) in content.image_urls?.responsives"

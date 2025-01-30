@@ -21,7 +21,7 @@ class StoreContentAction extends Action
     public function handle()
     {
         $this->model->subcategory()->associate($this->data->subcategory_id);
-        $this->model->fill($this->data->only('title', 'premium')->toArray());
+        $this->model->fill($this->data->only('title')->toArray());
 
         DB::transaction(function () {
             $this->model->save();

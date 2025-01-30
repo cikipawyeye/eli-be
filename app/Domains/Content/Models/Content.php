@@ -26,7 +26,7 @@ class Content extends Model implements HasMedia
      *
      * @var array
      */
-    protected $fillable = ['title', 'premium'];
+    protected $fillable = ['title'];
 
     protected static function newFactory(): Factory
     {

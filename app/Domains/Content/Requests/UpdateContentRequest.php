@@ -18,7 +18,6 @@ class UpdateContentRequest extends FormRequest
         return [
             'title' => ['required', 'string', 'max:100'],
             'image' => ['nullable', 'image', 'max:4096'],
-            'premium' => ['required', 'boolean'],
         ];
     }
 }

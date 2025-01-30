@@ -22,7 +22,6 @@ const form = useForm<{ image: File | null } & Content>({
     image: null,
     title: '',
     subcategory_id: props.subcategory_id,
-    premium: true,
 });
 
 const submit = () => {
@@ -89,21 +88,6 @@ const updateFiles = (fileItems: FilePondFile[]) => {
                 />
 
                 <InputError :message="form.errors.image" />
-            </div>
-            <div class="mb-3">
-                <div class="form-check ms-0 ps-0">
-                    <input
-                        v-model="form.premium"
-                        class="form-check-input me-2"
-                        type="checkbox"
-                        value=""
-                        id="premium"
-                    />
-                    <label class="custom-control-label" for="premium"
-                        >Premium user only</label
-                    >
-                </div>
-                <InputError :message="form.errors.premium" />
             </div>
         </div>
 

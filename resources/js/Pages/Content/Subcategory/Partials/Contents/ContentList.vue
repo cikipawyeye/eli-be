@@ -4,7 +4,7 @@ import Modal from '@/Components/Modal.vue';
 import Pagination from '@/Components/Pagination.vue';
 import { debounce } from '@/Supports/helpers';
 import { Deferred, router, usePage } from '@inertiajs/vue3';
-import { computed, ref, watch } from 'vue';
+import { computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import AddContentForm from './AddContentForm.vue';
 import ContentCard from './ContentCard.vue';
@@ -28,7 +28,6 @@ const isAdding = ref(false);
 const isEditing = ref(false);
 const isDeleting = ref(false);
 const selectedContent = ref<Content | null>(null);
-const type = ref<'premium_content' | 'non_premium_content' | null>(null);
 
 const reloadContents = (payload: Record<string, string | number | null>) => {
     router.reload({
@@ -43,7 +42,7 @@ const reloadContents = (payload: Record<string, string | number | null>) => {
     });
 };
 const handleSearch = debounce(() =>
-    reloadContents({ type: type.value, search: search.value, page: 1 }),
+    reloadContents({ search: search.value, page: 1 }),
 );
 const handlePagination = ({
     per_page,
@@ -54,10 +53,6 @@ const handlePagination = ({
 }) => {
     reloadContents({ limit: per_page, page });
 };
-watch(
-    () => type.value,
-    () => reloadContents({ type: type.value, search: search.value, page: 1 }),
-);
 
 const closeAddModal = () => {
     isAdding.value = false;
@@ -101,17 +96,6 @@ const closeDeleteModal = () => {
                         "
                         @input="handleSearch"
                     />
-                </InputGroup>
-                <InputGroup>
-                    <select v-model="type" class="form-control">
-                        <option :value="null">All Content Type</option>
-                        <option value="premium_content">
-                            {{ t('premium_content') }}
-                        </option>
-                        <option value="non_premium_content">
-                            {{ t('non_premium_content') }}
-                        </option>
-                    </select>
                 </InputGroup>
             </div>
             <button

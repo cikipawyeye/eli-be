@@ -2,7 +2,6 @@ type Content = {
     id?: number;
     subcategory_id: number;
     title: string;
-    premium: boolean;
     created_at?: string;
     updated_at?: string;
     subcategory?: Subcategory;
