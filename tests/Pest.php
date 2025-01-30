@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Domains\User\Enums\JobTypeEnum;
 use App\Domains\User\Enums\RoleEnum;
 use App\Domains\User\Models\User;
 use App\Domains\User\PermissionAssignment;
@@ -72,7 +73,8 @@ function createSuperAdmin(array $attributes = []): User
     return createUser([
         ...$attributes,
         'city_code' => null,
-        'job' => null,
+        'job_type' => JobTypeEnum::Other->value,
+        'job' => 'Super Admin',
         'birth_date' => null,
         'is_premium' => false,
         'phone_number' => null,
@@ -84,7 +86,8 @@ function createAdmin(array $attributes = []): User
     return createUser([
         ...$attributes,
         'city_code' => null,
-        'job' => null,
+        'job_type' => JobTypeEnum::Other->value,
+        'job' => 'Admin',
         'birth_date' => null,
         'is_premium' => false,
         'phone_number' => null,

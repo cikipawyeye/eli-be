@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Database\Factories;
 
+use App\Domains\User\Enums\GenderEnum;
+use App\Domains\User\Enums\JobTypeEnum;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -32,6 +34,8 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
+        $jobType = JobTypeEnum::getCollection()->random();
+
         return [
             'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
@@ -39,10 +43,12 @@ class UserFactory extends Factory
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
             'city_code' => fake()->numberBetween(1101, 9471),
-            'job' => fake()->jobTitle(),
+            'job_type' => $jobType,
+            'job' => $jobType == JobTypeEnum::Other->value ? fake()->jobTitle() : null,
             'birth_date' => fake()->date(),
             'is_premium' => fake()->boolean(),
             'phone_number' => fake()->phoneNumber(),
+            'gender' => GenderEnum::getCollection()->random(),
         ];
     }
 

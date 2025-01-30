@@ -23,7 +23,7 @@ class UserData extends Data
         public readonly ?int $id,
         public readonly string $name,
         public readonly ?string $email,
-        public readonly ?string $email_verified_at,
+        public readonly string|Carbon|null $email_verified_at,
         public readonly ?bool $is_premium,
         public readonly ?string $phone_number,
         #[WithCast(DateTimeInterfaceCast::class, timeZone: 'Asia/Jakarta', format: 'Y-m-d')]
