@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Database\Factories;
 
+use App\Domains\Content\Enums\ContentCategoryEnum;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -26,7 +27,23 @@ class SubcategoryFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'name' => fake()->unique()->word(),
+            'category' => ContentCategoryEnum::getCollection()->random(),
+            'is_active' => fake()->boolean(),
         ];
+    }
+
+    public function motivation(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'category' => ContentCategoryEnum::Motivation->value,
+        ]);
+    }
+
+    public function reminder(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'category' => ContentCategoryEnum::Reminder->value,
+        ]);
     }
 }

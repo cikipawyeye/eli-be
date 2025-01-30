@@ -107,6 +107,7 @@ class SubcategoryController extends Controller
         $category = $subcategory->category;
 
         DB::transaction(function () use ($subcategory) {
+            $subcategory->contents()->delete();
             $subcategory->delete();
         });
 

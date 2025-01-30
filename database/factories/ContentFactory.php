@@ -26,7 +26,8 @@ class ContentFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'subcategory_id' => \App\Domains\Content\Models\Subcategory::factory(),
+            'title' => fake()->unique()->sentence(),
         ];
     }
 }

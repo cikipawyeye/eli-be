@@ -20,7 +20,7 @@ class SaveSubcategoryRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'max:100'],
             'is_active' => ['required', 'boolean'],
-            'category' => ['required', 'string', Rule::enum(ContentCategoryEnum::class)],
+            'category' => ['required', Rule::enum(ContentCategoryEnum::class)],
         ];
     }
 }
