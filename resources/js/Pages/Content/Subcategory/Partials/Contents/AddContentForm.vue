@@ -93,6 +93,7 @@ const updateFiles = (fileItems: FilePondFile[]) => {
 
         <div class="modal-footer">
             <button
+                :disabled="form.processing"
                 class="btn btn-secondary mb-1"
                 type="button"
                 @click="emit('closeModal')"
