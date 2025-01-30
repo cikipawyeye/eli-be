@@ -1,0 +1,57 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Rebuild Permission",
+            "type": "shell",
+            "command": "php artisan app:rebuild-permissions && php artisan app:generate-permission-constants",
+            "problemMatcher": [],
+            "isBackground": true
+        },
+        {
+            "label": "Generate Translations Key",
+            "type": "shell",
+            "command": "php artisan app:generate-translation-keys",
+            "problemMatcher": [],
+            "isBackground": true
+        },
+        {
+            "label": "Run Octane Dev Server",
+            "type": "shell",
+            "command": "php artisan octane:start --watch",
+            "problemMatcher": [],
+            "isBackground": true
+        },
+        {
+            "label": "Run Vite Dev Server",
+            "type": "shell",
+            "command": "npm run dev",
+            "problemMatcher": [],
+            "isBackground": true
+        },
+        {
+            "label": "Run Horizon",
+            "type": "shell",
+            "command": "php artisan horizon",
+            "problemMatcher": [],
+            "isBackground": true
+        },
+        {
+            "label": "Xendit Webhook",
+            "type": "shell",
+            "command": "ngrok http --domain=flowing-eminently-pika.ngrok-free.app 8000",
+            "problemMatcher": [],
+            "isBackground": true
+        },
+        {
+            "label": "Start Dev Server",
+            "dependsOn": [
+                "Run Octane Dev Server",
+                "Run Vite Dev Server",
+                "Run Horizon",
+                "Xendit Webhook",
+            ],
+            "problemMatcher": []
+        },
+    ]
+}
