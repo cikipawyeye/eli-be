@@ -10,6 +10,7 @@ use App\Domains\Content\Repositories\ContentCriteria;
 use App\Domains\Content\Repositories\ContentRepository;
 use App\Domains\Content\Requests\API\BrowseContentRequest;
 use App\Domains\User\Constants\PermissionConstant as Permission;
+use App\Domains\User\Enums\RoleEnum;
 use App\Support\Controllers\ApiController;
 use Illuminate\Http\JsonResponse;
 
@@ -31,9 +32,19 @@ class ContentController extends ApiController
             'subcategory' => $request->subcategory_id,
         ]);
         $repository = new ContentRepository($criteria);
-        $data = 'false' == $request->boolean('paginate')
-            ? $repository->get()
-            : $repository->cursorPaginate($request->all());
+
+        /** @disregard P1013 */
+        /** @var \App\Domains\User\Models\User */
+        $user = auth()->user();
+
+        if ($user->hasRole(RoleEnum::User->value) && (!$user->is_premium)) {
+            $repository->limit(3);
+            $data = $repository->get();
+        } else {
+            $data = 'false' == $request->boolean('paginate')
+                ? $repository->get()
+                : $repository->cursorPaginate($request->all());
+        }
 
         return $this->resource(
             ContentData::class,
