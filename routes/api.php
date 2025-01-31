@@ -39,4 +39,6 @@ Route::prefix('v1')->name('api.')->middleware('auth:sanctum')->group(function ()
     Route::post('/upgrade', [UpgradeAccountController::class, 'createPayment'])->name('upgrade.create-payment');
 
     Route::get('/payments/{payment}', [PaymentController::class, 'show'])->name('payments.show');
+
+    Route::get('/contents/{content}/image', [ContentController::class, 'getImage'])->name('contents.image');
 });

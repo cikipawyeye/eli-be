@@ -21,7 +21,6 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('/subcategories', SubcategoryController::class)->except(['edit']);
     Route::resource('/contents', ContentController::class)->only(['store', 'update', 'destroy']);
-    Route::get('/contents/{content}/image', [ContentController::class, 'getImage'])->name('contents.image');
 
     Route::resource('/users', UserController::class);
     Route::post('/users/{user}/add-payment', [UserController::class, 'addPayment'])->name('users.add-payment');

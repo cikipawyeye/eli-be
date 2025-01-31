@@ -13,6 +13,9 @@ use App\Domains\User\Constants\PermissionConstant as Permission;
 use App\Domains\User\Enums\RoleEnum;
 use App\Support\Controllers\ApiController;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Illuminate\Routing\Exceptions\InvalidSignatureException;
+use Illuminate\Support\Facades\Storage;
 
 class ContentController extends ApiController
 {
@@ -67,5 +70,37 @@ class ContentController extends ApiController
             ContentData::fromModel($content)
                 ->include('image_urls', 'subcategory', 'subcategory.category_name')
         );
+    }
+
+    public function getImage(Request $request, int $content)
+    {
+        if (! $request->hasValidSignatureWhileIgnoring(['type'])) {
+            throw new InvalidSignatureException;
+        }
+
+        /** @var Content */
+        $content = Content::with('media')->select('id')->findOrFail($content);
+        $media = $content->getFirstMedia('content');
+        $type = $request->get('type');
+
+        if (! $type) {
+            return $media;
+        }
+
+        if ('optimized' === $type) {
+            $path = $media->getPath('optimized');
+
+            return file_exists($path) ? response()->file($path) : $media;
+        }
+
+        if (str_starts_with($type, 'responsive/')) {
+            $filename = str_replace('responsive/', '', $type);
+            $path = Storage::disk('local')
+                ->path(sprintf('%s/responsive-images/%s', $media->id, $filename));
+
+            return response()->file($path);
+        }
+
+        return abort(404);
     }
 }

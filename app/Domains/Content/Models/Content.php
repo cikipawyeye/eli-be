@@ -63,7 +63,7 @@ class Content extends Model implements HasMedia
 
         $expiresAt = now()->addMinutes(30);
         $baseUrl = URL::temporarySignedRoute(
-            'contents.image',
+            'api.contents.image',
             $expiresAt,
             ['content' => $this->id]
         );
