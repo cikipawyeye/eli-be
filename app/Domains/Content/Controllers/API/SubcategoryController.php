@@ -46,7 +46,8 @@ class SubcategoryController extends ApiController
 
         return $this->resource(
             SubcategoryData::class,
-            $data
+            $data,
+            'contents_count'
         );
     }
 
