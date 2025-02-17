@@ -17,6 +17,7 @@
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.9",
         "laravolt/indonesia": "^0.35.0",
+        "resend/resend-laravel": "^0.16.0",
         "spatie/laravel-data": "^4.11",
         "spatie/laravel-medialibrary": "^11.11",
         "spatie/laravel-model-states": "^2.10",
