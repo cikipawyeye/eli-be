@@ -8,6 +8,7 @@ use App\Domains\Payment\Controllers\API\PaymentController;
 use App\Domains\Payment\Controllers\API\PaymentWebhookController;
 use App\Domains\Payment\Controllers\API\UpgradeAccountController;
 use App\Domains\User\Controllers\API\AuthenticatedUserController;
+use App\Domains\User\Controllers\API\PasswordResetLinkController;
 use App\Domains\User\Controllers\API\ProfileController;
 use App\Domains\User\Controllers\API\RegisterController;
 use Illuminate\Support\Facades\Route;
@@ -23,6 +24,9 @@ Route::prefix('v1')->name('api.')->middleware('auth:sanctum')->group(function ()
 
         Route::post('payment/webhook', PaymentWebhookController::class)->name('payment.webhook');
         Route::post('payment/webhook/pm', [PaymentWebhookController::class, 'paymentMethod'])->name('payment.webhook.pm');
+
+        Route::post('forgot-password', [PasswordResetLinkController::class, 'store'])
+            ->name('password.email');
     });
 
     Route::post('logout', [AuthenticatedUserController::class, 'logout'])->name('logout');
