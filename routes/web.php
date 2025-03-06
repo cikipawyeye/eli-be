@@ -10,7 +10,7 @@ use App\Domains\User\Controllers\ProfileController;
 use App\Domains\User\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
-Route::redirect('/', '/login');
+Route::view('/', 'landing');
 
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', DashboardController::class)->name('dashboard');
