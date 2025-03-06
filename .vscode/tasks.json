@@ -44,12 +44,20 @@
             "isBackground": true
         },
         {
+            "label": "Watch Landing Page CSS",
+            "type": "shell",
+            "command": "npx @tailwindcss/cli -i ./resources/css/tailwind.css -o ./public/assets/css/landing.css --watch --minify",
+            "problemMatcher": [],
+            "isBackground": true
+        },
+        {
             "label": "Start Dev Server",
             "dependsOn": [
                 "Run Octane Dev Server",
                 "Run Vite Dev Server",
                 "Run Horizon",
                 "Xendit Webhook",
+                "Watch Landing Page CSS",
             ],
             "problemMatcher": []
         },

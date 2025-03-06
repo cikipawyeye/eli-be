@@ -1,0 +1,12 @@
+@import "tailwindcss";
+
+@theme {
+    --font-display: "Open Sans", sans-serif;
+
+    --color-primary: #32497B; 
+    --color-secondary: #757575; 
+}
+
+body {
+    font-family: var(--font-display);
+}

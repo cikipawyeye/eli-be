@@ -1,6 +1,17 @@
 {
     "singleQuote": true,
     "plugins": [
-        "prettier-plugin-organize-imports"
+        "prettier-plugin-organize-imports",
+        "prettier-plugin-blade"
+    ],
+    "overrides": [
+        {
+            "files": [
+                "*.blade.php"
+            ],
+            "options": {
+                "parser": "blade"
+            }
+        }
     ]
 }
