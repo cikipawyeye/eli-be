@@ -26,4 +26,10 @@ export const Permissions = {
     EDIT_PAYMENT: 'edit_payment',
     ADD_PAYMENT: 'add_payment',
     DELETE_PAYMENT: 'delete_payment',
+    MANAGE_WALLPAPERS: 'manage_wallpapers',
+    BROWSE_WALLPAPERS: 'browse_wallpapers',
+    READ_WALLPAPER: 'read_wallpaper',
+    EDIT_WALLPAPER: 'edit_wallpaper',
+    ADD_WALLPAPER: 'add_wallpaper',
+    DELETE_WALLPAPER: 'delete_wallpaper',
 };

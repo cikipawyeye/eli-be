@@ -43,7 +43,7 @@ class Content extends Model implements HasMedia
     public function registerMediaConversions(?Media $media = null): void
     {
         $this->addMediaConversion('optimized')
-            ->format('jpg')
+            ->format('webp')
             ->performOnCollections('content')
             ->withResponsiveImages();
     }

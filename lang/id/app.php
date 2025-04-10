@@ -132,4 +132,9 @@ return [
     'revenue' => 'Pendapatan',
     'registered_user' => 'Pengguna Terdaftar',
     'unknown' => 'Tidak Diketahui',
+    'wallpapers' => 'Wallpaper',
+    'wallpaper' => 'Wallpaper',
+    'file' => 'File',
+    'music' => 'Musik',
+    'musics' => 'Musik',
 ];

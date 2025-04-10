@@ -7,6 +7,8 @@ use App\Domains\Content\Controllers\API\SubcategoryController;
 use App\Domains\Payment\Controllers\API\PaymentController;
 use App\Domains\Payment\Controllers\API\PaymentWebhookController;
 use App\Domains\Payment\Controllers\API\UpgradeAccountController;
+use App\Domains\Theme\Controllers\API\MusicController;
+use App\Domains\Theme\Controllers\API\WallpaperController;
 use App\Domains\User\Controllers\API\AuthenticatedUserController;
 use App\Domains\User\Controllers\API\PasswordResetLinkController;
 use App\Domains\User\Controllers\API\ProfileController;
@@ -38,11 +40,17 @@ Route::prefix('v1')->name('api.')->middleware('auth:sanctum')->group(function ()
 
     Route::apiResource('/{category}/subcategories', SubcategoryController::class)->only('index', 'show');
     Route::apiResource('/contents', ContentController::class)->only('index', 'show');
+    Route::get('/contents/{content}/image', [ContentController::class, 'getImage'])->name('contents.image');
 
     Route::get('/upgrade/status', [UpgradeAccountController::class, 'status'])->name('upgrade.status');
     Route::post('/upgrade', [UpgradeAccountController::class, 'createPayment'])->name('upgrade.create-payment');
 
     Route::get('/payments/{payment}', [PaymentController::class, 'show'])->name('payments.show');
 
-    Route::get('/contents/{content}/image', [ContentController::class, 'getImage'])->name('contents.image');
+    Route::apiResource('/wallpapers', WallpaperController::class)->only('index', 'show');
+    Route::get('/wallpapers/{wallpaper}/file', [WallpaperController::class, 'getFile'])->name('wallpapers.file');
+    Route::get('/wallpapers/{wallpaper}/thumbnail', [WallpaperController::class, 'getThumbnail'])->name('wallpapers.thumbnail');
+
+    Route::apiResource('/musics', MusicController::class)->only('index', 'show');
+    Route::get('/musics/{music}/file', [MusicController::class, 'getFile'])->name('musics.file');
 });
