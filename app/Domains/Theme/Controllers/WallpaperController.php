@@ -8,7 +8,6 @@ use App\Domains\Theme\Models\Wallpaper;
 use App\Domains\Theme\Repositories\WallpaperCriteria;
 use App\Domains\Theme\Repositories\WallpaperRepository;
 use App\Domains\Theme\Requests\StoreWallpaperRequest;
-use App\Domains\Theme\Requests\UpdateWallpaperRequest;
 use App\Support\Controllers\Controller;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -37,14 +36,14 @@ class WallpaperController extends Controller
      */
     public function store(StoreWallpaperRequest $request)
     {
-        $user = dispatch_sync(new StoreWallpaperAction(
+        dispatch_sync(new StoreWallpaperAction(
             $request->get('name'),
             $request->file('file')
         ));
 
         return redirect()
-            ->route('wallpapers.index', ['user' => $user->id])
-            ->with('success', __('app.stored_data', ['data' => __('app.user')]));
+            ->route('wallpapers.index')
+            ->with('success', __('app.stored_data', ['data' => __('app.wallpaper')]));
     }
 
     /**

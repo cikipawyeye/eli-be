@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Domains\Theme\Controllers\API;
 
-use App\Domains\Content\Requests\API\BrowseContentRequest;
 use App\Domains\Theme\DataTransferObjects\WallpaperData;
 use App\Domains\Theme\Models\Wallpaper;
 use App\Domains\Theme\Repositories\WallpaperCriteria;
@@ -30,7 +29,7 @@ class WallpaperController extends ApiController
     /**
      * Display a listing of the resource.
      */
-    public function index(BrowseContentRequest $request): JsonResponse
+    public function index(Request $request): JsonResponse
     {
         $criteria = WallpaperCriteria::from([
             ...$request->all(),
@@ -61,7 +60,7 @@ class WallpaperController extends ApiController
 
     public function getThumbnail(Request $request, int $wallpaper)
     {
-        if (! $request->hasValidSignatureWhileIgnoring(['type'])) {
+        if (! $request->hasValidSignature()) {
             throw new InvalidSignatureException;
         }
 
@@ -75,7 +74,7 @@ class WallpaperController extends ApiController
 
     public function getFile(Request $request, int $wallpaper)
     {
-        if (! $request->hasValidSignatureWhileIgnoring(['type'])) {
+        if (! $request->hasValidSignature()) {
             throw new InvalidSignatureException;
         }
 

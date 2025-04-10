@@ -152,6 +152,34 @@ class PermissionAssignment
                 R::SuperAdmin,
                 R::Admin,
             ],
+
+            // Music
+            P::MANAGE_MUSICS => [
+                R::SuperAdmin,
+                R::Admin,
+            ],
+            P::BROWSE_MUSICS => [
+                R::SuperAdmin,
+                R::Admin,
+                R::User,
+            ],
+            P::READ_MUSIC => [
+                R::SuperAdmin,
+                R::Admin,
+                R::User,
+            ],
+            P::EDIT_MUSIC => [
+                R::SuperAdmin,
+                R::Admin,
+            ],
+            P::ADD_MUSIC => [
+                R::SuperAdmin,
+                R::Admin,
+            ],
+            P::DELETE_MUSIC => [
+                R::SuperAdmin,
+                R::Admin,
+            ],
         ];
     }
 

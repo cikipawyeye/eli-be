@@ -50,4 +50,12 @@ class PermissionConstant extends Constant
     public const EDIT_WALLPAPER = 'edit_wallpaper';
     public const ADD_WALLPAPER = 'add_wallpaper';
     public const DELETE_WALLPAPER = 'delete_wallpaper';
+
+    // music
+    public const MANAGE_MUSICS = 'manage_musics';
+    public const BROWSE_MUSICS = 'browse_musics';
+    public const READ_MUSIC = 'read_music';
+    public const EDIT_MUSIC = 'edit_music';
+    public const ADD_MUSIC = 'add_music';
+    public const DELETE_MUSIC = 'delete_music';
 }

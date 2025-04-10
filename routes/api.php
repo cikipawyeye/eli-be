@@ -7,6 +7,7 @@ use App\Domains\Content\Controllers\API\SubcategoryController;
 use App\Domains\Payment\Controllers\API\PaymentController;
 use App\Domains\Payment\Controllers\API\PaymentWebhookController;
 use App\Domains\Payment\Controllers\API\UpgradeAccountController;
+use App\Domains\Theme\Controllers\API\MusicController;
 use App\Domains\Theme\Controllers\API\WallpaperController;
 use App\Domains\User\Controllers\API\AuthenticatedUserController;
 use App\Domains\User\Controllers\API\PasswordResetLinkController;
@@ -49,4 +50,7 @@ Route::prefix('v1')->name('api.')->middleware('auth:sanctum')->group(function ()
     Route::apiResource('/wallpapers', WallpaperController::class)->only('index', 'show');
     Route::get('/wallpapers/{wallpaper}/file', [WallpaperController::class, 'getFile'])->name('wallpapers.file');
     Route::get('/wallpapers/{wallpaper}/thumbnail', [WallpaperController::class, 'getThumbnail'])->name('wallpapers.thumbnail');
+
+    Route::apiResource('/musics', MusicController::class)->only('index', 'show');
+    Route::get('/musics/{music}/file', [MusicController::class, 'getFile'])->name('musics.file');
 });

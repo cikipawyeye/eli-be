@@ -135,4 +135,6 @@ return [
     'wallpapers' => 'Wallpaper',
     'wallpaper' => 'Wallpaper',
     'file' => 'File',
+    'music' => 'Musik',
+    'musics' => 'Musik',
 ];

@@ -5,6 +5,7 @@ declare(strict_types=1);
 use App\Domains\Content\Controllers\ContentController;
 use App\Domains\Content\Controllers\SubcategoryController;
 use App\Domains\Payment\Controllers\PaymentController;
+use App\Domains\Theme\Controllers\MusicController;
 use App\Domains\Theme\Controllers\WallpaperController;
 use App\Domains\User\Controllers\DashboardController;
 use App\Domains\User\Controllers\ProfileController;
@@ -29,6 +30,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('/payments', PaymentController::class)->except(['create', 'edit']);
 
     Route::resource('/wallpapers', WallpaperController::class)->only(['index', 'store', 'destroy']);
+
+    Route::resource('/musics', MusicController::class)->only(['index', 'store', 'destroy']);
 });
 
 require __DIR__.'/auth.php'; // NOSONAR
