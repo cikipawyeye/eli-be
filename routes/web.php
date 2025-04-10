@@ -5,6 +5,7 @@ declare(strict_types=1);
 use App\Domains\Content\Controllers\ContentController;
 use App\Domains\Content\Controllers\SubcategoryController;
 use App\Domains\Payment\Controllers\PaymentController;
+use App\Domains\Theme\Controllers\WallpaperController;
 use App\Domains\User\Controllers\DashboardController;
 use App\Domains\User\Controllers\ProfileController;
 use App\Domains\User\Controllers\UserController;
@@ -26,6 +27,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/users/{user}/add-payment', [UserController::class, 'addPayment'])->name('users.add-payment');
 
     Route::resource('/payments', PaymentController::class)->except(['create', 'edit']);
+
+    Route::resource('/wallpapers', WallpaperController::class)->only(['index', 'store', 'destroy']);
 });
 
 require __DIR__.'/auth.php'; // NOSONAR

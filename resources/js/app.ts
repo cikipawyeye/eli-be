@@ -5,6 +5,7 @@ import '../theme/scss/material-dashboard.scss';
 import './bootstrap';
 
 import { createInertiaApp } from '@inertiajs/vue3';
+import FilePondPluginFileValidateSize from 'filepond-plugin-file-validate-size';
 import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
 import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
@@ -20,6 +21,7 @@ const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 const FilePond = vueFilePond(
     FilePondPluginImagePreview,
     FilePondPluginFileValidateType,
+    FilePondPluginFileValidateSize,
 );
 
 createInertiaApp({

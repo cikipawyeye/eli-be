@@ -124,6 +124,34 @@ class PermissionAssignment
             P::DELETE_PAYMENT => [
                 R::SuperAdmin,
             ],
+
+            // Wallpaper
+            P::MANAGE_WALLPAPERS => [
+                R::SuperAdmin,
+                R::Admin,
+            ],
+            P::BROWSE_WALLPAPERS => [
+                R::SuperAdmin,
+                R::Admin,
+                R::User,
+            ],
+            P::READ_WALLPAPER => [
+                R::SuperAdmin,
+                R::Admin,
+                R::User,
+            ],
+            P::EDIT_WALLPAPER => [
+                R::SuperAdmin,
+                R::Admin,
+            ],
+            P::ADD_WALLPAPER => [
+                R::SuperAdmin,
+                R::Admin,
+            ],
+            P::DELETE_WALLPAPER => [
+                R::SuperAdmin,
+                R::Admin,
+            ],
         ];
     }
 

@@ -42,4 +42,12 @@ class PermissionConstant extends Constant
     public const EDIT_PAYMENT = 'edit_payment';
     public const ADD_PAYMENT = 'add_payment';
     public const DELETE_PAYMENT = 'delete_payment';
+
+    // wallpaper
+    public const MANAGE_WALLPAPERS = 'manage_wallpapers';
+    public const BROWSE_WALLPAPERS = 'browse_wallpapers';
+    public const READ_WALLPAPER = 'read_wallpaper';
+    public const EDIT_WALLPAPER = 'edit_wallpaper';
+    public const ADD_WALLPAPER = 'add_wallpaper';
+    public const DELETE_WALLPAPER = 'delete_wallpaper';
 }
