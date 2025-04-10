@@ -35,7 +35,7 @@ class WallpaperController extends ApiController
             ...$request->all(),
         ]);
         $repository = new WallpaperRepository($criteria);
-        $data = 'false' == $request->boolean('paginate')
+        $data = 'false' == $request->get('paginate')
             ? $repository->get()
             : $repository->paginate($request->all());
 
