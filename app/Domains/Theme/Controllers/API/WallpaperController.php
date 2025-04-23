@@ -80,6 +80,11 @@ class WallpaperController extends ApiController
 
         /** @var Wallpaper */
         $wallpaper = Wallpaper::with('media')->select('id')->findOrFail($wallpaper);
-        return $wallpaper->getFirstMedia('content');
+        $mediaItem = $wallpaper->getFirstMedia('content');
+
+        return response()->file($mediaItem->getPath(), [
+            'Content-Type' => $mediaItem->mime_type,
+            'Content-Disposition' => 'inline; filename="' . $mediaItem->file_name . '"',
+        ]);
     }
 }

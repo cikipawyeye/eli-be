@@ -15,10 +15,6 @@ class SubcategoryRepository extends Repository
 
     protected ?array $searchableColumns = ['name'];
 
-    protected string $defaultSort = 'name';
-
-    protected string $defaultSortDirection = self::SORT_DIRECTION_ASC;
-
     protected function category(?int $category): static
     {
         if (

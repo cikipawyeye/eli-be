@@ -362,7 +362,7 @@
                 class="container mx-auto px-2 absolute top-[25%] right-0 left-0"
             >
                 <h4
-                    class="text-2xl sm:text-3xl md:text-4xl xl:text-5xl font-semibold text-center text-white"
+                    class="text-2xl sm:text-3xl md:text-4xl xl:text-6xl font-semibold text-center text-white"
                 >
                     Temukan Ketenangan Di Sini
                 </h4>

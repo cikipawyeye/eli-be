@@ -43,7 +43,7 @@ it('cat manage a content', function () {
         ->assertExists($media->id . '/test-image.jpg');
     /** @disregard P1013 */
     Storage::disk('local')
-        ->assertExists($media->id . '/conversions/test-image-optimized.jpg');
+        ->assertExists($media->id . '/conversions/test-image-optimized.webp');
 
     // Update content without changing image
     $newTitle = fake()->sentence();
@@ -69,7 +69,7 @@ it('cat manage a content', function () {
         ->assertExists($media->id . '/test-image.jpg');
     /** @disregard P1013 */
     Storage::disk('local')
-        ->assertExists($media->id . '/conversions/test-image-optimized.jpg');
+        ->assertExists($media->id . '/conversions/test-image-optimized.webp');
 
     // Change content image
     $newImage = UploadedFile::fake()->image('new-test-image.jpg');
@@ -95,7 +95,7 @@ it('cat manage a content', function () {
         ->assertExists($media->id . '/new-test-image.jpg');
     /** @disregard P1013 */
     Storage::disk('local')
-        ->assertExists($media->id . '/conversions/new-test-image-optimized.jpg');
+        ->assertExists($media->id . '/conversions/new-test-image-optimized.webp');
 });
 
 it('can delete a content', function () {

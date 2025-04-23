@@ -62,6 +62,11 @@ class MusicController extends ApiController
 
         /** @var Music */
         $music = Music::with('media')->select('id')->findOrFail($music);
-        return $music->getFirstMedia('content');
+        $mediaItem = $music->getFirstMedia('content');
+        
+        return response()->file($mediaItem->getPath(), [
+            'Content-Type' => $mediaItem->mime_type,
+            'Content-Disposition' => 'inline; filename="' . $mediaItem->file_name . '"',
+        ]);
     }
 }
