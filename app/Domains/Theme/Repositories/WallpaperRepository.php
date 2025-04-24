@@ -11,8 +11,6 @@ class WallpaperRepository extends Repository
     /** @var array<string>|null */
     protected ?array $searchableColumns = ['name'];
 
-    protected string $defaultSort = 'name';
-
     protected string $defaultSortDirection = self::SORT_DIRECTION_ASC;
 
     /** @var array<string>|null */
