@@ -42,10 +42,7 @@ class RegisterRequest extends FormRequest
                 'lowercase',
                 'max:255',
                 Rule::unique(User::class, 'email')->withoutTrashed(),
-                Rule::email()
-                    ->rfcCompliant(strict: false)
-                    ->validateMxRecord()
-                    ->preventSpoofing()
+                'email:rfc,dns,spoof',
             ],
             'password' => ['required', 'confirmed', Password::defaults()],
             'birth_date' => 'required|date|before:today',

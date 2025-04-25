@@ -65,6 +65,7 @@ it('can register new user', function () {
 
     $newUser = User::factory([
         'city_code' => City::select('code')->get()->random()->code,
+        'email' => fake()->unique()->freeEmail(),
     ])->make();
     $password = fake()->password(8);
 
