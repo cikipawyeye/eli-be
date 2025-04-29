@@ -144,7 +144,9 @@ class PaymentService extends AbstractPaymentService
     protected function useQR(QRCodeObjectData $property): self
     {
         $qrObject = (new QRCodeParameters)
-            ->setChannelCode($property->channel_code->value)
+            // TODO: Use QRIS Only
+            // ->setChannelCode($property->channel_code->value)
+            ->setChannelCode(\Xendit\PaymentRequest\QRCodeChannelCode::QRIS)
             ->setChannelProperties(
                 (new QRCodeChannelProperties)
                     ->setQrString(Str::orderedUuid()->toString())
