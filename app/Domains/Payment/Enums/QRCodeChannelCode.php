@@ -11,14 +11,12 @@ enum QRCodeChannelCode: string
 {
     use EnumTrait;
 
-    case DANA = X::DANA;
-    case LINKAJA = X::LINKAJA;
+    case QRIS = X::QRIS;
 
     public function translated(): string
     {
         return match ($this->value) {
-            X::DANA => 'Dana',
-            X::LINKAJA => 'LinkAja',
+            X::QRIS => 'QRIS',
         };
     }
 }
