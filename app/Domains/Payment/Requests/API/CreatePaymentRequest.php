@@ -40,11 +40,12 @@ class CreatePaymentRequest extends FormRequest
                 fn (string $attr, mixed $val, \Closure $fail) => $this->validatePaymentMethod($attr, $val, $fail),
             ],
             'phone_number' => [
-                'string',
+                'nullable',
                 Rule::requiredIf(
                     $this->payment_type == PaymentMethodType::EWALLET->value
                         && $this->channel_code == EWalletChannelCode::OVO->value
                 ),
+                'string',
                 'regex:/^\+62[0-9]{9,15}$/',
             ],
         ];
