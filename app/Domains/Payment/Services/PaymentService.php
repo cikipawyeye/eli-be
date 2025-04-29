@@ -150,7 +150,7 @@ class PaymentService extends AbstractPaymentService
             ->setChannelProperties(
                 (new QRCodeChannelProperties)
                     ->setQrString(Str::orderedUuid()->toString())
-                    ->setExpiresAt(now()->addDays())
+                    // ->setExpiresAt(now()->addDays())
             );
 
         $paymentMethod = (new PaymentMethodParameters)
