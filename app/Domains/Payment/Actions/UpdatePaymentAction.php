@@ -25,7 +25,13 @@ class UpdatePaymentAction extends Action
             ->whereNot('id', $this->model->id)
             ->count();
 
-        $this->model->fill($this->data->toArray());
+        $this->model->fill([
+            $this->data->toArray(),
+            'x_payment_id' => $this->data->x_payment_id ?? $this->model->x_payment_id,
+            'x_payment_request_id' => $this->data->x_payment_request_id ?? $this->model->x_payment_request_id,
+            'x_payment_method_id' => $this->data->x_payment_method_id ?? $this->model->x_payment_method_id,
+
+        ]);
         $this->model->state->transitionTo($this->data->state);
 
         DB::transaction(function () use ($otherUserPaymentCount) {
