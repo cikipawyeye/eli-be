@@ -10,7 +10,6 @@ use App\Domains\Payment\Models\Payment;
 use App\Domains\Payment\Services\Facade\PaymentService;
 use App\Domains\User\Models\User;
 use App\Support\Actions\Action;
-use Illuminate\Support\Facades\Log;
 use Xendit\PaymentRequest\PaymentRequest;
 
 class UpgradeAccountAction extends Action
@@ -46,19 +45,10 @@ class UpgradeAccountAction extends Action
 
     protected function makePaymentRequest(): PaymentRequest
     {
-        try {
-            return PaymentService::requestPayment(
-                amount: config('app.upgrade_price'),
-                paymentData: $this->paymentData
-            );
-        } catch (\Throwable $th) {
-            Log::error('Failed to create payment request', [
-                'user_id' => $this->user->id,
-                'error' => $th->getMessage(),
-                'data' => $this->paymentData->toArray(),
-            ]);
-            throw $th;
-        }
+        return PaymentService::requestPayment(
+            amount: config('app.upgrade_price'),
+            paymentData: $this->paymentData
+        );
     }
 
     protected function transformData(PaymentRequest $paymentRequest): array

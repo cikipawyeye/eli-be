@@ -11,6 +11,7 @@ use App\Domains\Payment\DataTransferObjects\PaymentRequest\QRCodeObjectData;
 use App\Domains\Payment\DataTransferObjects\PaymentRequest\VirtualAccountObjectData;
 use App\Domains\Payment\Enums\EWalletChannelCode;
 use App\Domains\Payment\Enums\PaymentMethodType as Type;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Xendit\PaymentMethod\PaymentMethodApi;
 use Xendit\PaymentRequest\EWalletChannelProperties;
@@ -56,9 +57,17 @@ class PaymentService extends AbstractPaymentService
             ->setPaymentRequest()
             ->setPaymentMethod();
 
-        return $this->apiInstance->createPaymentRequest(
-            payment_request_parameters: $this->parameter,
-        );
+        try {
+            return $this->apiInstance->createPaymentRequest(
+                payment_request_parameters: $this->parameter,
+            );
+        } catch (\Throwable $th) {
+            Log::error('Failed to create payment request', [
+                'error' => $th->getMessage(),
+                'data' => json_encode($this->parameter),
+            ]);
+            throw $th;
+        }
     }
 
     protected function setApiInstance(): self
