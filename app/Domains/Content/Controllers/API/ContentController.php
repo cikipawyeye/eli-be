@@ -44,7 +44,7 @@ class ContentController extends ApiController
             $repository->limit(3);
             $data = $repository->get();
         } else {
-            $data = $request->has('paginate') && !$request->boolean('paginate')
+            $data = !$request->boolean('paginate', true)
                 ? $repository->get()
                 : $repository->cursorPaginate($request->all());
         }

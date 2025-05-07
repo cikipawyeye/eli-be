@@ -40,7 +40,7 @@ class SubcategoryController extends ApiController
             'type' => 'active',
         ]);
         $repository = new SubcategoryRepository($criteria);
-        $data = $request->has('paginate') && !$request->boolean('paginate')
+        $data = !$request->boolean('paginate', true)
             ? $repository->get()
             : $repository->paginate($request->all());
 
