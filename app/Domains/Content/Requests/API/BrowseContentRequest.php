@@ -5,10 +5,13 @@ declare(strict_types=1);
 namespace App\Domains\Content\Requests\API;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Concerns\InteractsWithInput;
 use Illuminate\Validation\Rule;
 
 class BrowseContentRequest extends FormRequest
 {
+    use InteractsWithInput;
+    
     public function attributes()
     {
         return ['subcategory_id' => __('app.subcategory_id')];

@@ -57,7 +57,7 @@
                 "Run Vite Dev Server",
                 "Run Horizon",
                 "Xendit Webhook",
-                "Watch Landing Page CSS",
+                // "Watch Landing Page CSS",
             ],
             "problemMatcher": []
         },

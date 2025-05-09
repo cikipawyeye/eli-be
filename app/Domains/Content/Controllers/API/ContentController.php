@@ -32,7 +32,7 @@ class ContentController extends ApiController
     {
         $criteria = ContentCriteria::from([
             ...$request->all(),
-            'subcategory' => $request->subcategory_id,
+            'subcategory' => $request->input('subcategory_id'),
         ]);
         $repository = new ContentRepository($criteria);
 
