@@ -92,6 +92,16 @@ onMounted(() => {
                     <span
                         class="badge badge-sm text-none my-auto"
                         :class="{
+                            'badge-info': data?.premium,
+                            'badge-secondary': !data?.premium,
+                        }"
+                        >{{
+                            t(data?.premium ? 'premium_user_only' : 'all_users')
+                        }}</span
+                    >
+                    <span
+                        class="badge badge-sm text-none my-auto"
+                        :class="{
                             'badge-info': data?.is_active,
                             'badge-secondary': !data?.is_active,
                         }"

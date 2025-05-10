@@ -14,5 +14,7 @@ class SubcategoryCriteria extends Criteria
         public readonly ?int $category,
         public readonly ?string $type,
         public readonly ?string $active,
+        public readonly ?string $access,
+        public readonly ?bool $has_content_only,
     ) {}
 }

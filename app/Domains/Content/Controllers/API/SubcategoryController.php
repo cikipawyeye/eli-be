@@ -38,6 +38,7 @@ class SubcategoryController extends ApiController
             ...$request->all(),
             'category' => $category,
             'type' => 'active',
+            'has_content_only' => true,
         ]);
         $repository = new SubcategoryRepository($criteria);
         $data = !$request->boolean('paginate', true)

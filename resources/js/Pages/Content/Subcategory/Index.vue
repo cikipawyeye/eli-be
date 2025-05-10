@@ -40,6 +40,7 @@ const category = computed(() => {
 });
 const search = ref('');
 const type = ref<'active' | 'inactive' | null>(null);
+const access = ref<'premium' | 'non_premium' | null>(null);
 
 const reloadContent = (payload: Record<string, string | number | null>) => {
     router.reload({
@@ -52,9 +53,6 @@ const reloadContent = (payload: Record<string, string | number | null>) => {
     });
 };
 
-const handleSearch = debounce(() => {
-    reloadContent({ type: type.value, search: search.value });
-});
 const handlePagination = ({
     per_page,
     page,
@@ -62,9 +60,36 @@ const handlePagination = ({
     per_page: number;
     page: number;
 }) => reloadContent({ page, limit: per_page });
+
+const handleSearch = debounce(() => {
+    reloadContent({
+        access: access.value,
+        type: type.value,
+        search: search.value,
+        page: 1,
+    });
+});
+
+watch(
+    () => access.value,
+    () =>
+        reloadContent({
+            access: access.value,
+            type: type.value,
+            search: search.value,
+            page: 1,
+        }),
+);
+
 watch(
     () => type.value,
-    () => reloadContent({ type: type.value, search: search.value }),
+    () =>
+        reloadContent({
+            access: access.value,
+            type: type.value,
+            search: search.value,
+            page: 1,
+        }),
 );
 
 onMounted(() => {
@@ -111,6 +136,20 @@ onMounted(() => {
                     <div
                         class="d-flex align-items-center ms-auto gap-3 flex-sm-nowrap flex-wrap"
                     >
+                        <InputGroup>
+                            <select
+                                v-model="access"
+                                class="form-control form-control-sm"
+                            >
+                                <option :value="null">All Access</option>
+                                <option value="premium">
+                                    {{ t('premium_user_only') }}
+                                </option>
+                                <option value="non_premium">
+                                    {{ t('all_users') }}
+                                </option>
+                            </select>
+                        </InputGroup>
                         <InputGroup>
                             <select
                                 v-model="type"
@@ -181,6 +220,11 @@ onMounted(() => {
                                 <th
                                     class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2"
                                 >
+                                    {{ t('access') }}
+                                </th>
+                                <th
+                                    class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2"
+                                >
                                     {{ t('status') }}
                                 </th>
                                 <th class="text-secondary opacity-7"></th>
@@ -232,6 +276,24 @@ onMounted(() => {
                                             class="font-weight-bold mb-0 text-sm"
                                             >{{
                                                 subcategory.contents_count
+                                            }}</span
+                                        >
+                                    </td>
+                                    <td class="text-sm">
+                                        <span
+                                            class="badge text-none my-auto"
+                                            :class="{
+                                                'badge-info':
+                                                    subcategory.premium,
+                                                'badge-secondary':
+                                                    !subcategory.premium,
+                                            }"
+                                            >{{
+                                                t(
+                                                    subcategory.premium
+                                                        ? 'premium_user_only'
+                                                        : 'all_users',
+                                                )
                                             }}</span
                                         >
                                     </td>

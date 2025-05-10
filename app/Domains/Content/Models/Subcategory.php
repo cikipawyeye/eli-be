@@ -18,7 +18,7 @@ class Subcategory extends Model
      *
      * @var array
      */
-    protected $fillable = ['name', 'category', 'is_active'];
+    protected $fillable = ['name', 'category', 'is_active', 'premium'];
 
     protected static function newFactory(): Factory
     {
