@@ -53,7 +53,7 @@ class LoginRequest extends FormRequest
             RateLimiter::hit($this->throttleKey());
     
             throw ValidationException::withMessages([
-                'email' => 'Email tidak terdaftar.',
+                'email' => trans('auth.email'),
             ]);
         }
 
