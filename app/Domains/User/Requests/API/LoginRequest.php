@@ -8,13 +8,20 @@ use App\Domains\User\Enums\RoleEnum;
 use App\Domains\User\Models\User;
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Concerns\InteractsWithInput;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 
+/**
+ * @method mixed user()
+ * @method string|null ip()
+ */
 class LoginRequest extends FormRequest
 {
+    use InteractsWithInput;
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -36,11 +43,24 @@ class LoginRequest extends FormRequest
     public function authenticate(): void
     {
         $this->ensureIsNotRateLimited();
+        
+        $credentials = $this->only('email', 'password');
+        $remember = $this->boolean('remember');
+    
+        $user = User::where('email', $credentials['email'])->first();
+    
+        if (! $user) {
+            RateLimiter::hit($this->throttleKey());
+    
+            throw ValidationException::withMessages([
+                'email' => 'Email tidak terdaftar.',
+            ]);
+        }
 
         if (! Auth::attemptWhen(
-            $this->only('email', 'password'),
+            $credentials,
             fn (User $user) => $user->hasRole(RoleEnum::User->value),
-            $this->boolean('remember')
+            $remember
         )) {
             RateLimiter::hit($this->throttleKey());
 

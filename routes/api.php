@@ -20,6 +20,7 @@ Route::prefix('v1')->name('api.')->middleware('auth:sanctum')->group(function ()
         Route::prefix('register')->group(function () {
             Route::get('/cities', [RegisterController::class, 'cities'])->name('register.origin.cities');
             Route::post('/', [RegisterController::class, 'register'])->name('register');
+            Route::post('/check-email', [RegisterController::class, 'checkEmail'])->name('register.check-email');
         });
 
         Route::post('login', [AuthenticatedUserController::class, 'login'])->name('login');
