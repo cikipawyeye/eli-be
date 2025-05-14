@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Domains\Payment\Actions;
 
 use App\Domains\Payment\Models\Payment;
+use App\Domains\Payment\States\Payment\Canceled;
 use App\Domains\Payment\States\Payment\Failed;
 use App\Support\Actions\Action;
 use Illuminate\Support\Facades\DB;
@@ -34,6 +35,12 @@ class HandlePaymentMethodNotificationAction extends Action
 
         if (empty($payment)) {
             info('Payment not found for payment method', json_decode($this->data->__toString(), true));
+
+            return;
+        }
+
+        if ($payment->state instanceof Canceled) {
+            info('Payment already canceled', json_decode($this->data->__toString(), true));
 
             return;
         }

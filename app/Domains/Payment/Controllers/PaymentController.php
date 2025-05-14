@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domains\Payment\Controllers;
 
+use App\Domains\Payment\Actions\CancelPaymentAction;
 use App\Domains\Payment\Actions\DeletePaymentAction;
 use App\Domains\Payment\Actions\GetPaymentRequestAction;
 use App\Domains\Payment\Actions\UpdatePaymentAction;
@@ -25,6 +26,7 @@ class PaymentController extends Controller
         $this->middleware(sprintf('permission:%s', Permission::READ_PAYMENT))->only('show');
         $this->middleware(sprintf('permission:%s', Permission::EDIT_PAYMENT))->only('update');
         $this->middleware(sprintf('permission:%s', Permission::DELETE_PAYMENT))->only('destroy');
+        $this->middleware(sprintf('permission:%s', Permission::CANCEL_PAYMENT))->only('cancelPayment');
     }
 
     /**
@@ -83,5 +85,14 @@ class PaymentController extends Controller
         return redirect()
             ->route('payments.index')
             ->with('success', __('app.deleted_data', ['data' => __('app.payment')]));
+    }
+
+    public function cancelPayment(Payment $payment)
+    {
+        dispatch_sync(new CancelPaymentAction($payment));
+        
+        return redirect()
+            ->route('payments.show', $payment)
+            ->with('success', __('app.updated_data', ['data' => __('app.payment')]));
     }
 }

@@ -14,6 +14,7 @@ use Spatie\ModelStates\HasStates;
 
 /**
  * @mixin IdeHelperPayment
+ * @property PaymentState $state
  */
 class Payment extends Model
 {

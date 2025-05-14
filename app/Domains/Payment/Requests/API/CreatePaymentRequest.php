@@ -12,6 +12,11 @@ use App\Domains\Payment\Enums\VirtualAccountChannelCode;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
+/**
+ * @method \App\Domains\User\Models\User user()
+ * @property string|null $payment_type
+ * @property string|null $channel_code
+ */
 class CreatePaymentRequest extends FormRequest
 {
     public function attributes()

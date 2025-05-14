@@ -45,6 +45,7 @@ Route::prefix('v1')->name('api.')->middleware('auth:sanctum')->group(function ()
 
     Route::get('/upgrade/status', [UpgradeAccountController::class, 'status'])->name('upgrade.status');
     Route::post('/upgrade', [UpgradeAccountController::class, 'createPayment'])->name('upgrade.create-payment');
+    Route::post('/upgrade/cancel-payment', [UpgradeAccountController::class, 'cancelPayment'])->name('upgrade.cancel-payment');
 
     Route::get('/payments/{payment}', [PaymentController::class, 'show'])->name('payments.show');
 

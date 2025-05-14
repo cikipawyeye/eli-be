@@ -28,6 +28,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/users/{user}/add-payment', [UserController::class, 'addPayment'])->name('users.add-payment');
 
     Route::resource('/payments', PaymentController::class)->except(['create', 'edit']);
+    Route::post('/payments/{payment}/cancel', [PaymentController::class, 'cancelPayment'])->name('payments.cancel');
 
     Route::resource('/wallpapers', WallpaperController::class)->only(['index', 'store', 'destroy']);
 

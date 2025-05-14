@@ -18,8 +18,10 @@ abstract class PaymentState extends State
             ->allowTransition(Failed::class, Pending::class)
             ->allowTransition(Failed::class, Succeeded::class)
             ->allowTransition(Succeeded::class, Pending::class)
+            ->allowTransition(Succeeded::class, Canceled::class)
             ->allowTransition(Succeeded::class, Failed::class)
             ->allowTransition(Pending::class, Succeeded::class)
+            ->allowTransition(Pending::class, Canceled::class)
             ->allowTransition(Pending::class, Failed::class);
     }
 }

@@ -8,7 +8,7 @@ type Payment = {
         | 'EWALLET'
         | null;
     amount: number;
-    state: 'SUCCEEDED' | 'FAILED' | 'PENDING';
+    state: 'SUCCEEDED' | 'FAILED' | 'PENDING' | 'CANCELED';
     created_at?: string;
     user?: {
         name: string;
