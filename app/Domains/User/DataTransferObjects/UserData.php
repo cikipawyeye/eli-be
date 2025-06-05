@@ -34,6 +34,7 @@ class UserData extends Data
         #[WithCast(EnumCast::class)]
         public readonly ?GenderEnum $gender,
         public readonly ?string $city_code,
+        public readonly ?string $device_id,
         public readonly string|Carbon|null $created_at,
         public readonly Lazy|string|null $password,
         public readonly Lazy|Collection|null $payments,
@@ -54,6 +55,7 @@ class UserData extends Data
             job: $user->job,
             gender: GenderEnum::fromValue($user->gender),
             city_code: $user->city_code,
+            device_id: $user->device_id,
             created_at: $user->created_at,
             password: Lazy::create(fn () => null),
             payments: self::getPayments($user),

@@ -43,6 +43,7 @@ class User extends Authenticatable
         'job',
         'phone_number',
         'gender',
+        'device_id',
     ];
 
     /**

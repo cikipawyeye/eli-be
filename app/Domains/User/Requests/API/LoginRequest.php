@@ -32,6 +32,7 @@ class LoginRequest extends FormRequest
         return [
             'email' => ['required', 'string', 'email'],
             'password' => ['required', 'string'],
+            'device_id' => ['nullable', 'string'],
         ];
     }
 
@@ -66,6 +67,12 @@ class LoginRequest extends FormRequest
 
             throw ValidationException::withMessages([
                 'password' => trans('auth.password'),
+            ]);
+        }
+
+        if ($this->filled('device_id')) {
+            $this->user()->update([
+                'device_id' => $this->string('device_id'),
             ]);
         }
 
