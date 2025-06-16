@@ -49,7 +49,7 @@ const submit = () => {
                             <div class="card-body">
                                 <div
                                     v-if="status"
-                                    class="alert alert-warning text-sm text-white"
+                                    class="alert alert-success text-sm text-white"
                                     role="alert"
                                 >
                                     {{ status }}

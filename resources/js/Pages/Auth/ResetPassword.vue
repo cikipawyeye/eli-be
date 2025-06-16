@@ -63,7 +63,7 @@ const submit = () => {
                             <div class="card-body">
                                 <div
                                     v-if="status.success"
-                                    class="alert alert-warning text-sm text-white"
+                                    class="alert alert-success text-sm text-white"
                                     role="alert"
                                 >
                                     {{ status.success }}
@@ -74,11 +74,6 @@ const submit = () => {
                                         <InputGroup
                                             :is-invalid="!!form.errors.email"
                                         >
-                                            <label
-                                                for="email"
-                                                class="form-label"
-                                                >{{ t('email') }}</label
-                                            >
                                             <input
                                                 v-model="form.email"
                                                 id="email"
