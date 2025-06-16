@@ -20,6 +20,7 @@ Route::prefix('v1')->name('api.')->middleware('auth:sanctum')->group(function ()
         Route::prefix('register')->group(function () {
             Route::get('/cities', [RegisterController::class, 'cities'])->name('register.origin.cities');
             Route::post('/', [RegisterController::class, 'register'])->name('register');
+            Route::post('/check-email', [RegisterController::class, 'checkEmail'])->name('register.check-email');
         });
 
         Route::post('login', [AuthenticatedUserController::class, 'login'])->name('login');
@@ -44,6 +45,7 @@ Route::prefix('v1')->name('api.')->middleware('auth:sanctum')->group(function ()
 
     Route::get('/upgrade/status', [UpgradeAccountController::class, 'status'])->name('upgrade.status');
     Route::post('/upgrade', [UpgradeAccountController::class, 'createPayment'])->name('upgrade.create-payment');
+    Route::post('/upgrade/cancel-payment', [UpgradeAccountController::class, 'cancelPayment'])->name('upgrade.cancel-payment');
 
     Route::get('/payments/{payment}', [PaymentController::class, 'show'])->name('payments.show');
 

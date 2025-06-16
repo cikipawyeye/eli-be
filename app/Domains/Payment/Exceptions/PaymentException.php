@@ -17,4 +17,9 @@ class PaymentException extends JsonResponseException
     {
         return new self('Payment not found.', 404);
     }
+
+    public static function cannotCancel(): self
+    {
+        return new self('Payment cannot be canceled.', 422);
+    }
 }

@@ -12,8 +12,10 @@ import {
 import { Deferred, Head, Link, usePage } from '@inertiajs/vue3';
 import { computed, PropType, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
+import Cancel from './Partials/Cancel.vue';
 import Delete from './Partials/Delete.vue';
 import Edit from './Partials/Edit.vue';
+import RenderQR from './Partials/RenderQR.vue';
 
 const props = defineProps({
     data: {
@@ -28,6 +30,7 @@ const props = defineProps({
 const payment = computed(() => props.data);
 const page = usePage<SharedProps>();
 const flash = computed(() => page.props.flash);
+const isCanceling = ref(false);
 const isEditing = ref(false);
 const isDeleting = ref(false);
 
@@ -48,6 +51,10 @@ watch(
 
 const closeEditModal = () => {
     isEditing.value = false;
+};
+
+const closeCancelModal = () => {
+    isCanceling.value = false;
 };
 
 const closeDeleteModal = () => {
@@ -101,11 +108,28 @@ const closeDeleteModal = () => {
                             class="btn btn-sm btn-warning mb-0 text-nowrap"
                             @click="isEditing = true"
                         >
-                            <i class="fa fa-pencil"></i>
+                            <i class="text-xs fa fa-pencil"></i>
                             <span class="d-none d-md-inline ms-2">{{
                                 t('edit', {
                                     data: t('payment'),
                                 })
+                            }}</span>
+                        </button>
+                        <button
+                            v-if="
+                                (
+                                    $page.props?.auth.user
+                                        ?.permissions_by_roles ?? []
+                                ).includes(Permissions.CANCEL_PAYMENT) &&
+                                payment?.state !== 'CANCELED' &&
+                                payment?.state !== 'FAILED'
+                            "
+                            class="btn btn-sm btn-danger mb-0 text-nowrap"
+                            @click="isCanceling = true"
+                        >
+                            <i class="text-xs fa fa-ban"></i>
+                            <span class="d-none d-md-inline ms-2">{{
+                                t('cancel_payment')
                             }}</span>
                         </button>
                         <button
@@ -118,7 +142,7 @@ const closeDeleteModal = () => {
                             class="btn btn-sm btn-danger mb-0 text-nowrap"
                             @click="isDeleting = true"
                         >
-                            <i class="fa fa-trash"></i>
+                            <i class="text-xs fa fa-trash"></i>
                             <span class="d-none d-md-inline ms-2">{{
                                 t('delete', {
                                     data: t('payment'),
@@ -192,7 +216,9 @@ const closeDeleteModal = () => {
                                     >{{ t('failed') }}</span
                                 >
                                 <span v-else class="badge badge-secondary">{{
-                                    t('pending')
+                                    payment.state === 'CANCELED'
+                                        ? t('canceled')
+                                        : t('pending')
                                 }}</span>
                             </li>
                         </ul>
@@ -349,7 +375,7 @@ const closeDeleteModal = () => {
                                                       .channel_properties
                                                       .expires_at,
                                               )
-                                            : ''
+                                            : '-'
                                     }}
                                 </li>
                                 <li
@@ -373,7 +399,7 @@ const closeDeleteModal = () => {
                                                       .channel_properties
                                                       .expires_at,
                                               )
-                                            : ''
+                                            : '-'
                                     }}
                                 </li>
                                 <li
@@ -396,25 +422,30 @@ const closeDeleteModal = () => {
                                                       .channel_properties
                                                       .expires_at,
                                               )
-                                            : ''
+                                            : '-'
                                     }}
                                 </li>
 
                                 <li
                                     v-if="
                                         payment_info.payment_method.type ==
-                                        'QR_CODE'
+                                            'QR_CODE' &&
+                                        payment_info.payment_method.qr_code
+                                            .channel_properties.qr_string
                                     "
                                     class="list-group-item border-0 ps-0 text-sm"
                                 >
                                     <strong class="text-dark"
                                         >{{ t('qr_string') }}:</strong
                                     >
-                                    &nbsp;
-                                    {{
-                                        payment_info.payment_method.qr_code
-                                            .channel_properties.qr_string
-                                    }}
+                                    <br />
+                                    <br />
+                                    <RenderQR
+                                        :value="
+                                            payment_info.payment_method.qr_code
+                                                .channel_properties.qr_string
+                                        "
+                                    />
                                 </li>
 
                                 <div
@@ -505,6 +536,19 @@ const closeDeleteModal = () => {
         @close="closeEditModal"
     >
         <Edit v-on:close-modal="closeEditModal" />
+    </Modal>
+
+    <Modal
+        v-if="
+            ($page.props?.auth.user?.permissions_by_roles ?? []).includes(
+                Permissions.CANCEL_PAYMENT,
+            ) && payment?.id
+        "
+        :show="isCanceling"
+        id="cancel-payment-modal"
+        @close="closeCancelModal"
+    >
+        <Cancel v-on:close-modal="closeCancelModal" />
     </Modal>
 
     <Modal

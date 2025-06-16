@@ -210,7 +210,11 @@ onMounted(() => {
                                         <span
                                             v-else
                                             class="badge badge-secondary"
-                                            >{{ t('pending') }}</span
+                                            >{{
+                                                payment.state === 'CANCELED'
+                                                    ? t('canceled')
+                                                    : t('pending')
+                                            }}</span
                                         >
                                     </td>
                                     <td class="text-sm">

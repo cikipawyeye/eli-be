@@ -21,6 +21,7 @@ class SaveSubcategoryAction extends Action
             'name',
             'category',
             'is_active',
+            'premium',
         )->toArray());
         $this->model->save();
 

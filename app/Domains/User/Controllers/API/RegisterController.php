@@ -6,6 +6,7 @@ namespace App\Domains\User\Controllers\API;
 
 use App\Domains\User\Actions\RegisterUserAction;
 use App\Domains\User\DataTransferObjects\UserData;
+use App\Domains\User\Models\User;
 use App\Domains\User\Requests\API\RegisterRequest;
 use App\Support\Controllers\ApiController;
 use Illuminate\Http\JsonResponse;
@@ -43,6 +44,23 @@ class RegisterController extends ApiController
                 'token' => $user->createToken('api')->plainTextToken,
             ],
             message: 'User registered successfully'
+        );
+    }
+
+    public function checkEmail(Request $request): JsonResponse
+    {
+        $request->validate([
+            'email' => ['required', 'string', 'email:rfc,dns,spoof'],
+        ]);
+
+        $email = $request->get('email');
+        $user = User::where('email', $email)->first();
+
+        return $this->sendJsonResponse(
+            data: [
+                'email' => $email,
+                'exists' => $user !== null,
+            ]
         );
     }
 }

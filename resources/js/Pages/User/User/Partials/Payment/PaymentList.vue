@@ -140,7 +140,11 @@ const closeAddModal = () => {
                                     <span
                                         v-else
                                         class="badge badge-secondary badge-sm"
-                                        >{{ t('pending') }}</span
+                                        >{{
+                                            payment.state === 'CANCELED'
+                                                ? t('canceled')
+                                                : t('pending')
+                                        }}</span
                                     >
                                 </td>
                                 <td class="align-middle">

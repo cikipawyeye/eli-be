@@ -4,16 +4,19 @@ declare(strict_types=1);
 
 namespace App\Domains\Payment\Controllers\API;
 
+use App\Domains\Payment\Actions\CancelPaymentAction;
 use App\Domains\Payment\Actions\UpgradeAccountAction;
 use App\Domains\Payment\Constants\AccountUpgradeStatus;
 use App\Domains\Payment\DataTransferObjects\PaymentData;
 use App\Domains\Payment\DataTransferObjects\PaymentRequest\CreatePaymentData;
+use App\Domains\Payment\Models\Payment;
 use App\Domains\Payment\Requests\API\CreatePaymentRequest;
 use App\Domains\Payment\States\Payment\Pending;
 use App\Domains\User\Enums\RoleEnum;
 use App\Support\Controllers\ApiController;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class UpgradeAccountController extends ApiController
 {
@@ -60,6 +63,22 @@ class UpgradeAccountController extends ApiController
 
         return $this->sendJsonResponse(
             data: $payment,
+        );
+    }
+
+    public function cancelPayment(Request $request): JsonResponse
+    {
+        $payment = $request->user()->payments()
+            ->where('state', Pending::$name)
+            ->orderByDesc('created_at')
+            ->first();
+
+        if (!empty($payment)) {
+            dispatch_sync(new CancelPaymentAction($payment));
+        }
+
+        return $this->sendJsonResponse(
+            status: Response::HTTP_NO_CONTENT,
         );
     }
 }

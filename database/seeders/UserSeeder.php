@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Database\Seeders;
 
+use App\Domains\User\Enums\JobTypeEnum;
 use App\Domains\User\Enums\RoleEnum;
 use App\Domains\User\Models\User;
 use Illuminate\Database\Seeder;
@@ -23,6 +24,7 @@ class UserSeeder extends Seeder
         ], [
             'name' => 'Super Admin',
             'password' => Hash::make('password'),
+            'job_type' => JobTypeEnum::Professional->value,
         ])->assignRole(RoleEnum::SuperAdmin->value);
 
         User::firstOrCreate([
@@ -30,6 +32,7 @@ class UserSeeder extends Seeder
         ], [
             'name' => 'Admin',
             'password' => Hash::make('password'),
+            'job_type' => JobTypeEnum::Professional->value,
         ])->assignRole(RoleEnum::Admin->value);
 
         User::firstOrCreate([
@@ -37,6 +40,7 @@ class UserSeeder extends Seeder
         ], [
             'name' => 'User',
             'password' => Hash::make('password'),
+            'job_type' => JobTypeEnum::Professional->value,
         ])->assignRole(RoleEnum::User->value);
     }
 }

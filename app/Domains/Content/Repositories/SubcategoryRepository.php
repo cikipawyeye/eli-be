@@ -40,4 +40,25 @@ class SubcategoryRepository extends Repository
 
         return $this;
     }
+
+    protected function access(?string $access): static
+    {
+        if (
+            'premium' == $access ||
+            'non_premium' == $access
+        ) {
+            $this->query->where('premium', 'premium' == $access);
+        }
+
+        return $this;
+    }
+
+    protected function hasContentOnly(?bool $value): static
+    {
+        if ($value) {
+            $this->query->whereHas('contents');
+        }
+
+        return $this;
+    }
 }

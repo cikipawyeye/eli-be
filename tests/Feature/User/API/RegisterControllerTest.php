@@ -5,6 +5,7 @@ declare(strict_types=1);
 use App\Domains\User\Models\User;
 use Database\Seeders\RoleSeeder;
 use Illuminate\Support\Facades\Notification;
+use Illuminate\Testing\Fluent\AssertableJson;
 use Laravolt\Indonesia\Models\City;
 use Laravolt\Indonesia\Seeds\CitiesSeeder;
 use Laravolt\Indonesia\Seeds\ProvincesSeeder;
@@ -96,4 +97,33 @@ it('can register new user', function () {
     $this->assertNull($user->email_verified_at);
 
     Notification::assertSentTo($user, Illuminate\Auth\Notifications\VerifyEmail::class);
+});
+
+it('returns true when email exists', function () {
+    $user = User::factory()->create([
+        'city_code' => City::select('code')->get()->random()->code,
+        'email' => fake()->unique()->freeEmail(),
+    ]);
+
+    $response = postJson(route('api.register.check-email', ['email' => $user->email]));
+
+    $response->assertOk()
+        ->assertJson(fn (AssertableJson $json) =>
+            $json->where('data.email', $user->email)
+                 ->where('data.exists', true)
+                 ->etc()
+        );
+});
+
+it('returns false when email does not exist', function () {
+    $email = fake()->unique()->freeEmail();
+
+    $response = postJson(route('api.register.check-email', ['email' => $email]));
+
+    $response->assertOk()
+        ->assertJson(fn (AssertableJson $json) =>
+            $json->where('data.email', $email)
+                 ->where('data.exists', false)
+                 ->etc()
+        );
 });

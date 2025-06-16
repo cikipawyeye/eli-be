@@ -32,7 +32,7 @@ class ContentController extends ApiController
     {
         $criteria = ContentCriteria::from([
             ...$request->all(),
-            'subcategory' => $request->subcategory_id,
+            'subcategory' => $request->input('subcategory_id'),
         ]);
         $repository = new ContentRepository($criteria);
 
@@ -44,7 +44,7 @@ class ContentController extends ApiController
             $repository->limit(3);
             $data = $repository->get();
         } else {
-            $data = $request->has('paginate') && !$request->boolean('paginate')
+            $data = !$request->boolean('paginate', true)
                 ? $repository->get()
                 : $repository->cursorPaginate($request->all());
         }

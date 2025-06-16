@@ -42,6 +42,7 @@ class PermissionConstant extends Constant
     public const EDIT_PAYMENT = 'edit_payment';
     public const ADD_PAYMENT = 'add_payment';
     public const DELETE_PAYMENT = 'delete_payment';
+    public const CANCEL_PAYMENT = 'cancel_payment';
 
     // wallpaper
     public const MANAGE_WALLPAPERS = 'manage_wallpapers';

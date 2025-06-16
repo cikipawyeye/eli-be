@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Domains\Payment\Actions;
 
 use App\Domains\Payment\Models\Payment;
+use App\Domains\Payment\States\Payment\Canceled;
 use App\Domains\Payment\States\Payment\Failed;
 use App\Support\Actions\Action;
 use Illuminate\Support\Facades\DB;
@@ -23,22 +24,34 @@ class HandlePaymentMethodNotificationAction extends Action
     {
         $event = $this->data->getEvent();
 
-        // Only handle failed payment
-        if ('payment_method.expired' != $event) {
+        // Only handle failed / expired payment
+        if ('payment_method.activated' == $event) {
             return;
         }
 
         $paymentMethod = new \Xendit\PaymentMethod\PaymentMethod($this->data->getData());
-
         /** @var Payment $payment */
         $payment = Payment::firstWhere('x_payment_method_id', $paymentMethod->getId());
 
-        if (! $payment) {
+        if (empty($payment)) {
             info('Payment not found for payment method', json_decode($this->data->__toString(), true));
 
             return;
         }
 
+        if ($payment->state instanceof Canceled) {
+            info('Payment already canceled', json_decode($this->data->__toString(), true));
+
+            return;
+        }
+
+        // handle expired payment
+        if ('payment_method.expired' == $event) {
+            VerifyPaymentMethodExpiredAction::dispatch($payment);
+            return;
+        }
+
+        // handle failed payment
         DB::transaction(function () use ($payment) {
             if ($payment->state->canTransitionTo(Failed::$name)) {
                 $payment->state->transitionTo(Failed::$name)->refresh();

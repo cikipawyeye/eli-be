@@ -13,7 +13,7 @@ const payment = computed(() => page.props.data as Payment);
 const { t } = useI18n();
 const form = useForm({});
 
-const deleteSubcategory = () => {
+const deletePayment = () => {
     form.delete(
         route('payments.destroy', {
             payment: payment.value.id,
@@ -63,7 +63,7 @@ const deleteSubcategory = () => {
                     class="w-100 btn bg-gradient-danger mb-0"
                     type="button"
                     :disabled="form.processing"
-                    @click="deleteSubcategory"
+                    @click="deletePayment"
                 >
                     {{
                         t('delete', {

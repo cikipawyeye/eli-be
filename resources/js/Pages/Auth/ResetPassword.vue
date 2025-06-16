@@ -3,7 +3,7 @@ import InputError from '@/Components/InputError.vue';
 import InputGroup from '@/Components/InputGroup.vue';
 import Guest from '@/Layouts/Guest.vue';
 import { Head, useForm, usePage } from '@inertiajs/vue3';
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 const props = defineProps<{
@@ -15,6 +15,16 @@ const { t } = useI18n();
 const page = usePage<SharedProps>();
 const status = computed(() => page.props.flash);
 
+const showPassword = ref(false);
+const showPasswordConfirmation = ref(false);
+
+const togglePasswordVisibility = () => {
+    showPassword.value = !showPassword.value;
+};
+const togglePasswordConfirmationVisibility = () => {
+    showPasswordConfirmation.value = !showPasswordConfirmation.value;
+};
+
 const form = useForm({
     token: props.token,
     email: props.email,
@@ -24,7 +34,7 @@ const form = useForm({
 
 const submit = () => {
     form.post(route('password.store'), {
-        onFinish: () => {
+        onSuccess: () => {
             form.reset('password', 'password_confirmation');
         },
     });
@@ -63,22 +73,17 @@ const submit = () => {
                             <div class="card-body">
                                 <div
                                     v-if="status.success"
-                                    class="alert alert-warning text-sm text-white"
+                                    class="alert alert-success text-sm text-white"
                                     role="alert"
                                 >
                                     {{ status.success }}
                                 </div>
 
                                 <form @submit.prevent="submit">
-                                    <div class="my-3">
+                                    <div class="flex-fill">
                                         <InputGroup
                                             :is-invalid="!!form.errors.email"
                                         >
-                                            <label
-                                                for="email"
-                                                class="form-label"
-                                                >{{ t('email') }}</label
-                                            >
                                             <input
                                                 v-model="form.email"
                                                 id="email"
@@ -96,58 +101,117 @@ const submit = () => {
                                     </div>
 
                                     <div class="mb-3">
-                                        <InputGroup
-                                            :is-invalid="!!form.errors.password"
+                                        <div
+                                            class="mt-3 position-relative w-full"
                                         >
-                                            <label
-                                                for="password"
-                                                class="form-label"
-                                                >{{ t('new_password') }}</label
+                                            <InputGroup>
+                                                <label
+                                                    for="password"
+                                                    class="form-label"
+                                                    >{{
+                                                        t('new_password')
+                                                    }}</label
+                                                >
+                                                <input
+                                                    v-model="form.password"
+                                                    :type="
+                                                        showPassword
+                                                            ? 'text'
+                                                            : 'password'
+                                                    "
+                                                    id="password"
+                                                    class="form-control"
+                                                    required
+                                                    autofocus
+                                                />
+                                            </InputGroup>
+
+                                            <button
+                                                class="position-absolute top-50 translate-middle border-0 p-1 bg-transparent"
+                                                :onclick="
+                                                    togglePasswordVisibility
+                                                "
+                                                type="button"
+                                                style="
+                                                    opacity: 0.7;
+                                                    z-index: 20;
+                                                    left: 94% !important;
+                                                "
+                                                tabindex="-1"
                                             >
-                                            <input
-                                                v-model="form.password"
-                                                id="password"
-                                                type="password"
-                                                class="form-control"
-                                                required
-                                                autofocus
-                                            />
-                                        </InputGroup>
+                                                <i
+                                                    v-if="showPassword"
+                                                    class="text-sm fa fa-eye"
+                                                ></i>
+                                                <i
+                                                    v-else
+                                                    class="text-sm fa fa-eye-slash"
+                                                ></i>
+                                            </button>
+                                        </div>
 
                                         <InputError
-                                            class="mt-2"
                                             :message="form.errors.password"
                                         />
                                     </div>
 
                                     <div class="mb-3">
-                                        <InputGroup
-                                            :is-invalid="
-                                                !!form.errors
-                                                    .password_confirmation
-                                            "
+                                        <div
+                                            class="mt-3 position-relative w-full"
                                         >
-                                            <label
-                                                for="password_confirmation"
-                                                class="form-label"
-                                                >{{
-                                                    t('password_confirmation')
-                                                }}</label
-                                            >
-                                            <input
-                                                v-model="
-                                                    form.password_confirmation
+                                            <InputGroup>
+                                                <label
+                                                    for="password_confirmation"
+                                                    class="form-label"
+                                                    >{{
+                                                        t(
+                                                            'password_confirmation',
+                                                        )
+                                                    }}</label
+                                                >
+                                                <input
+                                                    v-model="
+                                                        form.password_confirmation
+                                                    "
+                                                    :type="
+                                                        showPasswordConfirmation
+                                                            ? 'text'
+                                                            : 'password'
+                                                    "
+                                                    id="password_confirmation"
+                                                    class="form-control"
+                                                    required
+                                                    autofocus
+                                                />
+                                            </InputGroup>
+
+                                            <button
+                                                class="position-absolute top-50 translate-middle border-0 bg-transparent"
+                                                :onclick="
+                                                    togglePasswordConfirmationVisibility
                                                 "
-                                                id="password_confirmation"
-                                                type="password"
-                                                class="form-control"
-                                                required
-                                                autofocus
-                                            />
-                                        </InputGroup>
+                                                type="button"
+                                                style="
+                                                    opacity: 0.7;
+                                                    z-index: 20;
+                                                    left: 94% !important;
+                                                "
+                                                tabindex="-1"
+                                            >
+                                                <i
+                                                    v-if="
+                                                        showPasswordConfirmation
+                                                    "
+                                                    class="text-sm fa fa-eye"
+                                                ></i>
+                                                <i
+                                                    v-else
+                                                    class="text-sm fa fa-eye-slash"
+                                                ></i>
+                                            </button>
+                                        </div>
 
                                         <InputError
-                                            class="mt-2"
                                             :message="
                                                 form.errors
                                                     .password_confirmation

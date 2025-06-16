@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Domains\Payment\Actions;
 
 use App\Domains\Payment\Models\Payment;
+use App\Domains\Payment\States\Payment\Canceled;
 use App\Domains\Payment\States\Payment\Succeeded;
 use App\Support\Actions\Action;
 use Illuminate\Support\Facades\DB;
@@ -32,9 +33,23 @@ class HandlePaymentNotificationAction extends Action
             return;
         }
 
+        if ($payment->state instanceof Canceled) {
+            info('Payment already canceled', json_decode($this->data->__toString(), true));
+
+            return;
+        }
+
         DB::transaction(function () use ($payment, $callbackData) {
-            if ($payment->state->canTransitionTo($callbackData->getStatus())) {
-                $payment->state->transitionTo($callbackData->getStatus())->refresh();
+            /**
+             * Possible values:
+             * - SUCCEEDED
+             * - FAILED
+             * @var string $status
+             */
+            $status = $callbackData->getStatus();
+
+            if ($payment->state->canTransitionTo($status)) {
+                $payment->state->transitionTo($status)->refresh();
             } else {
                 throw CouldNotPerformTransition::couldNotResolveTransitionField($payment);
             }

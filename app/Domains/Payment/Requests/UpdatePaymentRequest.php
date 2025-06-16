@@ -11,6 +11,9 @@ use App\Domains\Payment\States\Payment\Succeeded;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
+/**
+ * @method \App\Domains\User\Models\User|null user()
+ */
 class UpdatePaymentRequest extends FormRequest
 {
     /**

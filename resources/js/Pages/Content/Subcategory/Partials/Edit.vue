@@ -19,6 +19,7 @@ const form = useForm<Subcategory>({
     name: subcategory.value.name,
     category: subcategory.value.category,
     is_active: subcategory.value.is_active,
+    premium: subcategory.value.premium,
 });
 
 const submit = () => {
@@ -89,6 +90,24 @@ const submit = () => {
                 </InputGroup>
 
                 <InputError :message="form.errors.name" />
+            </div>
+
+            <label for="premium" class="form-label">{{ t('access') }}</label>
+            <div class="mx-1">
+                <div
+                    class="form-check form-switch d-flex align-items-center mb-3"
+                >
+                    <input
+                        v-model="form.premium"
+                        class="form-check-input"
+                        type="checkbox"
+                        id="premium"
+                        name="premium"
+                    />
+                    <label class="form-check-label mb-0 ms-3" for="premium">{{
+                        form.premium ? t('premium_user_only') : t('all_users')
+                    }}</label>
+                </div>
             </div>
 
             <label for="is_active" class="form-label">{{ t('status') }}</label>
