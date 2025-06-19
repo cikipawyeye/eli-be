@@ -34,6 +34,7 @@ class AuthenticatedUserController extends ApiController
 
     public function logout(Request $request): JsonResponse
     {
+        /** @disregard P1013 */
         $request->user()->currentAccessToken()->delete();
         Auth::guard('web')->logout();
 

@@ -231,6 +231,30 @@ onMounted(() => {
                     <h6
                         :class="`text-uppercase ${color} font-weight-bolder ms-2 ps-4 text-xs opacity-5`"
                     >
+                        Settings
+                    </h6>
+                </li>
+                <li class="nav-item">
+                    <Link
+                        class="nav-link"
+                        :class="
+                            sidebarActiveClass('reminder-notifications.index')
+                        "
+                        :href="route('reminder-notifications.index')"
+                    >
+                        <i class="material-symbols-rounded opacity-5"
+                            >notifications</i
+                        >
+                        <span class="nav-link-text ms-1">{{
+                            t('reminder_notification')
+                        }}</span>
+                    </Link>
+                </li>
+
+                <li class="nav-item mt-3">
+                    <h6
+                        :class="`text-uppercase ${color} font-weight-bolder ms-2 ps-4 text-xs opacity-5`"
+                    >
                         Account pages
                     </h6>
                 </li>

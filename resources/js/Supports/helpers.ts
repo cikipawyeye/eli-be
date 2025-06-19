@@ -1,3 +1,4 @@
+import { Page } from '@inertiajs/core';
 import { format } from 'date-fns';
 import { id } from 'date-fns/locale';
 import { TYPE, useToast } from 'vue-toastification';
@@ -144,4 +145,10 @@ export function formatAverageAge(averageAge: number): string {
     }
 
     return averageAge.toFixed(0);
+}
+
+export function can(page: Page, permission: string): boolean {
+    return (page.props?.auth.user?.permissions_by_roles ?? []).includes(
+        permission,
+    );
 }

@@ -7,6 +7,12 @@ namespace App\Domains\User\Requests\API;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rules\Password;
 
+/**
+ * Class ChangePasswordRequest
+ *
+ * @method \App\Domains\User\Models\User|null user()
+ * @method mixed get()
+ */
 class ChangePasswordRequest extends FormRequest
 {
     public function attributes()

@@ -27,7 +27,7 @@ class GeneratePermissionConstants extends Command
         $fileContent = "// Generated file, do not manually edit. Generate from BE instead (php artisan app:generate-permission-constants)\n";
         $fileContent .= 'export const Permissions = {';
         foreach ($permissions as $key => $value) {
-            $fileContent .= "\n  $key: '$value',";
+            $fileContent .= "\n    $key: '$value',";
         }
         $fileContent .= "\n};\n";
 

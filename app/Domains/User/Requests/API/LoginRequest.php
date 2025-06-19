@@ -70,10 +70,11 @@ class LoginRequest extends FormRequest
             ]);
         }
 
-        if ($this->filled('device_id')) {
-            $this->user()->update([
-                'device_id' => $this->string('device_id'),
-            ]);
+        $data = $this->only('device_id', 'fcm_token');
+        $data = array_filter($data, fn ($value) => ! is_null($value) && $value !== '');
+
+        if (!empty($data)) {
+            $this->user()->update($data);
         }
 
         RateLimiter::clear($this->throttleKey());
