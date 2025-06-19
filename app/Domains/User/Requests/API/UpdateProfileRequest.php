@@ -10,6 +10,9 @@ use App\Domains\User\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
+/**
+ * @method \App\Domains\User\Models\User|null user()
+ */
 class UpdateProfileRequest extends FormRequest
 {
     public function attributes()
