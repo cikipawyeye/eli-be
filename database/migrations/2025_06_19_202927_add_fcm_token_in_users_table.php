@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->string('fcm_token')->nullable()->after('device_id')->comment('Firebase Cloud Messaging token');
+            $table->timestamp('last_active_at')->nullable()->after('fcm_token')->comment('Last active timestamp');
         });
     }
 
@@ -23,6 +24,7 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->dropColumn('fcm_token');
+            $table->dropColumn('last_active_at');
         });
     }
 };
