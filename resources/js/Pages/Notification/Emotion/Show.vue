@@ -7,7 +7,7 @@ import { ref } from 'vue';
 import Modal from './Partials/Modal.vue';
 
 defineProps<{
-    data: ReminderNotification;
+    data: Emotion;
 }>();
 
 const isEditing = ref(false);
@@ -15,7 +15,7 @@ const isDeleting = ref(false);
 </script>
 
 <template>
-    <Head :title="$t('reminder_notification')" />
+    <Head :title="$t('emotion')" />
 
     <AuthenticatedLayout>
         <template #header>
@@ -31,16 +31,16 @@ const isDeleting = ref(false);
                 <li class="breadcrumb-item text-dark text-sm">
                     <Link
                         class="text-dark opacity-5"
-                        :href="route('reminder-notifications.index')"
+                        :href="route('emotions.index')"
                     >
-                        {{ $t('reminder_notification') }}
+                        {{ $t('emotion') }}
                     </Link>
                 </li>
                 <li
                     class="breadcrumb-item text-dark active text-sm"
                     aria-current="page"
                 >
-                    {{ data?.title }}
+                    {{ data?.name }}
                 </li>
             </ol>
         </template>
@@ -51,49 +51,33 @@ const isDeleting = ref(false);
                     class="shadow-secondary border-radius-lg d-flex flex-wrap gap-4 p-3"
                 >
                     <h6 class="text-capitalize my-auto">
-                        {{ data?.title }}
+                        {{ data?.name }}
                     </h6>
-
-                    <span
-                        v-if="data.is_active"
-                        class="badge bg-gradient-primary my-auto"
-                        >Active</span
-                    >
 
                     <div
                         class="d-flex align-items-center justify-content-end ms-auto flex-wrap gap-3"
                     >
                         <button
-                            v-if="
-                                can(
-                                    $page,
-                                    Permissions.EDIT_REMINDER_NOTIFICATION,
-                                )
-                            "
+                            v-if="can($page, Permissions.EDIT_EMOTION)"
                             class="btn btn-sm btn-warning mb-0 text-nowrap"
                             @click="isEditing = true"
                         >
                             <i class="fa fa-pencil"></i>
                             <span class="d-none d-md-inline ms-2">{{
                                 $t('edit', {
-                                    data: $t('reminder_notification'),
+                                    data: $t('emotion'),
                                 })
                             }}</span>
                         </button>
                         <button
-                            v-if="
-                                can(
-                                    $page,
-                                    Permissions.DELETE_REMINDER_NOTIFICATION,
-                                )
-                            "
+                            v-if="can($page, Permissions.DELETE_EMOTION)"
                             class="btn btn-sm btn-danger mb-0 text-nowrap"
                             @click="isDeleting = true"
                         >
                             <i class="fa fa-trash"></i>
                             <span class="d-none d-md-inline ms-2">{{
                                 $t('delete', {
-                                    data: $t('reminder_notification'),
+                                    data: $t('emotion'),
                                 })
                             }}</span>
                         </button>
@@ -104,14 +88,9 @@ const isDeleting = ref(false);
             <div class="card-body">
                 <ul class="list-group m-4">
                     <li class="list-group-item border-0 ps-0 pt-0 text-sm">
-                        <strong class="text-dark">{{ $t('title') }}:</strong>
+                        <strong class="text-dark">{{ $t('name') }}:</strong>
                         &nbsp;
-                        {{ data.title }}
-                    </li>
-                    <li class="list-group-item border-0 ps-0 text-sm">
-                        <strong class="text-dark">{{ $t('message') }}:</strong>
-                        &nbsp;
-                        {{ data.message }}
+                        {{ data.name }}
                     </li>
                 </ul>
             </div>
@@ -120,7 +99,7 @@ const isDeleting = ref(false);
         <Modal
             :show="isEditing || isDeleting"
             :is-deleting="isDeleting"
-            :reminder-notification="data"
+            :emotion="data"
             @close="
                 () => {
                     isEditing = false;

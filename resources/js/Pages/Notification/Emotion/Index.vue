@@ -5,36 +5,30 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Permissions } from '@/Permission';
 import { can, debounce, rowNumber } from '@/Supports/helpers';
 import { Deferred, Head, Link, router } from '@inertiajs/vue3';
-import { computed, onMounted, PropType, ref, watch } from 'vue';
+import { computed, PropType, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import Modal from './Partials/Modal.vue';
 
 const { t } = useI18n();
 
-const urlQuery = new URLSearchParams(window.location.search);
-
 const props = defineProps({
     data: {
-        type: Object as PropType<PaginatedResponseData<ReminderNotification>>,
-        required: false,
-    },
-    criteria: {
-        type: Object as PropType<{
-            search: string | null;
-        }>,
+        type: Object as PropType<PaginatedResponseData<Emotion>>,
         required: false,
     },
 });
+
+const urlQuery = new URLSearchParams(window.location.search);
+
 const meta = computed(() => props.data?.meta);
-const criteria = computed(() => props.criteria);
+const criteria = computed(() => {
+    const obj: Record<string, string> = {};
+    urlQuery.forEach((value, key) => {
+        obj[key] = value;
+    });
+    return obj;
+});
 const search = ref(urlQuery.get('search') ?? '');
-const active = ref<'true' | 'false' | null>(
-    urlQuery.get('is_active') === 'true'
-        ? 'true'
-        : urlQuery.get('is_active') === 'false' // NOSONAR
-          ? 'false'
-          : null,
-);
 
 const isShowingModal = ref<boolean>(false);
 
@@ -50,7 +44,7 @@ const reloadContent = (payload: Record<string, string | number | null>) => {
 };
 
 const handleSearch = debounce(() => {
-    reloadContent({ search: search.value, is_active: active.value });
+    reloadContent({ search: search.value });
 });
 
 const handlePagination = ({
@@ -60,15 +54,6 @@ const handlePagination = ({
     per_page: number;
     page: number;
 }) => reloadContent({ page, limit: per_page });
-
-watch(
-    () => active.value,
-    (value) => reloadContent({ is_active: value, search: search.value }),
-);
-
-onMounted(() => {
-    search.value = props.criteria?.search ?? '';
-});
 </script>
 
 <template>
@@ -89,7 +74,7 @@ onMounted(() => {
                     class="breadcrumb-item text-dark active text-sm"
                     aria-current="page"
                 >
-                    {{ t('reminder_notification') }}
+                    {{ t('emotion') }}
                 </li>
             </ol>
         </template>
@@ -100,26 +85,12 @@ onMounted(() => {
                     class="shadow-secondary border-radius-lg d-flex gap-4 p-3 flex-wrap"
                 >
                     <h6 class="text-capitalize my-auto">
-                        {{ t('reminder_notifications') }}
+                        {{ t('emotions') }}
                     </h6>
 
                     <div
                         class="d-flex align-items-center ms-auto gap-3 flex-sm-nowrap flex-wrap"
                     >
-                        <InputGroup>
-                            <select
-                                v-model="active"
-                                class="form-control form-control-sm"
-                            >
-                                <option :value="null">All Status</option>
-                                <option value="true">
-                                    {{ t('active') }}
-                                </option>
-                                <option value="false">
-                                    {{ t('inactive') }}
-                                </option>
-                            </select>
-                        </InputGroup>
                         <InputGroup>
                             <input
                                 v-model="search"
@@ -132,14 +103,14 @@ onMounted(() => {
                         </InputGroup>
                     </div>
                     <button
-                        v-if="can($page, Permissions.ADD_REMINDER_NOTIFICATION)"
-                        :onclick="() => (isShowingModal = true)"
+                        v-if="can($page, Permissions.ADD_EMOTION)"
+                        @click="isShowingModal = true"
                         class="btn btn-primary btn-sm mb-0 text-nowrap"
                     >
                         <i class="fa fa-plus"></i>
                         <span class="ms-2 d-none d-sm-inline">{{
                             t('add', {
-                                data: t('reminder_notification'),
+                                data: t('emotions'),
                             })
                         }}</span>
                     </button>
@@ -159,20 +130,10 @@ onMounted(() => {
                                 <th
                                     class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2"
                                 >
-                                    {{ t('content') }}
+                                    {{ t('name') }}
                                 </th>
                                 <th
-                                    class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2"
-                                >
-                                    {{ t('status') }}
-                                </th>
-                                <th
-                                    v-if="
-                                        can(
-                                            $page,
-                                            Permissions.READ_REMINDER_NOTIFICATION,
-                                        )
-                                    "
+                                    v-if="can($page, Permissions.READ_EMOTION)"
                                     class="text-secondary opacity-7"
                                 ></th>
                             </tr>
@@ -206,43 +167,17 @@ onMounted(() => {
                                         >
                                     </td>
                                     <td class="text-sm">
-                                        <p
-                                            class="font-weight-bold mb-0 text-sm"
-                                        >
-                                            {{ item.title }}
-                                        </p>
-
-                                        <p class="mb-0 text-sm">
-                                            {{ item.message }}
-                                        </p>
-                                    </td>
-                                    <td>
-                                        <span
-                                            v-if="item.is_active"
-                                            class="badge bg-gradient-primary badge-sm"
-                                            >{{ t('active') }}</span
-                                        >
-                                        <span
-                                            v-else
-                                            class="badge badge-secondary badge-sm"
-                                            >{{ t('inactive') }}</span
-                                        >
+                                        {{ item.name }}
                                     </td>
                                     <td
                                         v-if="
-                                            can(
-                                                $page,
-                                                Permissions.READ_REMINDER_NOTIFICATION,
-                                            )
+                                            can($page, Permissions.READ_EMOTION)
                                         "
                                         class="align-middle"
                                     >
                                         <Link
                                             :href="
-                                                route(
-                                                    'reminder-notifications.show',
-                                                    item.id,
-                                                )
+                                                route('emotions.show', item.id)
                                             "
                                             class="text-secondary font-weight-bold text-xs"
                                         >
@@ -276,7 +211,7 @@ onMounted(() => {
 
         <Modal
             :show="isShowingModal"
-            :reminder-notification="null"
+            :emotion="null"
             @close="isShowingModal = false"
         />
     </AuthenticatedLayout>

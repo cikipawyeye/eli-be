@@ -74,6 +74,14 @@ class PermissionAssignment
             P::EDIT_REMINDER_NOTIFICATION => [R::SuperAdmin, R::Admin],
             P::ADD_REMINDER_NOTIFICATION => [R::SuperAdmin, R::Admin],
             P::DELETE_REMINDER_NOTIFICATION => [R::SuperAdmin, R::Admin],
+
+            // Emotion
+            P::MANAGE_EMOTIONS => [R::SuperAdmin, R::Admin],
+            P::BROWSE_EMOTIONS => [R::SuperAdmin, R::Admin, R::User],
+            P::READ_EMOTION => [R::SuperAdmin, R::Admin, R::User],
+            P::EDIT_EMOTION => [R::SuperAdmin, R::Admin],
+            P::ADD_EMOTION => [R::SuperAdmin, R::Admin],
+            P::DELETE_EMOTION => [R::SuperAdmin, R::Admin],
         ];
     }
 

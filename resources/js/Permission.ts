@@ -45,4 +45,10 @@ export const Permissions = {
     EDIT_REMINDER_NOTIFICATION: 'edit_reminder_notification',
     ADD_REMINDER_NOTIFICATION: 'add_reminder_notification',
     DELETE_REMINDER_NOTIFICATION: 'delete_reminder_notification',
+    MANAGE_EMOTIONS: 'manage_emotions',
+    BROWSE_EMOTIONS: 'browse_emotions',
+    READ_EMOTION: 'read_emotion',
+    EDIT_EMOTION: 'edit_emotion',
+    ADD_EMOTION: 'add_emotion',
+    DELETE_EMOTION: 'delete_emotion',
 };

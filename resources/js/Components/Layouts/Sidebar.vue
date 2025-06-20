@@ -250,6 +250,20 @@ onMounted(() => {
                         }}</span>
                     </Link>
                 </li>
+                <li class="nav-item">
+                    <Link
+                        class="nav-link"
+                        :class="sidebarActiveClass('emotions.index')"
+                        :href="route('emotions.index')"
+                    >
+                        <i class="material-symbols-rounded opacity-5"
+                            >sentiment_content</i
+                        >
+                        <span class="nav-link-text ms-1">{{
+                            t('emotion_and_messages')
+                        }}</span>
+                    </Link>
+                </li>
 
                 <li class="nav-item mt-3">
                     <h6
