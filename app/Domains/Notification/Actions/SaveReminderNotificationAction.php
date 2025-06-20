@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Domains\Setting\Actions;
+namespace App\Domains\Notification\Actions;
 
-use App\Domains\Setting\DataTransferObjects\ReminderNotificationData;
-use App\Domains\Setting\Models\ReminderNotification;
+use App\Domains\Notification\DataTransferObjects\ReminderNotificationData;
+use App\Domains\Notification\Models\ReminderNotification;
 use App\Support\Actions\Action;
 
 class SaveReminderNotificationAction extends Action

@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Domains\Setting\Controllers;
+namespace App\Domains\Notification\Controllers;
 
-use App\Domains\Setting\Actions\SaveReminderNotificationAction;
-use App\Domains\Setting\DataTransferObjects\ReminderNotificationData;
-use App\Domains\Setting\Requests\StoreReminderNotificationRequest;
-use App\Domains\Setting\Requests\UpdateReminderNotificationRequest;
-use App\Domains\Setting\Models\ReminderNotification;
-use App\Domains\Setting\Repositories\ReminderNotificationCriteria;
-use App\Domains\Setting\Repositories\ReminderNotificationRepository;
+use App\Domains\Notification\Actions\SaveReminderNotificationAction;
+use App\Domains\Notification\DataTransferObjects\ReminderNotificationData;
+use App\Domains\Notification\Requests\StoreReminderNotificationRequest;
+use App\Domains\Notification\Requests\UpdateReminderNotificationRequest;
+use App\Domains\Notification\Models\ReminderNotification;
+use App\Domains\Notification\Repositories\ReminderNotificationCriteria;
+use App\Domains\Notification\Repositories\ReminderNotificationRepository;
 use App\Domains\User\Constants\PermissionConstant as Permission;
 use App\Support\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -34,7 +34,7 @@ class ReminderNotificationController extends Controller
         $repository = new ReminderNotificationRepository($criteria);
         $paginate = 'false' == $request->boolean('paginate');
 
-        return Inertia::render('Setting/ReminderNotification/Index', [
+        return Inertia::render('Notification/ReminderNotification/Index', [
             'criteria' => Inertia::always($criteria),
             'data' => Inertia::defer(fn() => $this->resource(ReminderNotificationData::class, $paginate
                 ? $repository->get()
@@ -63,7 +63,7 @@ class ReminderNotificationController extends Controller
      */
     public function show(ReminderNotification $reminderNotification)
     {
-        return Inertia::render('Setting/ReminderNotification/Show', [
+        return Inertia::render('Notification/ReminderNotification/Show', [
             'data' => ReminderNotificationData::fromModel($reminderNotification),
         ]);
     }

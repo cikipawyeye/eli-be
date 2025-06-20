@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domains\Setting\Requests;
+namespace App\Domains\Notification\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 

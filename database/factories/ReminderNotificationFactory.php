@@ -14,7 +14,7 @@ class ReminderNotificationFactory extends Factory
      *
      * @var class-string<\Illuminate\Database\Eloquent\Model>
      */
-    protected $model = \App\Domains\Setting\Models\ReminderNotification::class;
+    protected $model = \App\Domains\Notification\Models\ReminderNotification::class;
 
     /**
      * Define the model's default state.

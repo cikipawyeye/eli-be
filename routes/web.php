@@ -5,7 +5,7 @@ declare(strict_types=1);
 use App\Domains\Content\Controllers\ContentController;
 use App\Domains\Content\Controllers\SubcategoryController;
 use App\Domains\Payment\Controllers\PaymentController;
-use App\Domains\Setting\Controllers\ReminderNotificationController;
+use App\Domains\Notification\Controllers\ReminderNotificationController;
 use App\Domains\Theme\Controllers\MusicController;
 use App\Domains\Theme\Controllers\WallpaperController;
 use App\Domains\User\Controllers\DashboardController;

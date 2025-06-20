@@ -23,7 +23,7 @@ const submit = () => {
             form.reset();
             emit('closeModal');
             flashSuccess(
-                t('created_data', { data: t('reminder_notification') }),
+                t('stored_data', { data: t('reminder_notification') }),
             );
         },
     });

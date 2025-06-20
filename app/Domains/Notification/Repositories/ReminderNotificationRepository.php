@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Domains\Setting\Repositories;
+namespace App\Domains\Notification\Repositories;
 
 use App\Support\Repositories\Repository;
 
@@ -16,7 +16,7 @@ class ReminderNotificationRepository extends Repository
 
     protected string $defaultSortDirection = self::SORT_DIRECTION_ASC;
 
-    protected string $model = \App\Domains\Setting\Models\ReminderNotification::class;
+    protected string $model = \App\Domains\Notification\Models\ReminderNotification::class;
 
     public function isActive(?string $status): self
     {

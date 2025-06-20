@@ -1,0 +1,47 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Domains\Notification\Actions;
+
+use App\Domains\Notification\DataTransferObjects\ReminderNotificationData;
+use App\Support\Actions\AsyncAction;
+use Illuminate\Support\Facades\Log;
+use Kreait\Firebase\Exception\MessagingException;
+use Kreait\Firebase\Messaging\CloudMessage;
+use Kreait\Laravel\Firebase\Facades\Firebase;
+
+class SendPushNotificationAction extends AsyncAction
+{
+    const TOPIC = 'reminder';
+
+    public function __construct(
+        protected readonly ReminderNotificationData $reminderNotificationData
+    ) {}
+
+    public function handle()
+    {
+        $messaging = Firebase::messaging();
+        
+        $message = CloudMessage::new()
+            ->withNotification([
+                'title' => $this->reminderNotificationData->title,
+                'body' => $this->reminderNotificationData->message,
+            ])
+            ->withData([
+                'reminderNotificationId' => $this->reminderNotificationData->id,
+            ])
+            ->toTopic(self::TOPIC);
+
+        try {
+            $messaging->send($message);
+        } catch (MessagingException $e) {
+            // Handle the exception as needed, e.g., log it or rethrow it
+            // For now, we will just log the error message
+            Log::error('Failed to send push notification', [
+                'error' => $e->getMessage(),
+                'data' => $this->reminderNotificationData->toArray(),
+            ]);
+        }
+    }
+}

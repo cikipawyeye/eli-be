@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Domains\Setting\Repositories;
+namespace App\Domains\Notification\Repositories;
 
 use App\Support\Repositories\Criteria;
 

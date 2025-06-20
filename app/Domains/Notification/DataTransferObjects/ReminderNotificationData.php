@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Domains\Setting\DataTransferObjects;
+namespace App\Domains\Notification\DataTransferObjects;
 
-use App\Domains\Setting\Models\ReminderNotification;
+use App\Domains\Notification\Models\ReminderNotification;
 use Spatie\LaravelData\Data;
 
 class ReminderNotificationData extends Data
