@@ -7,7 +7,9 @@ import { can, debounce, rowNumber } from '@/Supports/helpers';
 import { Deferred, Head, Link, router } from '@inertiajs/vue3';
 import { computed, onMounted, PropType, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
+import ActiveReminderNotification from './Partials/ActiveReminderNotification.vue';
 import Modal from './Partials/Modal.vue';
+import SetActiveModal from './Partials/SetActiveModal.vue';
 
 const { t } = useI18n();
 
@@ -24,11 +26,15 @@ const props = defineProps({
         }>,
         required: false,
     },
+    active: {
+        type: Object as PropType<ReminderNotification | null>,
+        required: false,
+    },
 });
 const meta = computed(() => props.data?.meta);
 const criteria = computed(() => props.criteria);
 const search = ref(urlQuery.get('search') ?? '');
-const active = ref<'true' | 'false' | null>(
+const isActive = ref<'true' | 'false' | null>(
     urlQuery.get('is_active') === 'true'
         ? 'true'
         : urlQuery.get('is_active') === 'false' // NOSONAR
@@ -37,6 +43,7 @@ const active = ref<'true' | 'false' | null>(
 );
 
 const isShowingModal = ref<boolean>(false);
+const selected = ref<ReminderNotification | null>(null);
 
 const reloadContent = (payload: Record<string, string | number | null>) => {
     router.reload({
@@ -50,7 +57,7 @@ const reloadContent = (payload: Record<string, string | number | null>) => {
 };
 
 const handleSearch = debounce(() => {
-    reloadContent({ search: search.value, is_active: active.value });
+    reloadContent({ search: search.value, is_active: isActive.value });
 });
 
 const handlePagination = ({
@@ -62,7 +69,7 @@ const handlePagination = ({
 }) => reloadContent({ page, limit: per_page });
 
 watch(
-    () => active.value,
+    () => isActive.value,
     (value) => reloadContent({ is_active: value, search: search.value }),
 );
 
@@ -94,13 +101,15 @@ onMounted(() => {
             </ol>
         </template>
 
+        <ActiveReminderNotification :active="active ?? null" />
+
         <div class="card mb-4 mt-5">
             <div class="card-header position-relative mt-n4 z-index-2 mx-3 p-0">
                 <div
                     class="shadow-secondary border-radius-lg d-flex gap-4 p-3 flex-wrap"
                 >
                     <h6 class="text-capitalize my-auto">
-                        {{ t('reminder_notifications') }}
+                        {{ t('reminder_notification_list') }}
                     </h6>
 
                     <div
@@ -108,7 +117,7 @@ onMounted(() => {
                     >
                         <InputGroup>
                             <select
-                                v-model="active"
+                                v-model="isActive"
                                 class="form-control form-control-sm"
                             >
                                 <option :value="null">All Status</option>
@@ -133,7 +142,12 @@ onMounted(() => {
                     </div>
                     <button
                         v-if="can($page, Permissions.ADD_REMINDER_NOTIFICATION)"
-                        :onclick="() => (isShowingModal = true)"
+                        :onclick="
+                            () => {
+                                isShowingModal = true;
+                                selected = null;
+                            }
+                        "
                         class="btn btn-primary btn-sm mb-0 text-nowrap"
                     >
                         <i class="fa fa-plus"></i>
@@ -228,26 +242,42 @@ onMounted(() => {
                                             >{{ t('inactive') }}</span
                                         >
                                     </td>
-                                    <td
-                                        v-if="
-                                            can(
-                                                $page,
-                                                Permissions.READ_REMINDER_NOTIFICATION,
-                                            )
-                                        "
-                                        class="align-middle"
-                                    >
-                                        <Link
-                                            :href="
-                                                route(
-                                                    'reminder-notifications.show',
-                                                    item.id,
-                                                )
-                                            "
-                                            class="text-secondary font-weight-bold text-xs"
-                                        >
-                                            {{ t('detail') }}
-                                        </Link>
+                                    <td class="align-middle">
+                                        <div class="d-flex gap-4">
+                                            <Link
+                                                v-if="
+                                                    can(
+                                                        $page,
+                                                        Permissions.READ_REMINDER_NOTIFICATION,
+                                                    )
+                                                "
+                                                :href="
+                                                    route(
+                                                        'reminder-notifications.show',
+                                                        item.id,
+                                                    )
+                                                "
+                                                class="text-secondary font-weight-bold text-xs"
+                                            >
+                                                {{ t('detail') }}
+                                            </Link>
+                                            <a
+                                                v-if="
+                                                    can(
+                                                        $page,
+                                                        Permissions.EDIT_REMINDER_NOTIFICATION,
+                                                    ) && !item.is_active
+                                                "
+                                                href="javascript:void(0)"
+                                                @click="
+                                                    isShowingModal = true;
+                                                    selected = item;
+                                                "
+                                                class="text-secondary font-weight-bold text-xs"
+                                            >
+                                                {{ t('activate') }}
+                                            </a>
+                                        </div>
                                     </td>
                                 </tr>
 
@@ -275,8 +305,14 @@ onMounted(() => {
         </div>
 
         <Modal
-            :show="isShowingModal"
+            :show="isShowingModal && selected === null"
             :reminder-notification="null"
+            @close="isShowingModal = false"
+        />
+
+        <SetActiveModal
+            :show="isShowingModal && selected !== null"
+            :reminder-notification="selected"
             @close="isShowingModal = false"
         />
     </AuthenticatedLayout>

@@ -11,7 +11,9 @@ use App\Domains\Notification\Repositories\ReminderNotificationCriteria;
 use App\Domains\Notification\Repositories\ReminderNotificationRepository;
 use App\Domains\User\Constants\PermissionConstant as Permission;
 use App\Support\Controllers\Controller;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 
 class ReminderNotificationController extends Controller
@@ -34,11 +36,15 @@ class ReminderNotificationController extends Controller
         $repository = new ReminderNotificationRepository($criteria);
         $paginate = 'false' == $request->boolean('paginate');
 
+        $activeReminderNotification = ReminderNotification::where('is_active', true)
+            ->first();
+
         return Inertia::render('Notification/ReminderNotification/Index', [
             'criteria' => Inertia::always($criteria),
             'data' => Inertia::defer(fn() => $this->resource(ReminderNotificationData::class, $paginate
                 ? $repository->get()
                 : $repository->paginate($request->all()))),
+            'active' => $activeReminderNotification ? ReminderNotificationData::fromModel($activeReminderNotification) : null,
         ]);
     }
 
@@ -97,5 +103,33 @@ class ReminderNotificationController extends Controller
         return redirect()
             ->route('reminder-notifications.index')
             ->with('success', __('app.deleted_data', ['data' => __('app.reminder_notification')]));
+    }
+
+    /**
+     * Set the specified resource as active.
+     */
+    public function setActive(ReminderNotification $reminderNotification): RedirectResponse
+    {
+        DB::transaction(function () use ($reminderNotification) {
+            ReminderNotification::where('is_active', true)
+                ->update(['is_active' => false]);
+
+            $reminderNotification->update(['is_active' => true]);
+        });
+
+        return redirect()
+            ->back();
+    }
+
+    /**
+     * Disable all active reminder notifications.
+     */
+    public function disable(): RedirectResponse
+    {
+        ReminderNotification::where('is_active', true)
+            ->update(['is_active' => false]);
+
+        return redirect()
+            ->back();
     }
 }

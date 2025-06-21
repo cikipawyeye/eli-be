@@ -37,7 +37,11 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('/musics', MusicController::class)->only(['index', 'store', 'destroy']);
 
+    Route::post('/reminder-notifications/disable', [ReminderNotificationController::class, 'disable'])->name('reminder-notifications.disable');
+
     Route::resource('/reminder-notifications', ReminderNotificationController::class)->except(['create', 'edit']);
+
+    Route::post('/reminder-notifications/{reminder_notification}/set-active', [ReminderNotificationController::class, 'setActive'])->name('reminder-notifications.set-active');
 
     Route::resource('/emotions', EmotionController::class)->except(['create', 'edit']);
 
