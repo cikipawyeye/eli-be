@@ -5,6 +5,7 @@ declare(strict_types=1);
 use App\Domains\Content\Controllers\ContentController;
 use App\Domains\Content\Controllers\SubcategoryController;
 use App\Domains\Notification\Controllers\EmotionController;
+use App\Domains\Notification\Controllers\MessageController;
 use App\Domains\Payment\Controllers\PaymentController;
 use App\Domains\Notification\Controllers\ReminderNotificationController;
 use App\Domains\Theme\Controllers\MusicController;
@@ -39,6 +40,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('/reminder-notifications', ReminderNotificationController::class)->except(['create', 'edit']);
 
     Route::resource('/emotions', EmotionController::class)->except(['create', 'edit']);
+
+    Route::resource('/messages', MessageController::class)->only(['store', 'update', 'destroy']);
 });
 
 require __DIR__ . '/auth.php'; // NOSONAR

@@ -9,13 +9,6 @@
             "isBackground": true
         },
         {
-            "label": "Generate Translations Key",
-            "type": "shell",
-            "command": "php artisan app:generate-translation-keys",
-            "problemMatcher": [],
-            "isBackground": true
-        },
-        {
             "label": "Run Octane Dev Server",
             "type": "shell",
             "command": "php artisan octane:start --watch",
@@ -60,6 +53,13 @@
                 // "Watch Landing Page CSS",
             ],
             "problemMatcher": []
+        },
+        {
+            "label": "Sort Language Keys & Generate Translations JSON",
+            "type": "shell",
+            "command": "php artisan app:sort-language-keys",
+            "problemMatcher": [],
+            "isBackground": true
         },
     ]
 }

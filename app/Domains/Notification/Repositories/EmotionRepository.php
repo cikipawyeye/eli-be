@@ -17,4 +17,6 @@ class EmotionRepository extends Repository
     protected string $defaultSortDirection = self::SORT_DIRECTION_ASC;
 
     protected string $model = \App\Domains\Notification\Models\Emotion::class;
+
+    protected ?array $withCount = ['messages'];
 }

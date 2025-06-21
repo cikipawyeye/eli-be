@@ -237,9 +237,7 @@ onMounted(() => {
                 <li class="nav-item">
                     <Link
                         class="nav-link"
-                        :class="
-                            sidebarActiveClass('reminder-notifications.index')
-                        "
+                        :class="sidebarActiveClass('reminder-notifications')"
                         :href="route('reminder-notifications.index')"
                     >
                         <i class="material-symbols-rounded opacity-5"
@@ -253,7 +251,7 @@ onMounted(() => {
                 <li class="nav-item">
                     <Link
                         class="nav-link"
-                        :class="sidebarActiveClass('emotions.index')"
+                        :class="sidebarActiveClass('emotions')"
                         :href="route('emotions.index')"
                     >
                         <i class="material-symbols-rounded opacity-5"

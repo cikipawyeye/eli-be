@@ -4,9 +4,12 @@ namespace App\Domains\Notification\Controllers;
 
 use App\Domains\Notification\Actions\SaveEmotionAction;
 use App\Domains\Notification\DataTransferObjects\EmotionData;
+use App\Domains\Notification\DataTransferObjects\MessageData;
 use App\Domains\Notification\Models\Emotion;
 use App\Domains\Notification\Repositories\EmotionCriteria;
 use App\Domains\Notification\Repositories\EmotionRepository;
+use App\Domains\Notification\Repositories\MessageCriteria;
+use App\Domains\Notification\Repositories\MessageRepository;
 use App\Domains\Notification\Requests\SaveEmotionRequest;
 use App\Domains\User\Constants\PermissionConstant as Permission;
 use App\Support\Controllers\Controller;
@@ -36,7 +39,7 @@ class EmotionController extends Controller
         return Inertia::render('Notification/Emotion/Index', [
             'data' => Inertia::defer(fn() => $this->resource(EmotionData::class, $paginate
                 ? $repository->get()
-                : $repository->paginate($request->all()))),
+                : $repository->paginate($request->all()), 'messages_count')),
         ]);
     }
 
@@ -46,7 +49,7 @@ class EmotionController extends Controller
     public function store(SaveEmotionRequest $request)
     {
         $emotion = new Emotion();
-        
+
         dispatch_sync(
             new SaveEmotionAction(
                 $emotion,
@@ -64,10 +67,20 @@ class EmotionController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Emotion $emotion)
+    public function show(Request $request, Emotion $emotion)
     {
+        $criteria = MessageCriteria::from([
+            ...$request->all(),
+            'emotion' => $emotion->id,
+        ]);
+        $repository = new MessageRepository($criteria);
+
         return Inertia::render('Notification/Emotion/Show', [
             'data' => EmotionData::fromModel($emotion),
+            'messages' => Inertia::defer(fn() => $this->resource(
+                MessageData::class,
+                $repository->paginate($request->all())
+            )),
         ]);
     }
 

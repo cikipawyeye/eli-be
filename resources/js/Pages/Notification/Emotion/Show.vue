@@ -4,10 +4,12 @@ import { Permissions } from '@/Permission';
 import { can } from '@/Supports/helpers';
 import { Head, Link } from '@inertiajs/vue3';
 import { ref } from 'vue';
+import MessageList from './Partials/Message/Index.vue';
 import Modal from './Partials/Modal.vue';
 
 defineProps<{
     data: Emotion;
+    messages?: PaginatedResponseData<Message>;
 }>();
 
 const isEditing = ref(false);
@@ -86,13 +88,7 @@ const isDeleting = ref(false);
             </div>
 
             <div class="card-body">
-                <ul class="list-group m-4">
-                    <li class="list-group-item border-0 ps-0 pt-0 text-sm">
-                        <strong class="text-dark">{{ $t('name') }}:</strong>
-                        &nbsp;
-                        {{ data.name }}
-                    </li>
-                </ul>
+                <MessageList :emotion="data" :messages="messages" />
             </div>
         </div>
 

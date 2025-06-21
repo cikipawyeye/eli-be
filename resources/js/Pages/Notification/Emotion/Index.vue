@@ -85,7 +85,7 @@ const handlePagination = ({
                     class="shadow-secondary border-radius-lg d-flex gap-4 p-3 flex-wrap"
                 >
                     <h6 class="text-capitalize my-auto">
-                        {{ t('emotions') }}
+                        {{ t('emotion') }}
                     </h6>
 
                     <div
@@ -130,7 +130,12 @@ const handlePagination = ({
                                 <th
                                     class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2"
                                 >
-                                    {{ t('name') }}
+                                    {{ t('emotion_name') }}
+                                </th>
+                                <th
+                                    class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2"
+                                >
+                                    {{ t('emotion_messages_count') }}
                                 </th>
                                 <th
                                     v-if="can($page, Permissions.READ_EMOTION)"
@@ -168,6 +173,9 @@ const handlePagination = ({
                                     </td>
                                     <td class="text-sm">
                                         {{ item.name }}
+                                    </td>
+                                    <td class="text-sm">
+                                        {{ item.messages_count }}
                                     </td>
                                     <td
                                         v-if="
