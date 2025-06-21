@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 use App\Domains\Content\Controllers\API\ContentController;
 use App\Domains\Content\Controllers\API\SubcategoryController;
+use App\Domains\Notification\Controllers\API\EmotionController;
+use App\Domains\Notification\Controllers\API\MessageController;
 use App\Domains\Payment\Controllers\API\PaymentController;
 use App\Domains\Payment\Controllers\API\PaymentWebhookController;
 use App\Domains\Payment\Controllers\API\UpgradeAccountController;
@@ -30,6 +32,12 @@ Route::prefix('v1')->name('api.')->middleware('auth:sanctum')->group(function ()
 
         Route::post('forgot-password', [PasswordResetLinkController::class, 'store'])
             ->name('password.email');
+
+        Route::get('emotions', [EmotionController::class, 'index'])
+            ->name('emotions.index');
+
+        Route::get('messages', [MessageController::class, 'index'])
+            ->name('messages.index');
     });
 
     Route::post('logout', [AuthenticatedUserController::class, 'logout'])->name('logout');

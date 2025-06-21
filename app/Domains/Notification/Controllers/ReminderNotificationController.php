@@ -23,7 +23,7 @@ class ReminderNotificationController extends Controller
         $this->middleware(sprintf('permission:%s', Permission::BROWSE_REMINDER_NOTIFICATIONS))->only('index');
         $this->middleware(sprintf('permission:%s', Permission::READ_REMINDER_NOTIFICATION))->only('show');
         $this->middleware(sprintf('permission:%s', Permission::ADD_REMINDER_NOTIFICATION))->only('store');
-        $this->middleware(sprintf('permission:%s', Permission::EDIT_REMINDER_NOTIFICATION))->only('update');
+        $this->middleware(sprintf('permission:%s', Permission::EDIT_REMINDER_NOTIFICATION))->only(['update', 'setActive', 'disable']);
         $this->middleware(sprintf('permission:%s', Permission::DELETE_REMINDER_NOTIFICATION))->only('destroy');
     }
 
