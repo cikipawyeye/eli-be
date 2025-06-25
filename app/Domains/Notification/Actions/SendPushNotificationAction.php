@@ -27,6 +27,14 @@ class SendPushNotificationAction extends AsyncAction
             ->withNotification([
                 'title' => $this->reminderNotificationData->title,
                 'body' => $this->reminderNotificationData->message,
+                'image' => 'https://images8.alphacoders.com/516/516890.jpg',
+            ])
+            ->withAndroidConfig([
+                'notification' => [
+                    'color' => '#0e2341',
+                    // Notification sound can be set here if needed
+                    // 'channel_id' => 'reminder_notification_channel',
+                ]
             ])
             ->withData([
                 'reminderNotificationId' => $this->reminderNotificationData->id,
