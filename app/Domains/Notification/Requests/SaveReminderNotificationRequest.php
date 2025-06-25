@@ -4,7 +4,7 @@ namespace App\Domains\Notification\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreReminderNotificationRequest extends FormRequest
+class SaveReminderNotificationRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.

@@ -4,8 +4,7 @@ namespace App\Domains\Notification\Controllers;
 
 use App\Domains\Notification\Actions\SaveReminderNotificationAction;
 use App\Domains\Notification\DataTransferObjects\ReminderNotificationData;
-use App\Domains\Notification\Requests\StoreReminderNotificationRequest;
-use App\Domains\Notification\Requests\UpdateReminderNotificationRequest;
+use App\Domains\Notification\Requests\SaveReminderNotificationRequest;
 use App\Domains\Notification\Models\ReminderNotification;
 use App\Domains\Notification\Repositories\ReminderNotificationCriteria;
 use App\Domains\Notification\Repositories\ReminderNotificationRepository;
@@ -51,7 +50,7 @@ class ReminderNotificationController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreReminderNotificationRequest $request)
+    public function store(SaveReminderNotificationRequest $request)
     {
         $remoinderNotification = new ReminderNotification();
 
@@ -80,7 +79,7 @@ class ReminderNotificationController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateReminderNotificationRequest $request, ReminderNotification $reminderNotification)
+    public function update(SaveReminderNotificationRequest $request, ReminderNotification $reminderNotification)
     {
         dispatch_sync(
             new SaveReminderNotificationAction(
