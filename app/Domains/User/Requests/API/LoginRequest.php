@@ -73,10 +73,10 @@ class LoginRequest extends FormRequest
             ]);
         }
 
-        dispatch(new SendDeviceLoginNotificationAction(
-            newDeviceId: $this->input('device_id', ''),
-            oldFcmToken: $this->input('fcm_token', '')
-        ));
+        SendDeviceLoginNotificationAction::dispatchAfterResponse(
+            $this->input('device_id', ''),
+            $this->input('fcm_token', '')
+        );
 
         $data = $this->only('device_id', 'fcm_token');
         $data = array_filter($data, fn($value) => ! is_null($value) && $value !== '');

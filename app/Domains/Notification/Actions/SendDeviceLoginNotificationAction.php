@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Domains\Notification\Actions;
 
-use App\Domains\User\Models\User;
 use App\Support\Actions\AsyncAction;
 use Illuminate\Support\Facades\Log;
 use Kreait\Firebase\Exception\MessagingException;
@@ -14,8 +13,8 @@ use Kreait\Laravel\Firebase\Facades\Firebase;
 class SendDeviceLoginNotificationAction extends AsyncAction
 {
     public function __construct(
-        protected readonly ?string $newDeviceId,
-        protected readonly ?string $oldFcmToken
+        public readonly ?string $newDeviceId,
+        public readonly ?string $oldFcmToken
     ) {}
 
     public function handle(): void
