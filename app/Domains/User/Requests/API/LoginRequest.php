@@ -18,6 +18,7 @@ use Illuminate\Validation\ValidationException;
 /**
  * @method mixed user()
  * @method string|null ip()
+ * @extends \Illuminate\Http\Request
  */
 class LoginRequest extends FormRequest
 {
@@ -73,10 +74,16 @@ class LoginRequest extends FormRequest
         }
 
         dispatch(new SendDeviceLoginNotificationAction(
-            user: $user,
             newDeviceId: $this->input('device_id', ''),
-            newFcmToken: $this->input('fcm_token', '')
+            oldFcmToken: $this->input('fcm_token', '')
         ));
+
+        $data = $this->only('device_id', 'fcm_token');
+        $data = array_filter($data, fn($value) => ! is_null($value) && $value !== '');
+
+        if (! empty($data)) {
+            $user->update($data);
+        }
 
         RateLimiter::clear($this->throttleKey());
     }

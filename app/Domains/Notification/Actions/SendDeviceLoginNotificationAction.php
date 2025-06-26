@@ -14,34 +14,21 @@ use Kreait\Laravel\Firebase\Facades\Firebase;
 class SendDeviceLoginNotificationAction extends AsyncAction
 {
     public function __construct(
-        protected readonly User $user,
-        protected readonly string $newDeviceId,
-        protected readonly string $newFcmToken
+        protected readonly ?string $newDeviceId,
+        protected readonly ?string $oldFcmToken
     ) {}
 
     public function handle(): void
     {
-        $oldFcmToken = $this->user->fcm_token;
-        $shouldSendNotification = $this->user->device_id !== $this->newDeviceId
-            && ! empty($this->newFcmToken)
-            && ! empty($oldFcmToken);
-
-        $data = [
-            'device_id' => $this->newDeviceId,
-            'fcm_token' => $this->newFcmToken,
-        ];
-        $data = array_filter($data, fn($value) => ! is_null($value) && $value !== '');
-
-        if (! empty($data)) {
-            $this->user->update($data);
-        }
+        $shouldSendNotification = ! empty($this->newDeviceId)
+            && ! empty($this->oldFcmToken);
 
         if ($shouldSendNotification) {
-            $this->sendNotification($oldFcmToken);
+            $this->sendNotification();
         }
     }
 
-    protected function sendNotification(string $fcmToken): void
+    protected function sendNotification(): void
     {
         $messaging = Firebase::messaging();
 
@@ -53,7 +40,7 @@ class SendDeviceLoginNotificationAction extends AsyncAction
             ->withData([
                 'device_id' => $this->newDeviceId,
             ])
-            ->toToken($fcmToken);
+            ->toToken($this->oldFcmToken);
 
         try {
             $messaging->send($message);
@@ -61,7 +48,7 @@ class SendDeviceLoginNotificationAction extends AsyncAction
             Log::error('Failed to send device login notification', [
                 'error' => $e->getMessage(),
                 'device_id' => $this->newDeviceId,
-                'fcm_token' => $fcmToken,
+                'fcm_token' => $this->oldFcmToken,
             ]);
         }
     }
