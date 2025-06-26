@@ -75,7 +75,7 @@ class LoginRequest extends FormRequest
 
         SendDeviceLoginNotificationAction::dispatchAfterResponse(
             $this->input('device_id', ''),
-            $this->input('fcm_token', '')
+            $user->fcm_token ?? ''
         );
 
         $data = $this->only('device_id', 'fcm_token');
