@@ -41,7 +41,7 @@ class SendPushNotificationAction extends AsyncAction
                 'notification' => [
                     'color' => '#0e2341',
                     // Notification sound can be set here if needed
-                    // 'channel_id' => 'reminder_notification_channel',
+                    'channel_id' => 'reminder_notification_channel',
                 ]
             ])
             ->withData([
