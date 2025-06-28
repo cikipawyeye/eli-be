@@ -19,13 +19,11 @@ class SaveReminderNotificationRequest extends FormRequest
      */
     public function rules(): array
     {
-        $isUpdate = $this->routeIs('reminder-notifications.update');
-        
         return [
             'title' => 'required|string|max:255',
             'message' => 'required|string|max:255',
             'is_active' => 'boolean',
-            'image' => $isUpdate ? 'nullable|image|max:2048' : 'required|image|max:2048',
+            'image' => 'nullable|image|max:2048',
         ];
     }
 }

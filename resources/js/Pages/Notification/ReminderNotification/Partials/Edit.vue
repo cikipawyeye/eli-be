@@ -93,9 +93,7 @@ const updateFiles = (fileItems: FilePondFile[]) => {
                 <InputError :message="form.errors.message" />
             </div>
             <div class="mb-3">
-                <label for="image" class="form-label"
-                    >{{ t('image') }}<span class="text-warning">*</span></label
-                >
+                <label for="image" class="form-label">{{ t('image') }}</label>
 
                 <file-pond
                     store-as-file="true"
