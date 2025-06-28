@@ -41,7 +41,14 @@ defineProps<{
                 <div class="me-3" style="width: 30px"></div>
                 <div class="text-white">
                     <h6 class="mb-1 text-white">{{ notification.title }}</h6>
-                    <p class="text-sm m-0 mb-3" style="opacity: 0.7">
+                    <p
+                        class="text-sm m-0"
+                        :class="{
+                            'mb-0': !notification.image_url,
+                            'mb-3': notification.image_url,
+                        }"
+                        style="opacity: 0.7"
+                    >
                         {{ notification.message }}
                     </p>
 

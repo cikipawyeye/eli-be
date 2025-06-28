@@ -39,7 +39,15 @@ defineProps<{
                 <div class="me-3" style="width: 30px"></div>
                 <div class="">
                     <h6 class="mb-1">{{ notification.title }}</h6>
-                    <p class="text-sm m-0 mb-3">{{ notification.message }}</p>
+                    <p
+                        class="text-sm"
+                        :class="{
+                            'mb-0': !notification.image_url,
+                            'mb-3': notification.image_url,
+                        }"
+                    >
+                        {{ notification.message }}
+                    </p>
 
                     <img
                         v-if="notification.image_url"
