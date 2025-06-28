@@ -43,7 +43,7 @@ class ReminderNotificationController extends Controller
             'data' => Inertia::defer(fn() => $this->resource(ReminderNotificationData::class, $paginate
                 ? $repository->get()
                 : $repository->paginate($request->all()))),
-            'active' => $activeReminderNotification ? ReminderNotificationData::fromModel($activeReminderNotification) : null,
+            'active' => $activeReminderNotification ? ReminderNotificationData::fromModel($activeReminderNotification)->include('image_url') : null,
         ]);
     }
 
@@ -57,7 +57,8 @@ class ReminderNotificationController extends Controller
         dispatch_sync(
             new SaveReminderNotificationAction(
                 $remoinderNotification,
-                ReminderNotificationData::from($request->validated())
+                ReminderNotificationData::from($request->validated()),
+                $request->file('image', null),
             )
         );
 
@@ -72,7 +73,7 @@ class ReminderNotificationController extends Controller
     public function show(ReminderNotification $reminderNotification)
     {
         return Inertia::render('Notification/ReminderNotification/Show', [
-            'data' => ReminderNotificationData::fromModel($reminderNotification),
+            'data' => ReminderNotificationData::fromModel($reminderNotification)->include('image_url'),
         ]);
     }
 
@@ -84,7 +85,8 @@ class ReminderNotificationController extends Controller
         dispatch_sync(
             new SaveReminderNotificationAction(
                 $reminderNotification,
-                ReminderNotificationData::from($request->validated())
+                ReminderNotificationData::from($request->validated()),
+                $request->file('image', null)
             )
         );
 

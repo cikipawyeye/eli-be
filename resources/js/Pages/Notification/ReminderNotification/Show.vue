@@ -5,6 +5,7 @@ import { can } from '@/Supports/helpers';
 import { Head, Link } from '@inertiajs/vue3';
 import { ref } from 'vue';
 import Modal from './Partials/Modal.vue';
+import NotificationPreview from './Partials/NotificationPreview.vue';
 
 defineProps<{
     data: ReminderNotification;
@@ -102,18 +103,31 @@ const isDeleting = ref(false);
             </div>
 
             <div class="card-body">
-                <ul class="list-group m-4">
-                    <li class="list-group-item border-0 ps-0 pt-0 text-sm">
-                        <strong class="text-dark">{{ $t('title') }}:</strong>
-                        &nbsp;
-                        {{ data.title }}
-                    </li>
-                    <li class="list-group-item border-0 ps-0 text-sm">
-                        <strong class="text-dark">{{ $t('message') }}:</strong>
-                        &nbsp;
-                        {{ data.message }}
-                    </li>
-                </ul>
+                <div class="row">
+                    <div class="col-12 col-md-6 p-4">
+                        <ul class="list-group mb-4">
+                            <li
+                                class="list-group-item border-0 ps-0 pt-0 text-sm"
+                            >
+                                <strong class="text-dark"
+                                    >{{ $t('title') }}:</strong
+                                >
+                                &nbsp;
+                                {{ data.title }}
+                            </li>
+                            <li class="list-group-item border-0 ps-0 text-sm">
+                                <strong class="text-dark"
+                                    >{{ $t('message') }}:</strong
+                                >
+                                &nbsp;
+                                {{ data.message }}
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-12 col-md-6 p-4">
+                        <NotificationPreview :notification="data" />
+                    </div>
+                </div>
             </div>
         </div>
 

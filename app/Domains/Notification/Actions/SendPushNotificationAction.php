@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Log;
 use Kreait\Firebase\Exception\MessagingException;
 use Kreait\Firebase\Messaging\CloudMessage;
 use Kreait\Laravel\Firebase\Facades\Firebase;
+use Spatie\LaravelData\Lazy;
 
 class SendPushNotificationAction extends AsyncAction
 {
@@ -21,13 +22,20 @@ class SendPushNotificationAction extends AsyncAction
 
     public function handle()
     {
+        $image = $this->reminderNotificationData->image_url_optimized;
+
+        if ($image instanceof Lazy) {
+            // Resolve the Lazy image URL to get the actual URL
+            $image = $image->resolve();
+        }
+
         $messaging = Firebase::messaging();
         
         $message = CloudMessage::new()
             ->withNotification([
                 'title' => $this->reminderNotificationData->title,
                 'body' => $this->reminderNotificationData->message,
-                'image' => 'https://images8.alphacoders.com/516/516890.jpg',
+                'image' => $image,
             ])
             ->withAndroidConfig([
                 'notification' => [

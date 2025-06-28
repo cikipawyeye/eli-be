@@ -40,7 +40,7 @@ class SendReminderPushNotification extends Command
 
         dispatch_sync(
             new SendPushNotificationAction(
-                ReminderNotificationData::fromModel($reminderNotification)
+                ReminderNotificationData::fromModel($reminderNotification)->include('image_url_optimized')
             )
         );
     }

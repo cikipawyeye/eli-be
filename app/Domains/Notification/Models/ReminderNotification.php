@@ -2,16 +2,15 @@
 
 namespace App\Domains\Notification\Models;
 
+use App\Support\Models\Model;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
-class ReminderNotification extends Model
+class ReminderNotification extends Model implements HasMedia
 {
-    /** @use HasFactory<\Database\Factories\ReminderNotificationFactory> */
-    use HasFactory;
-    use SoftDeletes;
+    use InteractsWithMedia;
 
     /**
      * The attributes that are mass assignable.
@@ -23,5 +22,17 @@ class ReminderNotification extends Model
     protected static function newFactory(): Factory
     {
         return \Database\Factories\ReminderNotificationFactory::new();
+    }
+
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('image')->singleFile();
+    }
+
+    public function registerMediaConversions(?Media $media = null): void
+    {
+        $this->addMediaConversion('optimized')
+            ->format('webp')
+            ->performOnCollections('image');
     }
 }

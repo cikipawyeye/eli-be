@@ -32,14 +32,31 @@ defineProps<{
                     <p class="m-0 text-xs">Motivasi Penyejuk Hati &bull; now</p>
                 </div>
                 <div class="ms-auto my-auto">
-                    <i class="fa fa-chevron-up text-primary me-2"></i>
+                    <i class="fa fa-chevron-down text-primary me-2"></i>
                 </div>
             </div>
             <div class="d-flex">
                 <div class="me-3" style="width: 30px"></div>
-                <div class="">
-                    <h6 class="mb-1">{{ notification.title }}</h6>
-                    <p class="text-sm m-0">{{ notification.message }}</p>
+                <div
+                    class="d-flex justify-content-between align-items-stretch w-100"
+                >
+                    <div>
+                        <h6 class="mb-1">{{ notification.title }}</h6>
+                        <p class="text-sm m-0">{{ notification.message }}</p>
+                    </div>
+
+                    <img
+                        v-if="notification.image_url"
+                        :src="notification.image_url"
+                        class="img-fluid rounded shadow"
+                        style="
+                            max-height: 50px;
+                            width: auto;
+                            object-fit: contain;
+                        "
+                        alt=""
+                        srcset=""
+                    />
                 </div>
             </div>
         </div>

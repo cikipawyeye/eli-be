@@ -3,6 +3,7 @@ import InputError from '@/Components/InputError.vue';
 import InputGroup from '@/Components/InputGroup.vue';
 import { flashSuccess } from '@/Supports/helpers';
 import { useForm } from '@inertiajs/vue3';
+import { ActualFileObject, FilePondFile } from 'filepond';
 import { useI18n } from 'vue-i18n';
 
 const { t } = useI18n();
@@ -11,14 +12,16 @@ const emit = defineEmits<{
     closeModal: [void];
 }>();
 
-const form = useForm<ReminderNotification>({
+const form = useForm<{ image: null | Blob } & ReminderNotification>({
     title: '',
     message: '',
     is_active: false,
+    image: null,
 });
 
 const submit = () => {
     form.post(route('reminder-notifications.store'), {
+        forceFormData: true,
         onSuccess: () => {
             form.reset();
             emit('closeModal');
@@ -27,6 +30,20 @@ const submit = () => {
             );
         },
     });
+};
+
+const updateFiles = (fileItems: FilePondFile[]) => {
+    const file =
+        (fileItems.map((fileItem) => fileItem.file)[0] as
+            | File
+            | ActualFileObject) ?? null;
+
+    form.image =
+        file instanceof File
+            ? file
+            : new File([file], (file as ActualFileObject).name, {
+                  type: file.type,
+              });
 };
 </script>
 
@@ -69,6 +86,21 @@ const submit = () => {
                 </InputGroup>
 
                 <InputError :message="form.errors.message" />
+            </div>
+            <div class="mb-3">
+                <label for="image" class="form-label"
+                    >{{ t('image') }}<span class="text-warning">*</span></label
+                >
+
+                <file-pond
+                    store-as-file="true"
+                    @updatefiles="updateFiles"
+                    label-idle="Drop files here..."
+                    :allow-multiple="false"
+                    :accepted-file-types="['image/*']"
+                />
+
+                <InputError :image="form.errors.image" />
             </div>
         </div>
 

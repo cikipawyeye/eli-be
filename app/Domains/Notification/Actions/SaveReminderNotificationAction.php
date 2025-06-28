@@ -7,12 +7,15 @@ namespace App\Domains\Notification\Actions;
 use App\Domains\Notification\DataTransferObjects\ReminderNotificationData;
 use App\Domains\Notification\Models\ReminderNotification;
 use App\Support\Actions\Action;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\DB;
 
 class SaveReminderNotificationAction extends Action
 {
     public function __construct(
         protected readonly ReminderNotification $model,
-        protected readonly ReminderNotificationData $data
+        protected readonly ReminderNotificationData $data,
+        protected readonly ?UploadedFile $image = null,
     ) {}
 
     public function handle()
@@ -23,7 +26,14 @@ class SaveReminderNotificationAction extends Action
             'is_active',
         )->toArray());
 
-        $this->model->save();
+        DB::transaction(function () {
+            $this->model->save();
+
+            if ($this->image instanceof UploadedFile) {
+                $this->model->addMedia($this->image)
+                    ->toMediaCollection('image', 'public');
+            }
+        });
 
         return $this->model;
     }
