@@ -34,31 +34,25 @@ defineProps<{
                     </p>
                 </div>
                 <div class="ms-auto my-auto text-white" style="opacity: 0.7">
-                    <i class="fa fa-chevron-down me-2"></i>
+                    <i class="fa fa-chevron-up me-2"></i>
                 </div>
             </div>
             <div class="d-flex">
                 <div class="me-3" style="width: 30px"></div>
-                <div
-                    class="d-flex justify-content-between align-items-stretch w-100"
-                >
-                    <div>
-                        <h6 class="text-white mb-1">
-                            {{ notification.title }}
-                        </h6>
-                        <p class="text-white text-sm m-0" style="opacity: 0.7">
-                            {{ notification.message }}
-                        </p>
-                    </div>
+                <div class="text-white">
+                    <h6 class="mb-1 text-white">{{ notification.title }}</h6>
+                    <p class="text-sm m-0 mb-3" style="opacity: 0.7">
+                        {{ notification.message }}
+                    </p>
 
                     <img
                         v-if="notification.image_url"
                         :src="notification.image_url"
-                        class="img-fluid rounded shadow"
+                        class="img-fluid shadow"
                         style="
-                            max-height: 50px;
                             width: auto;
                             object-fit: contain;
+                            border-radius: 16px;
                         "
                         alt=""
                         srcset=""
