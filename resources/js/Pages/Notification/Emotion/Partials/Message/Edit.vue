@@ -49,8 +49,9 @@ const submit = () => {
                         id="content"
                         type="text"
                         class="form-control"
-                        :placeholder="t('message_content')"
+                        :placeholder="t('write_your_message_here')"
                         autofocus
+                        rows="16"
                     />
                 </InputGroup>
 

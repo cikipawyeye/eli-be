@@ -166,6 +166,7 @@ return [
     'virtual_account' => 'Virtual Account',
     'wallpaper' => 'Wallpaper',
     'wallpapers' => 'Wallpaper',
+    'write_your_message_here' => 'Tulis pesan Anda di sini...',
     'years' => 'Tahun',
     'yes' => 'Ya',
     'yesterday' => 'Kemarin',

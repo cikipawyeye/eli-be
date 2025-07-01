@@ -118,7 +118,7 @@ const setIsDeleting = (item: Message) => {
                             <th
                                 class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2"
                             >
-                                {{ $t('name') }}
+                                {{ $t('message') }}
                             </th>
                             <th class="text-secondary opacity-7"></th>
                         </tr>
@@ -150,10 +150,10 @@ const setIsDeleting = (item: Message) => {
                                         }}.</span
                                     >
                                 </td>
-                                <td class="text-sm">
+                                <td class="text-sm text-wrap">
                                     {{ item.content }}
                                 </td>
-                                <td class="align-middle">
+                                <td class="align-middle px-5">
                                     <div
                                         class="d-flex gap-5 justify-content-center"
                                     >

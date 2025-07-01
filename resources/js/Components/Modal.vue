@@ -2,20 +2,12 @@
 import { Modal } from 'bootstrap';
 import { computed, onMounted, onUnmounted, ref, watch } from 'vue';
 
-const props = defineProps({
-    id: {
-        type: String,
-        required: true,
-    },
-    show: {
-        type: Boolean,
-        default: false,
-    },
-    scrollable: {
-        type: Boolean,
-        default: false,
-    },
-});
+const props = defineProps<{
+    id: string;
+    show?: boolean;
+    scrollable?: boolean;
+    size?: 'sm' | 'md' | 'lg' | 'xl';
+}>();
 
 const emit = defineEmits<{
     close: [void];
@@ -63,7 +55,7 @@ watch(
         :aria-hidden="showModal ? 'true' : 'false'"
     >
         <div
-            :class="`modal-dialog modal-dialog-centered ${scrollable ? 'modal-dialog-scrollable' : ''}`"
+            :class="`modal-dialog modal-dialog-centered ${scrollable ? 'modal-dialog-scrollable' : ''} ${size ? `modal-${size}` : ''}`"
         >
             <div class="modal-content">
                 <slot />

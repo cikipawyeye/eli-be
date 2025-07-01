@@ -31,6 +31,7 @@ const closeModal = () => {
     <Modal
         id="add-edit-message-modal"
         :show="isShowingModal"
+        size="lg"
         @close="closeModal"
     >
         <div class="modal-header">
