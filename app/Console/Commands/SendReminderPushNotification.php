@@ -21,7 +21,7 @@ class SendReminderPushNotification extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Send firebase push notification for active reminder notifications';
 
     /**
      * Execute the console command.
@@ -35,6 +35,14 @@ class SendReminderPushNotification extends Command
         if (!$reminderNotification) {
             $datetime = now()->toDateTimeString();
             $this->warn("[{$datetime}] No active reminder notification found.");
+            return;
+        }
+
+        // Get current time
+        $currentTime = now()->format('H:i');
+        if (substr($reminderNotification->notification_time, 0, 5) !== $currentTime) {
+            $datetime = now()->toDateTimeString();
+            $this->warn("[{$datetime}] Time does not match current time. Skipping.");
             return;
         }
 

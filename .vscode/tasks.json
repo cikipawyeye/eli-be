@@ -44,6 +44,13 @@
             "isBackground": true
         },
         {
+            "label": "Run Scheduler",
+            "type": "shell",
+            "command": "php artisan schedule:work",
+            "problemMatcher": [],
+            "isBackground": true
+        },
+        {
             "label": "Start Dev Server",
             "dependsOn": [
                 "Run Octane Dev Server",
@@ -51,6 +58,7 @@
                 "Run Horizon",
                 "Xendit Webhook",
                 // "Watch Landing Page CSS",
+                "Run Scheduler",
             ],
             "problemMatcher": []
         },

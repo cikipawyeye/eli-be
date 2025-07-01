@@ -49,11 +49,22 @@ const testNotification = () => {
 
 <template>
     <div class="card mb-4 mt-3">
-        <div class="card-header d-flex gap-4 justify-content-between flex-wrap">
-            <h6 class="text-capitalize my-auto">
-                {{ t('reminder_notifications') }}
-            </h6>
-            <div class="d-flex gap-3">
+        <div
+            class="card-header d-flex gap-4 justify-content-between flex-wrap pb-0"
+        >
+            <div>
+                <h6 class="text-capitalize my-auto">
+                    {{ t('reminder_notifications') }}
+                </h6>
+                <p class="mb-0">
+                    {{
+                        t('sending_notification_at', {
+                            data: active?.notification_time?.substring(0, 5),
+                        })
+                    }}
+                </p>
+            </div>
+            <div class="d-flex gap-3 mb-auto">
                 <button
                     v-if="environment && environment !== 'production'"
                     @click="testNotification"

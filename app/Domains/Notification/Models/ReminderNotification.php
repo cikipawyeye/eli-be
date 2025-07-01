@@ -17,7 +17,7 @@ class ReminderNotification extends Model implements HasMedia
      *
      * @var array
      */
-    protected $fillable = ['title', 'message', 'is_active'];
+    protected $fillable = ['title', 'message', 'is_active', 'notification_time'];
 
     protected static function newFactory(): Factory
     {

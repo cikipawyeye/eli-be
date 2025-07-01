@@ -122,6 +122,13 @@ const isDeleting = ref(false);
                                 &nbsp;
                                 {{ data.message }}
                             </li>
+                            <li class="list-group-item border-0 ps-0 text-sm">
+                                <strong class="text-dark"
+                                    >{{ $t('notification_time') }}:</strong
+                                >
+                                &nbsp;
+                                {{ data.notification_time?.substring(0, 5) }}
+                            </li>
                         </ul>
                     </div>
                     <div class="col-12 col-md-6 p-4">

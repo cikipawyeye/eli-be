@@ -178,6 +178,11 @@ onMounted(() => {
                                 <th
                                     class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2"
                                 >
+                                    {{ t('notification_time') }}
+                                </th>
+                                <th
+                                    class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2"
+                                >
                                     {{ t('status') }}
                                 </th>
                                 <th
@@ -228,6 +233,18 @@ onMounted(() => {
 
                                         <p class="mb-0 text-sm">
                                             {{ item.message }}
+                                        </p>
+                                    </td>
+                                    <td class="text-sm">
+                                        <p
+                                            class="font-weight-bold mb-0 text-sm"
+                                        >
+                                            {{
+                                                item.notification_time?.substring(
+                                                    0,
+                                                    5,
+                                                ) ?? '-'
+                                            }}
                                         </p>
                                     </td>
                                     <td>

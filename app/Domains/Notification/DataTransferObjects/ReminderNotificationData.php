@@ -15,6 +15,7 @@ class ReminderNotificationData extends Data
         public readonly string $title,
         public readonly string $message,
         public readonly bool $is_active,
+        public readonly ?string $notification_time,
         public readonly Lazy|string|null $image_url,
         public readonly Lazy|string|null $image_url_optimized,
     ) {}
@@ -26,6 +27,7 @@ class ReminderNotificationData extends Data
             title: $model->title,
             message: $model->message,
             is_active: $model->is_active,
+            notification_time: $model->notification_time,
             image_url: Lazy::create(fn () => $model->getFirstMediaUrl('image')),
             image_url_optimized: Lazy::create(
                 fn () => $model->getFirstMediaUrl('image', 'optimized')

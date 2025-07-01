@@ -24,6 +24,7 @@ class SaveReminderNotificationAction extends Action
             'title',
             'message',
             'is_active',
+            'notification_time',
         )->toArray());
 
         DB::transaction(function () {
@@ -32,6 +33,8 @@ class SaveReminderNotificationAction extends Action
             if ($this->image instanceof UploadedFile) {
                 $this->model->addMedia($this->image)
                     ->toMediaCollection('image', 'public');
+            } elseif (! $this->image) {
+                $this->model->clearMediaCollection('image');
             }
         });
 

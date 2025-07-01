@@ -23,6 +23,7 @@ class SaveReminderNotificationRequest extends FormRequest
             'title' => 'required|string|max:255',
             'message' => 'required|string|max:255',
             'is_active' => 'boolean',
+            'notification_time' => 'required|date_format:H:i',
             'image' => 'nullable|image|max:2048',
         ];
     }

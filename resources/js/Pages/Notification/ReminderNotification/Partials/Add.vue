@@ -15,6 +15,7 @@ const emit = defineEmits<{
 const form = useForm<{ image: null | Blob } & ReminderNotification>({
     title: '',
     message: '',
+    notification_time: '',
     is_active: false,
     image: null,
 });
@@ -51,9 +52,10 @@ const updateFiles = (fileItems: FilePondFile[]) => {
     <form @submit.prevent="submit" class="text-start">
         <div class="modal-body">
             <div class="mb-3">
-                <label for="title" class="form-label"
-                    >{{ t('title') }}<span class="text-warning">*</span></label
-                >
+                <label for="title" class="form-label">
+                    {{ t('title') }}
+                    <span class="text-warning">*</span>
+                </label>
 
                 <InputGroup :is-invalid="!!form.errors.title">
                     <input
@@ -69,10 +71,10 @@ const updateFiles = (fileItems: FilePondFile[]) => {
                 <InputError :message="form.errors.title" />
             </div>
             <div class="mb-3">
-                <label for="message" class="form-label"
-                    >{{ t('message')
-                    }}<span class="text-warning">*</span></label
-                >
+                <label for="message" class="form-label">
+                    {{ t('message') }}
+                    <span class="text-warning">*</span>
+                </label>
 
                 <InputGroup :is-invalid="!!form.errors.message">
                     <input
@@ -86,6 +88,25 @@ const updateFiles = (fileItems: FilePondFile[]) => {
                 </InputGroup>
 
                 <InputError :message="form.errors.message" />
+            </div>
+            <div class="mb-3">
+                <label for="notification_time" class="form-label">
+                    {{ t('notification_time') }}
+                    <span class="text-warning">*</span>
+                </label>
+
+                <InputGroup>
+                    <input
+                        v-model="form.notification_time"
+                        id="notification_time"
+                        type="time"
+                        class="form-control"
+                        :placeholder="t('notification_time')"
+                        autofocus
+                    />
+                </InputGroup>
+
+                <InputError :message="form.errors.notification_time" />
             </div>
             <div class="mb-3">
                 <label for="image" class="form-label">{{ t('image') }}</label>

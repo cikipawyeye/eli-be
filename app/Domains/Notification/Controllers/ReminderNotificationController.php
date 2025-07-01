@@ -54,18 +54,18 @@ class ReminderNotificationController extends Controller
      */
     public function store(SaveReminderNotificationRequest $request)
     {
-        $remoinderNotification = new ReminderNotification();
+        $reminderNotification = new ReminderNotification();
 
         dispatch_sync(
             new SaveReminderNotificationAction(
-                $remoinderNotification,
+                $reminderNotification,
                 ReminderNotificationData::from($request->validated()),
                 $request->file('image', null),
             )
         );
 
         return redirect()
-            ->route('reminder-notifications.show', $remoinderNotification)
+            ->route('reminder-notifications.show', $reminderNotification)
             ->with('success', __('app.stored_data', ['data' => __('app.reminder_notification')]));
     }
 
