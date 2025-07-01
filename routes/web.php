@@ -39,6 +39,8 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/reminder-notifications/disable', [ReminderNotificationController::class, 'disable'])->name('reminder-notifications.disable');
 
+    Route::post('/reminder-notifications/test', [ReminderNotificationController::class, 'test'])->name('reminder-notifications.test');
+
     Route::resource('/reminder-notifications', ReminderNotificationController::class)->except(['create', 'edit']);
 
     Route::post('/reminder-notifications/{reminder_notification}/set-active', [ReminderNotificationController::class, 'setActive'])->name('reminder-notifications.set-active');

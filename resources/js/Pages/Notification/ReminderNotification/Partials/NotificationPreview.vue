@@ -42,16 +42,16 @@ defineProps<{
                     <p
                         class="text-sm"
                         :class="{
-                            'mb-0': !notification.image_url,
-                            'mb-3': notification.image_url,
+                            'mb-0': !notification.image_url_optimized,
+                            'mb-3': notification.image_url_optimized,
                         }"
                     >
                         {{ notification.message }}
                     </p>
 
                     <img
-                        v-if="notification.image_url"
-                        :src="notification.image_url"
+                        v-if="notification.image_url_optimized"
+                        :src="notification.image_url_optimized"
                         class="img-fluid shadow"
                         style="
                             width: auto;

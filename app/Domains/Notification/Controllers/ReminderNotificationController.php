@@ -3,7 +3,9 @@
 namespace App\Domains\Notification\Controllers;
 
 use App\Domains\Notification\Actions\SaveReminderNotificationAction;
+use App\Domains\Notification\Actions\SendPushNotificationAction;
 use App\Domains\Notification\DataTransferObjects\ReminderNotificationData;
+use App\Domains\Notification\Exceptions\ReminderNotificationException;
 use App\Domains\Notification\Requests\SaveReminderNotificationRequest;
 use App\Domains\Notification\Models\ReminderNotification;
 use App\Domains\Notification\Repositories\ReminderNotificationCriteria;
@@ -21,7 +23,7 @@ class ReminderNotificationController extends Controller
     {
         $this->middleware(sprintf('permission:%s', Permission::BROWSE_REMINDER_NOTIFICATIONS))->only('index');
         $this->middleware(sprintf('permission:%s', Permission::READ_REMINDER_NOTIFICATION))->only('show');
-        $this->middleware(sprintf('permission:%s', Permission::ADD_REMINDER_NOTIFICATION))->only('store');
+        $this->middleware(sprintf('permission:%s', Permission::ADD_REMINDER_NOTIFICATION))->only(['store', 'test']);
         $this->middleware(sprintf('permission:%s', Permission::EDIT_REMINDER_NOTIFICATION))->only(['update', 'setActive', 'disable']);
         $this->middleware(sprintf('permission:%s', Permission::DELETE_REMINDER_NOTIFICATION))->only('destroy');
     }
@@ -43,7 +45,7 @@ class ReminderNotificationController extends Controller
             'data' => Inertia::defer(fn() => $this->resource(ReminderNotificationData::class, $paginate
                 ? $repository->get()
                 : $repository->paginate($request->all()))),
-            'active' => $activeReminderNotification ? ReminderNotificationData::fromModel($activeReminderNotification)->include('image_url') : null,
+            'active' => $activeReminderNotification ? ReminderNotificationData::fromModel($activeReminderNotification)->include('image_url', 'image_url_optimized') : null,
         ]);
     }
 
@@ -73,7 +75,7 @@ class ReminderNotificationController extends Controller
     public function show(ReminderNotification $reminderNotification)
     {
         return Inertia::render('Notification/ReminderNotification/Show', [
-            'data' => ReminderNotificationData::fromModel($reminderNotification)->include('image_url'),
+            'data' => ReminderNotificationData::fromModel($reminderNotification)->include('image_url', 'image_url_optimized'),
         ]);
     }
 
@@ -129,6 +131,29 @@ class ReminderNotificationController extends Controller
     {
         ReminderNotification::where('is_active', true)
             ->update(['is_active' => false]);
+
+        return redirect()
+            ->back();
+    }
+
+    /**
+     * Test the reminder notification.
+     */
+    public function test(): RedirectResponse
+    {
+        $reminderNotification = ReminderNotification::where('is_active', true)
+            ->orderBy('updated_at', 'desc')
+            ->first();
+
+        if (! $reminderNotification) {
+            return redirect()
+                ->back()
+                ->withErrors(['message' => __('app.no_active_reminder_notification')]);
+        }
+
+        SendPushNotificationAction::dispatchSync(
+            ReminderNotificationData::fromModel($reminderNotification)->include('image_url_optimized')
+        );
 
         return redirect()
             ->back();

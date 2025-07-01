@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import Modal from '@/Components/Modal.vue';
-import { flashSuccess } from '@/Supports/helpers';
+import { flashError, flashSuccess } from '@/Supports/helpers';
 import { useForm } from '@inertiajs/vue3';
 import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
@@ -31,6 +31,20 @@ const submit = () => {
         },
     });
 };
+
+const environment = import.meta.env.VITE_APP_ENV;
+
+const testNotification = () => {
+    form.post(route('reminder-notifications.test'), {
+        showProgress: true,
+        onSuccess: () => {
+            flashSuccess(t('test_notification_sent'));
+        },
+        onError: ({ message }) => {
+            flashError(message);
+        },
+    });
+};
 </script>
 
 <template>
@@ -39,15 +53,27 @@ const submit = () => {
             <h6 class="text-capitalize my-auto">
                 {{ t('reminder_notifications') }}
             </h6>
+            <div class="d-flex gap-3">
+                <button
+                    v-if="environment && environment !== 'production'"
+                    @click="testNotification"
+                    :disabled="form.processing"
+                    class="btn btn-warning btn-sm mb-0 text-nowrap"
+                >
+                    <i class="fa fa-bell me-2"></i>
+                    {{ t('test_notification') }}
+                </button>
 
-            <button
-                v-if="active"
-                @click="isShowingModal = true"
-                class="btn btn-danger btn-sm mb-0 text-nowrap"
-            >
-                <i class="fa fa-ban me-2"></i>
-                {{ t('turn_off_notifications') }}
-            </button>
+                <button
+                    v-if="active"
+                    @click="isShowingModal = true"
+                    :disabled="form.processing"
+                    class="btn btn-danger btn-sm mb-0 text-nowrap"
+                >
+                    <i class="fa fa-ban me-2"></i>
+                    {{ t('turn_off_notifications') }}
+                </button>
+            </div>
         </div>
         <div class="card-body">
             <div v-if="active" class="row justify-content-center">
