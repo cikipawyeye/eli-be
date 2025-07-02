@@ -108,34 +108,46 @@
                         <h1
                             class="text-3xl md:text-4xl xl:text-5xl font-bold leading-snug"
                         >
-                            Temukan Ketenangan &
-                            <br />
-                            Motivasi dari
-                            <span class="text-primary">Al-Qur'an</span>
+                            Dapatkan Ketenangan Hati
+                            dan Motivasi dari
+                            <span class="text-primary text-nowrap">Al-Qur'an</span>
                         </h1>
 
                         <p
-                            class="my-8 text-lg md:text-xl text-secondary leading-relaxed"
+                            class="my-8 text-lg md:text-xl opacity-80 leading-relaxed"
                         >
-                            Dapatkan inspirasi harian dari ayat-ayat Al-Qur'an
-                            yang menyentuh hati dan memperkuat iman.
+                            Dapatkan motivasi harian dari ayat-ayat Al-Qur'an,
+                            yang menyentuh hati dan menambah keimanan.
                         </p>
 
-                        <ul class="list-disc px-5 font-semibold text-secondary">
+                        <ul class="list-disc px-5 font-semibold opacity-80">
                             <li class="mb-2">
-                                Sebagai penyejuk hati, pengingat, dan motivasi
-                                bagi kaum Muslim.
+                                Sebagai pengingan untuk selalu mendekatkan diri
+                                kepada Allah SWT.
                             </li>
                             <li class="mb-2">
-                                Lebih dari 200 motivasi dan pengingat Islami
-                                dalam satu aplikasi!
+                                Sebagai motivasi, penyejuk hati, dan pengingat,
+                                dan bagi umat Muslim agar tetap di jalanNYA saat
+                                menghadapi permasalahan kehidupan sehari-hari.
                             </li>
                             <li class="mb-2">
-                                Hanya bayar sekali untuk akses penuh!
+                                Memperbaiki suasana hati pada saat merasakan
+                                sedih, cemas, putus asa, dan perasaan tidak
+                                nyaman lainnya.
                             </li>
                             <li class="mb-2">
-                                Download sekarang & mulai perjalanan spiritual
-                                Anda!
+                                Aplikasi ini berisikan lebih dari 200 motivasi
+                                dan pengingat Islami.
+                            </li>
+                            <li class="mb-2">
+                                Cukup hanya dengan membayar satu kali saja untuk
+                                mendapatkan akses penuh isi motivasi selamanya
+                                dan mendapatkan update tanpa harus membayar
+                                lagi!
+                            </li>
+                            <li class="mb-2">
+                                Download sekarang, dan mulai perjalanan
+                                spiritual Kamu!
                             </li>
                         </ul>
 
@@ -267,7 +279,7 @@
                     <h2
                         class="text-center font-semibold text-3xl md:text-4xl xl:text-5xl mb-6"
                     >
-                        Kenapa Harus Menggunakan Aplikasi Ini?
+                        Kenapa harus menggunakan aplikasi ini?
                     </h2>
                     <div class="flex">
                         <div
@@ -293,13 +305,13 @@
                     </div>
                     <div class="py-8 flex flex-col justify-center">
                         <h4 class="text-3xl md:text-4xl font-bold leading-snug">
-                            Motivasi dan Pengingat Islami yang Terpercaya
+                            Motivasi dan pengingat Islami yang terpercaya
                         </h4>
 
                         <p class="my-8 text-xl leading-relaxed">
-                            Semua kutipan dalam aplikasi diambil
-                            <strong>langsung dari Al-Qur'an</strong>
-                            , sehingga terjamin kebenarannya.
+                            Semua kutipan dalam aplikasi merupakan petikan
+                            <strong>ayat-ayat Al-Qur'an</strong>
+                            , yang tidak ada keraguan di dalamnya.
                         </p>
                     </div>
                 </div>
@@ -314,16 +326,16 @@
                     </div>
                     <div class="py-8 flex flex-col justify-center">
                         <h4 class="text-3xl md:text-4xl font-bold leading-snug">
-                            Panduan Menghadapi Kehidupan Sehari-hari
+                            Panduan dalam menghadapi permasalahan kehidupan
+                            sehari-hari
                         </h4>
 
                         <p class="lg:order-1 my-8 text-xl leading-relaxed">
-                            Dapatkan motivasi Islami yang relevan dengan
-                            berbagai kondisi hidup:
-                            <strong>
-                                kesabaran, rezeki, semangat, kebahagiaan, dan
-                                banyak lagi.
-                            </strong>
+                            Dapatkan motivasi Islami sebagai penyemangat diri
+                            saat menghadapi berbagai permasalahan yang sering
+                            kali membuat sedih, cemas, khawatir, terpuruk,
+                            merasa putus asa, dan perasaan-perasaan tidak nyaman
+                            lainnya.
                         </p>
                     </div>
                 </div>
@@ -338,13 +350,16 @@
                     </div>
                     <div class="py-8 flex flex-col justify-center">
                         <h4 class="text-3xl md:text-4xl font-bold leading-snug">
-                            Praktis & Menarik
+                            Praktis dan menarik
                         </h4>
 
                         <p class="my-8 text-xl leading-relaxed">
-                            Aplikasi dikemas dalam desain
-                            <strong>modern dan elegan</strong>
+                            Aplikasi dikemas dalam desain yang
+                            <strong>modern dan user friendly</strong>
                             , mudah digunakan kapan saja dan di mana saja.
+                            Dilengkapi dengan banyak pilihan wallpaper dan
+                            backsound audio, yang membuatnya menjadi sangat
+                            menarik.
                         </p>
                     </div>
                 </div>
@@ -364,7 +379,7 @@
                 <h4
                     class="text-2xl sm:text-3xl md:text-4xl xl:text-6xl font-semibold text-center text-white"
                 >
-                    Temukan Ketenangan Di Sini
+                    Dapatkan ketenangan hati di sini
                 </h4>
             </div>
         </section>
@@ -397,20 +412,44 @@
                     </div>
                 </div>
 
-                <div class="flex">
-                    <blockquote
-                        class="max-w-[600px] italic text-center text-lg sm:text-xl mx-auto mb-12"
-                    >
-                        “Setiap kali saya merasa gelisah, saya membuka aplikasi
-                        ini. Pesannya selalu pas dengan kondisi saya.
-                        MasyaAllah!”
-                    </blockquote>
-                </div>
+                <div
+                    class="grid grid-cols-1 sm:grid-cols-2 gap-8 justify-center px-4"
+                >
+                    <div class="flex flex-col h-full justify-between">
+                        <blockquote
+                            class="max-w-[600px] italic text-center text-lg sm:text-xl mx-auto mb-6"
+                        >
+                            “Setiap kali saya merasa gelisah, saya membuka
+                            aplikasi ini. Pesannya selalu pas dengan kondisi
+                            saya. MasyaAllah!”
+                        </blockquote>
 
-                <p class="text-lg sm:text-xl text-[#673AB7] text-center">
-                    <strong>Rina S.</strong>
-                    , Mahasiswi
-                </p>
+                        <p
+                            class="text-lg sm:text-xl text-[#673AB7] text-center mb-8"
+                        >
+                            <strong>Rina S.</strong>
+                            - Mahasiswi
+                        </p>
+                    </div>
+                    <div class="flex flex-col h-full justify-between">
+                        <blockquote
+                            class="max-w-[600px] italic text-center text-lg sm:text-xl mx-auto mb-6"
+                        >
+                            “Saat saya merasa sedih, saya membuka aplikasi ini
+                            di HP saya. Alhamdulillah dengan membaca dan
+                            menghayati isinya, hati saya menjadi tenang dan
+                            tidak sedih lagi. Saya juga sangat menyukai
+                            wallpaper dan audionya...”
+                        </blockquote>
+
+                        <p
+                            class="text-lg sm:text-xl text-[#673AB7] text-center mb-8"
+                        >
+                            <strong>Iwan</strong>
+                            - Wiraswasta
+                        </p>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -485,7 +524,7 @@
                                         <span
                                             class="font-semibold text-lg sm:text-xl"
                                         >
-                                            Apa judul aplikasi ini?
+                                            Apa nama aplikasi ini?
                                         </span>
                                         <img
                                             alt=""
@@ -550,8 +589,8 @@
                                     <div
                                         class="invisible h-auto max-h-0 items-center opacity-0 transition-all group-focus:visible group-focus:max-h-screen group-focus:opacity-100 group-focus:duration-1000"
                                     >
-                                        Isi aplikasi ini bersumber dari Al
-                                        Quran, yang tidak diragukan lagi
+                                        Isi aplikasi ini bersumber dari
+                                        Al-Quran, yang tidak diragukan lagi
                                         kebenarannya.
                                     </div>
                                 </div>
@@ -624,7 +663,9 @@
                         <h5
                             class="text-3xl md:text-4xl font-bold mb-6 text-white text-center"
                         >
-                            Apalagi yang kamu tunggu? Download Sekarang
+                            Apalagi yang Kamu tunggu?
+                            <br />
+                            Download sekarang yuk!
                         </h5>
 
                         <div class="my-24 flex justify-center" id="download">
@@ -640,11 +681,6 @@
                         <h6 class="text-xl font-bold mb-6">
                             Motivasiislami.com
                         </h6>
-                        <p class="mb-6">
-                            Sedan, No. 22, Desa/Kelurahan Sariharjo, Kec.
-                            Ngaglik, Kab. Sleman, Prov. Daerah Istimewa
-                            Yogyakarta, Indonesia
-                        </p>
 
                         <div>
                             <svg
