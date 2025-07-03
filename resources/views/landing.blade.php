@@ -38,7 +38,7 @@
             <nav class="absolute top-0 left-0 right-0">
                 <div class="px-4 container mx-auto flex gap-24 py-4">
                     <img
-                        src="/assets/img/landing/logo.webp"
+                        src="/assets/img/logo_clean.webp"
                         class="w-26 aspect-square object-cover my-auto"
                         alt=""
                     />
@@ -176,7 +176,7 @@
                 <div class="grid sm:grid-cols-3 gap-24 sm:gap-0">
                     <div class="flex flex-col items-center">
                         <h2 class="text-primary text-4xl font-semibold mb-2">
-                            +200M
+                            +1K
                         </h2>
                         <div class="flex items-center justify-center gap-2">
                             <svg
@@ -209,7 +209,7 @@
                         class="border-0 border-[#d1c4e9] sm:border-l-2 flex flex-col items-center"
                     >
                         <h2 class="text-primary text-4xl font-semibold mb-2">
-                            +480M
+                            +763
                         </h2>
                         <div class="flex items-center justify-center gap-2">
                             <svg
@@ -234,7 +234,7 @@
                                 />
                             </svg>
                             <p class="text-secondary text-center text-2xl">
-                                Transactions
+                                Premium Users
                             </p>
                         </div>
                     </div>
@@ -242,7 +242,7 @@
                         class="border-0 border-[#d1c4e9] sm:border-l-2 flex flex-col items-center"
                     >
                         <h2 class="text-primary text-4xl font-semibold mb-2">
-                            +180M
+                            +665
                         </h2>
                         <div class="flex items-center justify-center gap-2">
                             <svg
