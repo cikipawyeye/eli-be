@@ -108,9 +108,10 @@
                         <h1
                             class="text-3xl md:text-4xl xl:text-5xl font-bold leading-snug"
                         >
-                            Dapatkan Ketenangan Hati
-                            dan Motivasi dari
-                            <span class="text-primary text-nowrap">Al-Qur'an</span>
+                            Dapatkan ketenangan hati dan motivasi dari
+                            <span class="text-primary text-nowrap">
+                                Al-Qur'an
+                            </span>
                         </h1>
 
                         <p
@@ -122,12 +123,12 @@
 
                         <ul class="list-disc px-5 font-semibold opacity-80">
                             <li class="mb-2">
-                                Sebagai pengingan untuk selalu mendekatkan diri
+                                Sebagai pengingat untuk selalu mendekatkan diri
                                 kepada Allah SWT.
                             </li>
                             <li class="mb-2">
-                                Sebagai motivasi, penyejuk hati, dan pengingat,
-                                dan bagi umat Muslim agar tetap di jalanNYA saat
+                                Sebagai motivasi, penyejuk hati, dan pengingat
+                                bagi umat Muslim agar tetap di jalanNYA saat
                                 menghadapi permasalahan kehidupan sehari-hari.
                             </li>
                             <li class="mb-2">
@@ -137,7 +138,7 @@
                             </li>
                             <li class="mb-2">
                                 Aplikasi ini berisikan lebih dari 200 motivasi
-                                dan pengingat Islami.
+                                dan pengingat islami.
                             </li>
                             <li class="mb-2">
                                 Cukup hanya dengan membayar satu kali saja untuk
@@ -147,7 +148,7 @@
                             </li>
                             <li class="mb-2">
                                 Download sekarang, dan mulai perjalanan
-                                spiritual Kamu!
+                                spiritual kamu!
                             </li>
                         </ul>
 
@@ -305,7 +306,7 @@
                     </div>
                     <div class="py-8 flex flex-col justify-center">
                         <h4 class="text-3xl md:text-4xl font-bold leading-snug">
-                            Motivasi dan pengingat Islami yang terpercaya
+                            Motivasi dan pengingat islami yang terpercaya
                         </h4>
 
                         <p class="my-8 text-xl leading-relaxed">
@@ -331,7 +332,7 @@
                         </h4>
 
                         <p class="lg:order-1 my-8 text-xl leading-relaxed">
-                            Dapatkan motivasi Islami sebagai penyemangat diri
+                            Dapatkan motivasi islami sebagai penyemangat diri
                             saat menghadapi berbagai permasalahan yang sering
                             kali membuat sedih, cemas, khawatir, terpuruk,
                             merasa putus asa, dan perasaan-perasaan tidak nyaman
@@ -590,7 +591,7 @@
                                         class="invisible h-auto max-h-0 items-center opacity-0 transition-all group-focus:visible group-focus:max-h-screen group-focus:opacity-100 group-focus:duration-1000"
                                     >
                                         Isi aplikasi ini bersumber dari
-                                        Al-Quran, yang tidak diragukan lagi
+                                        Al-Qur'an, yang tidak diragukan lagi
                                         kebenarannya.
                                     </div>
                                 </div>
@@ -645,10 +646,8 @@
                                     <div
                                         class="invisible h-auto max-h-0 items-center opacity-0 transition-all group-focus:visible group-focus:max-h-screen group-focus:opacity-100 group-focus:duration-1000"
                                     >
-                                        Gratis, tapi akses terbatas. Kalo ingin
-                                        bisa mengakses semuanya, maka perlu
-                                        membayar sekali saja dengan harga yang
-                                        sangat terjangkau.
+                                        Gratis dengan akses terbatas. Jika ingin
+                                        mengakses semuanya, maka hanya perlu membayar sekali saja dengan harga yang sangat terjangkau. Setiap kali ada update, tidak perlu membayar lagi.
                                     </div>
                                 </div>
                             </div>
@@ -663,7 +662,7 @@
                         <h5
                             class="text-3xl md:text-4xl font-bold mb-6 text-white text-center"
                         >
-                            Apalagi yang Kamu tunggu?
+                            Apalagi yang kamu tunggu?
                             <br />
                             Download sekarang yuk!
                         </h5>
