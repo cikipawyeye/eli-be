@@ -44,6 +44,7 @@ class User extends Authenticatable
         'phone_number',
         'gender',
         'device_id',
+        'fcm_token',
     ];
 
     /**

@@ -59,4 +59,20 @@ class PermissionConstant extends Constant
     public const EDIT_MUSIC = 'edit_music';
     public const ADD_MUSIC = 'add_music';
     public const DELETE_MUSIC = 'delete_music';
+
+    // reminder notification
+    public const MANAGE_REMINDER_NOTIFICATIONS = 'manage_reminder_notifications';
+    public const BROWSE_REMINDER_NOTIFICATIONS = 'browse_reminder_notifications';
+    public const READ_REMINDER_NOTIFICATION = 'read_reminder_notification';
+    public const EDIT_REMINDER_NOTIFICATION = 'edit_reminder_notification';
+    public const ADD_REMINDER_NOTIFICATION = 'add_reminder_notification';
+    public const DELETE_REMINDER_NOTIFICATION = 'delete_reminder_notification';
+
+    // emotion
+    public const MANAGE_EMOTIONS = 'manage_emotions';
+    public const BROWSE_EMOTIONS = 'browse_emotions';
+    public const READ_EMOTION = 'read_emotion';
+    public const EDIT_EMOTION = 'edit_emotion';
+    public const ADD_EMOTION = 'add_emotion';
+    public const DELETE_EMOTION = 'delete_emotion';
 }

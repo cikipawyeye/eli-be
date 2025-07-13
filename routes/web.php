@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 use App\Domains\Content\Controllers\ContentController;
 use App\Domains\Content\Controllers\SubcategoryController;
+use App\Domains\Notification\Controllers\EmotionController;
+use App\Domains\Notification\Controllers\MessageController;
 use App\Domains\Payment\Controllers\PaymentController;
+use App\Domains\Notification\Controllers\ReminderNotificationController;
 use App\Domains\Theme\Controllers\MusicController;
 use App\Domains\Theme\Controllers\WallpaperController;
 use App\Domains\User\Controllers\DashboardController;
@@ -33,6 +36,18 @@ Route::middleware('auth')->group(function () {
     Route::resource('/wallpapers', WallpaperController::class)->only(['index', 'store', 'destroy']);
 
     Route::resource('/musics', MusicController::class)->only(['index', 'store', 'destroy']);
+
+    Route::post('/reminder-notifications/disable', [ReminderNotificationController::class, 'disable'])->name('reminder-notifications.disable');
+
+    Route::post('/reminder-notifications/test', [ReminderNotificationController::class, 'test'])->name('reminder-notifications.test');
+
+    Route::resource('/reminder-notifications', ReminderNotificationController::class)->except(['create', 'edit']);
+
+    Route::post('/reminder-notifications/{reminder_notification}/set-active', [ReminderNotificationController::class, 'setActive'])->name('reminder-notifications.set-active');
+
+    Route::resource('/emotions', EmotionController::class)->except(['create', 'edit']);
+
+    Route::resource('/messages', MessageController::class)->only(['store', 'update', 'destroy']);
 });
 
-require __DIR__.'/auth.php'; // NOSONAR
+require __DIR__ . '/auth.php'; // NOSONAR

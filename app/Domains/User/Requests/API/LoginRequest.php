@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domains\User\Requests\API;
 
+use App\Domains\Notification\Actions\SendDeviceLoginNotificationAction;
 use App\Domains\User\Enums\RoleEnum;
 use App\Domains\User\Models\User;
 use Illuminate\Auth\Events\Lockout;
@@ -17,6 +18,7 @@ use Illuminate\Validation\ValidationException;
 /**
  * @method mixed user()
  * @method string|null ip()
+ * @extends \Illuminate\Http\Request
  */
 class LoginRequest extends FormRequest
 {
@@ -33,6 +35,7 @@ class LoginRequest extends FormRequest
             'email' => ['required', 'string', 'email'],
             'password' => ['required', 'string'],
             'device_id' => ['nullable', 'string'],
+            'fcm_token' => ['nullable', 'string'],
         ];
     }
 
@@ -70,10 +73,16 @@ class LoginRequest extends FormRequest
             ]);
         }
 
-        if ($this->filled('device_id')) {
-            $this->user()->update([
-                'device_id' => $this->string('device_id'),
-            ]);
+        SendDeviceLoginNotificationAction::dispatchAfterResponse(
+            $this->input('device_id', ''),
+            $user->fcm_token ?? ''
+        );
+
+        $data = $this->only('device_id', 'fcm_token');
+        $data = array_filter($data, fn($value) => ! is_null($value) && $value !== '');
+
+        if (! empty($data)) {
+            $user->update($data);
         }
 
         RateLimiter::clear($this->throttleKey());
