@@ -17,6 +17,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'landing');
 
+Route::view('/privacy-policy', 'tnc');
+
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', DashboardController::class)->name('dashboard');
 
