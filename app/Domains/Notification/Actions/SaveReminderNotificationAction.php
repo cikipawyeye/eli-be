@@ -33,7 +33,7 @@ class SaveReminderNotificationAction extends Action
             if ($this->image instanceof UploadedFile) {
                 $this->model->addMedia($this->image)
                     ->toMediaCollection('image', 'public');
-            } elseif (! $this->image) {
+            } else {
                 $this->model->clearMediaCollection('image');
             }
         });
