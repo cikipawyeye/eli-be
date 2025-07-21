@@ -4,7 +4,7 @@
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-        <title>Kebijakan Privasi - E-Book Motivasi Al-Qur\'an</title>
+        <title>Kebijakan Privasi - {{ config('app.name', 'E-Book Motivasi Al-Qur\'an') }}</title>
 
         <link
             rel="icon"
