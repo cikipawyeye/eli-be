@@ -4,7 +4,47 @@
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-        <title>Kebijakan Privasi - {{ config('app.name', 'E-Book Motivasi Al-Qur\'an') }}</title>
+        <!-- Meta Description -->
+        <meta
+            name="description"
+            content="Aplikasi motivasi penyejuk hati dari PT Anugerah Mandala Mulia Indonesia yang menghadirkan motivasi inspiratif dari Al-Qur'an semangat hidup setiap hari."
+        />
+
+        <!-- Meta Author -->
+        <meta name="author" content="PT Anugerah Mandala Mulia Indonesia" />
+
+        <!-- Meta Keywords -->
+        <meta
+            name="keywords"
+            content="motivasi, inspirasi, aplikasi motivasi, penyejuk hati, semangat hidup, PT Anugerah Mandala Mulia Indonesia"
+        />
+
+        <!-- Open Graph Meta (untuk tampilan di media sosial) -->
+        <meta property="og:title" content="Motivasi Penyejuk Hati" />
+        <meta
+            property="og:description"
+            content="Aplikasi motivasi penyejuk hati dari PT Anugerah Mandala Mulia Indonesia yang menghadirkan motivasi inspiratif dari Al-Qur'an semangat hidup setiap hari."
+        />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://motivasiislami.com" />
+        <meta
+            property="og:image"
+            content="hhttps://motivasiislami.com/assets/img/small-logos/app-logo.webp"
+        />
+
+        <!-- Twitter Card Meta -->
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Motivasi Penyejuk Hati" />
+        <meta
+            name="twitter:description"
+            content="Aplikasi motivasi penyejuk hati dari PT Anugerah Mandala Mulia Indonesia yang menghadirkan motivasi inspiratif dari Al-Qur'an semangat hidup setiap hari."
+        />
+        <meta
+            name="twitter:image"
+            content="https://motivasiislami.com/assets/img/small-logos/app-logo.webp"
+        />
+
+        <title>Kebijakan Privasi - {{ config('app.name', 'E-Book Motivasi Al-Qur\'an') }} - PT Anugerah Mandala Mulia Indonesia</title>
 
         <link
             rel="icon"
@@ -20,7 +60,7 @@
             rel="stylesheet"
         />
 
-        <link rel="stylesheet" type="text/css" href="/assets/css/landing.css" />
+        <link rel="stylesheet" type="text/css" href="/assets/css/landing.css?v=1" />
 
         @vite([])
     </head>
@@ -577,9 +617,10 @@
                     </div>
 
                     <div class="max-w-[300px] text-white">
-                        <h6 class="text-xl font-bold mb-6">
+                        <h6 class="text-xl font-bold">
                             Motivasiislami.com
                         </h6>
+                        <p class="mb-6">PT Anugerah Mandala Mulia Indonesia</p>
 
                         <div>
                             <svg
