@@ -60,7 +60,7 @@
             rel="stylesheet"
         />
 
-        <link rel="stylesheet" type="text/css" href="/assets/css/landing.css" />
+        <link rel="stylesheet" type="text/css" href="/assets/css/landing.css?v=1" />
 
         @vite([])
     </head>
