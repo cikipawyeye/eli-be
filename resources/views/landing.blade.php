@@ -187,6 +187,9 @@
                                 lagi!
                             </li>
                             <li class="mb-2">
+                                Dapat mengaktifkan fitur 'Reminder' bagi pengguna Premium.
+                            </li>
+                            <li class="mb-2">
                                 Download sekarang, dan mulai perjalanan
                                 spiritual kamu!
                             </li>
