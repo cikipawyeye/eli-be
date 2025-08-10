@@ -44,7 +44,10 @@
             content="https://motivasiislami.com/assets/img/small-logos/app-logo.webp"
         />
 
-        <title>{{ config('app.name', 'E-Book Motivasi Al-Qur\'an') }} - PT Anugerah Mandala Mulia Indonesia</title>
+        <title>
+            {{ config('app.name', 'E-Book Motivasi Al-Qur\'an') }} - PT
+            Anugerah Mandala Mulia Indonesia
+        </title>
 
         <link
             rel="icon"
@@ -60,7 +63,11 @@
             rel="stylesheet"
         />
 
-        <link rel="stylesheet" type="text/css" href="/assets/css/landing.css?v=1" />
+        <link
+            rel="stylesheet"
+            type="text/css"
+            href="/assets/css/landing.css?v=1"
+        />
 
         @vite([])
     </head>
@@ -187,7 +194,8 @@
                                 lagi!
                             </li>
                             <li class="mb-2">
-                                Dapat mengaktifkan fitur 'Reminder' bagi pengguna Premium.
+                                Dapat mengaktifkan fitur 'Reminder' bagi
+                                pengguna Premium.
                             </li>
                             <li class="mb-2">
                                 Download sekarang, dan mulai perjalanan
@@ -196,11 +204,16 @@
                         </ul>
 
                         <div class="mt-24 flex justify-center">
-                            <img
-                                src="/assets/img/landing/google-play.webp"
-                                class="w-48"
-                                alt=""
-                            />
+                            <a
+                                href="https://play.google.com/store/apps/details?id=com.motivasiislami.id&hl=id"
+                                target="_blank"
+                            >
+                                <img
+                                    src="/assets/img/landing/google-play.webp"
+                                    class="w-48"
+                                    alt=""
+                                />
+                            </a>
                         </div>
                     </div>
                     <div class="flex p-8">
@@ -714,18 +727,21 @@
                         </h5>
 
                         <div class="my-24 flex justify-center" id="download">
-                            <img
-                                src="/assets/img/landing/google-play.webp"
-                                class="w-48"
-                                alt=""
-                            />
+                            <a
+                                href="https://play.google.com/store/apps/details?id=com.motivasiislami.id&hl=id"
+                                target="_blank"
+                            >
+                                <img
+                                    src="/assets/img/landing/google-play.webp"
+                                    class="w-48"
+                                    alt=""
+                                />
+                            </a>
                         </div>
                     </div>
 
                     <div class="max-w-[300px] text-white">
-                        <h6 class="text-xl font-bold">
-                            Motivasiislami.com
-                        </h6>
+                        <h6 class="text-xl font-bold">Motivasiislami.com</h6>
                         <p class="mb-6">PT Anugerah Mandala Mulia Indonesia</p>
 
                         <div>
