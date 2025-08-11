@@ -66,7 +66,7 @@
         <link
             rel="stylesheet"
             type="text/css"
-            href="/assets/css/landing.css?v=1"
+            href="/assets/css/landing.css?v=2"
         />
 
         @vite([])
@@ -322,7 +322,7 @@
             />
 
             <div class="px-4 container mx-auto">
-                <div class="py-24">
+                <div class="pt-24 pb-14">
                     <h2
                         class="text-center font-semibold text-3xl md:text-4xl xl:text-5xl mb-6"
                     >
