@@ -67,7 +67,7 @@
         <link
             rel="stylesheet"
             type="text/css"
-            href="/assets/css/landing.css?v=1"
+            href="/assets/css/landing.css?v=2"
         />
 
         @vite([])
