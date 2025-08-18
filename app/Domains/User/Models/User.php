@@ -4,11 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domains\User\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-
 use App\Domains\Payment\Models\Payment;
-use App\Domains\User\Enums\GenderEnum;
-use App\Domains\User\Enums\JobTypeEnum;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -17,8 +13,6 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\ValidationException;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 
@@ -60,22 +54,6 @@ class User extends Authenticatable
     protected static function newFactory(): Factory
     {
         return \Database\Factories\UserFactory::new();
-    }
-
-    protected static function booted()
-    {
-        static::saving(function ($user) {
-            // make sure job is filled if job_type is "Other"
-            $validator = Validator::make($user->attributesToArray(), [
-                'job_type' => ['required', 'in:'.implode(',', JobTypeEnum::toArray())],
-                'job' => [sprintf('required_if:job_type,%s', JobTypeEnum::Other->value)],
-                'gender' => ['nullable', 'in:'.implode(',', GenderEnum::toArray())],
-            ]);
-
-            if ($validator->fails()) {
-                throw new ValidationException($validator);
-            }
-        });
     }
 
     /**
