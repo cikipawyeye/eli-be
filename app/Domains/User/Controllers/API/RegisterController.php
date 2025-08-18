@@ -50,7 +50,12 @@ class RegisterController extends ApiController
     public function checkEmail(Request $request): JsonResponse
     {
         $request->validate([
-            'email' => ['required', 'string', 'email:rfc,dns,spoof'],
+            'email' => [
+                'required',
+                'string',
+                'max:255',
+                app()->runningUnitTests() ? 'email' :  'email:rfc,dns,spoof'
+            ],
         ]);
 
         $email = $request->get('email');

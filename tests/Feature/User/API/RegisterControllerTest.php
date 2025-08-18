@@ -34,16 +34,6 @@ it('can get cities', function () {
     });
 });
 
-// Setup stress test
-// it('can get cities with good performance', function () {
-//     $result = stress(route('api.register.origin.cities'));
-//     // ->concurrently(requests: 200)
-//     // ->for(5)
-//     // ->seconds()
-//     // ->dump()
-//     expect($result->requests()->duration()->med())->toBeLessThan(100); // < 100.00ms
-// });
-
 it('can search cities', function () {
     $cities = City::select('code', 'name')->get();
     $target = $cities->random();
@@ -102,7 +92,7 @@ it('can register new user', function () {
 it('returns true when email exists', function () {
     $user = User::factory()->create([
         'city_code' => City::select('code')->get()->random()->code,
-        'email' => fake()->unique()->freeEmail(),
+        'email' => fake()->unique()->safeEmail(),
     ]);
 
     $response = postJson(route('api.register.check-email', ['email' => $user->email]));

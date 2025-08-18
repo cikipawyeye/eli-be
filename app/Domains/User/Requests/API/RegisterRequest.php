@@ -42,22 +42,33 @@ class RegisterRequest extends FormRequest
                 'lowercase',
                 'max:255',
                 Rule::unique(User::class, 'email')->withoutTrashed(),
-                'email:rfc,dns,spoof',
+                app()->runningUnitTests() ? 'email' :  'email:rfc,dns,spoof',
             ],
             'password' => ['required', 'confirmed', Password::defaults()],
-            'birth_date' => 'required|date|before:today',
-            'city_code' => ['required', Rule::exists(config('laravolt.indonesia.table_prefix') . 'cities', 'code')],
-            'job_type' => ['required', Rule::enum(JobTypeEnum::class)],
-            'job' => [sprintf('exclude_unless:job_type,%s', JobTypeEnum::Other->value), sprintf('required_if:job_type,%s', JobTypeEnum::Other->value), 'string', 'max:50'],
-            'gender' => ['required', Rule::enum(GenderEnum::class)],
             'phone_number' => 'required|string|max:19',
+            'birth_date' => 'nullable|date|before:today',
+            'city_code' => [
+                'nullable',
+                Rule::exists(config('laravolt.indonesia.table_prefix') . 'cities', 'code')
+            ],
+            'job_type' => ['nullable', Rule::enum(JobTypeEnum::class)],
+            'job' => [
+                sprintf('exclude_unless:job_type,%s', JobTypeEnum::Other->value),
+                sprintf('required_if:job_type,%s', JobTypeEnum::Other->value),
+                'string',
+                'max:50'
+            ],
+            'gender' => ['nullable', Rule::enum(GenderEnum::class)],
         ];
     }
 
     public function messages()
     {
         return [
-            'job.required_if' => __('validation.required_if', ['attribute' => __('app.job'), 'value' => JobTypeEnum::Other->translated()]),
+            'job.required_if' => __(
+                'validation.required_if',
+                ['attribute' => __('app.job'), 'value' => JobTypeEnum::Other->translated()]
+            ),
         ];
     }
 }

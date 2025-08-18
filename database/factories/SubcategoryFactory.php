@@ -30,6 +30,7 @@ class SubcategoryFactory extends Factory
             'name' => fake()->unique()->word(),
             'category' => ContentCategoryEnum::getCollection()->random(),
             'is_active' => fake()->boolean(),
+            'premium' => fake()->boolean(),
         ];
     }
 
