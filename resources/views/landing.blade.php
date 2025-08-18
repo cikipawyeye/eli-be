@@ -66,7 +66,7 @@
         <link
             rel="stylesheet"
             type="text/css"
-            href="/assets/css/landing.css?v=2"
+            href="/assets/css/landing.css?v=3"
         />
 
         @vite([])
@@ -155,45 +155,19 @@
                         <h1
                             class="text-3xl md:text-4xl xl:text-5xl font-bold leading-snug"
                         >
-                            Dapatkan ketenangan hati dan motivasi dari
+                            Download aja dulu...
                             <span class="text-primary text-nowrap">
-                                Al-Qur'an
+                                Gratis kok!
                             </span>
                         </h1>
 
                         <p
                             class="my-8 text-lg md:text-xl opacity-80 leading-relaxed"
                         >
-                            Tidak ada orang hidup yang tidak menghadapi ujian.
-                            Dalam kehidupan sehari-hari, setiap orang menghadapi
-                            permasalahannya masing-masing. Terkadang,
-                            permasalahan-permasalahan yang kita hadapi dalam
-                            kehidupan sehari-hari, membuat kita merasa sedih,
-                            marah, kecewa, terpuruk, tidak semangat, putus asa,
-                            dan perasaan tidak nyaman lainnya. Pada saat-saat
-                            seperti itu, kita membutuhkan motivasi dan
-                            pencerahan, dan seringkali kita berharap ada
-                            seseorang yang peduli kepada kita, memberikan
-                            motivasi dan bantuan kepada kita. Namun pada
-                            kenyataannya, tidak sedikit yang merasa 'sendiri'
-                            pada saat menghadapi situasi 'sulit'. Merasa tidak
-                            ada tempat untuk 'berbagi' atau sekedar bercerita.
-                            Bahkan, banyak juga yang 'berharap' kepada
-                            orang-orang disekitarnya atau bahkan kepada orang
-                            terdekat, namun justru kekecewaan yang didapatkan.
+                            InsyaAllah bermanfaat.
                         </p>
 
-                        <p
-                            class="my-8 text-lg md:text-xl opacity-80 leading-relaxed"
-                        >
-                            Oleh karena itu, aplikasi Motivasi Penyejuk Hati ini
-                            dirancang untuk memberikan motivasi kepada pengguna
-                            agar memperoleh ketenangan hati, menambah keimanan
-                            dan kembali bersemangat dalam menjalani kehidupan
-                            sehari-hari.
-                        </p>
-
-                        <div class="mt-24 flex justify-center">
+                        <div class="mt-18 xl:mt-24 flex">
                             <a
                                 href="https://play.google.com/store/apps/details?id=com.motivasiislami.id&hl=id"
                                 target="_blank"
