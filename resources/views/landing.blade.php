@@ -151,23 +151,79 @@
 
             <div class="container px-6 py-24 m-auto">
                 <div class="grid lg:grid-cols-2 gap-12">
-                    <div class="mt-16 md:mt-0 py-8">
-                        <h1
-                            class="text-3xl md:text-4xl xl:text-5xl font-bold leading-snug"
-                        >
-                            Download aja dulu...
-                            <span class="text-primary text-nowrap">
-                                Gratis kok!
-                            </span>
-                        </h1>
-
+                    <div class="py-8">
                         <p
-                            class="my-8 text-lg md:text-xl opacity-80 leading-relaxed"
+                            class="mt-8 mb-4 text-lg md:text-xl opacity-80 font-bold"
                         >
-                            InsyaAllah bermanfaat.
+                            Kamu bisa mendapatkan motivasi yang bersumber dari
+                            ayat-ayat Al-Qur'an
                         </p>
 
-                        <div class="mt-18 xl:mt-24 flex">
+                        <div>
+                            <ul class="list-disc px-5 font-semibold opacity-80">
+                                <li class="mb-2">
+                                    Lebih dari 200 ayat motivasi yang bisa kamu
+                                    pilih sesuai mood yang kamu rasakan
+                                </li>
+                                <li class="mb-2">
+                                    Bisa mengaktifkan reminder sesuai dengan
+                                    mood yang kamu rasakan
+                                </li>
+                            </ul>
+                        </div>
+
+                        <p class="my-8 text-lg md:text-xl opacity-80 font-bold">
+                            Selain mendapatkan motivasi, kamu sekaligus berbagi
+                            kebaikan berkontribusi dalam kegiatan wakaf sumur
+                            tanpa berdonasi
+                        </p>
+
+                        <div>
+                            <ul class="list-disc px-5 font-semibold opacity-80">
+                                <li class="mb-2">
+                                    Wakaf sumur ini untuk memenuhi kebutuhan air
+                                    bersih di masjid dan mushola
+                                </li>
+                                <li class="mb-2">
+                                    Wakaf sumur ini juga untuk memenuhi
+                                    kebutuhan air bersih bagi 200 KK
+                                </li>
+                                <li class="mb-2">
+                                    InsyaAllah semoga bisa menjadi amal jariyah
+                                    kamu
+                                </li>
+                            </ul>
+                        </div>
+
+                        <p class="my-8 text-lg md:text-xl opacity-80 font-bold">
+                            Selain itu, kamu juga bisa berpeluang untuk bisa
+                            berangkat umrah gratis
+                        </p>
+
+                        <div>
+                            <ul class="list-disc px-5 font-semibold opacity-80">
+                                <li class="mb-2">
+                                    Motivasi Penyejuk Hati menyediakan satu
+                                    tiket umrah gratis bagi yang beruntung
+                                </li>
+                                <li class="mb-2">
+                                    Pengumuman akan dilakukan pada tanggal 31
+                                    Desember 2025
+                                </li>
+                            </ul>
+                        </div>
+
+                        <p class="mt-8 mb-4 text-lg">
+                            Jika kamu tertarik, caranya sangat mudah:
+                        </p>
+                        <p class="mb-4 text-lg">
+                            <strong>Hanya dengan menjadi 'Sahabat MPH'</strong>
+                        </p>
+                        <p class="mb-10 text-lg">
+                            Tinggal download aplikasi Motivasi Penyejuk Hati di Google Play Store
+                        </p>
+
+                        <div class="mt-4 flex">
                             <a
                                 href="https://play.google.com/store/apps/details?id=com.motivasiislami.id&hl=id"
                                 target="_blank"
