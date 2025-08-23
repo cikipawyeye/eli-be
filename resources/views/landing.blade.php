@@ -203,7 +203,7 @@
                         <div>
                             <ul class="list-disc px-5 font-semibold opacity-80">
                                 <li class="mb-2">
-                                    Motivasi Penyejuk Hati menyediakan satu
+                                    Motivasi Penyejuk Hati menyediakan
                                     tiket umrah gratis bagi yang beruntung
                                 </li>
                                 <li class="mb-2">
