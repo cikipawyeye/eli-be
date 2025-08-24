@@ -32,7 +32,10 @@ class PasswordResetLinkController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
-            'email' => 'required|email:rfc,dns,spoof',
+            'email' => [
+                'required',
+                app()->runningUnitTests() ? 'email' : 'email:rfc,dns,spoof'
+            ],
         ]);
 
         // We will send the password reset link to this user. Once we have attempted

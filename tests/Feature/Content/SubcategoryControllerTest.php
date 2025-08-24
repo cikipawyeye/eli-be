@@ -213,7 +213,7 @@ it('can update subcategory', function () {
     actingAs($admin)
         ->put(
             route('subcategories.update', ['subcategory' => $subcategory->id]),
-            $newData->only('name', 'category', 'is_active')
+            $newData->only('name', 'category', 'is_active', 'premium')
         )
         ->assertRedirect()
         ->assertSessionHas('success', __('app.updated_data', ['data' => __('app.subcategory')]));
